@@ -1,0 +1,50 @@
+﻿@model LibrARRRy.Models.Worker
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Worker</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAdmin)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WorkerId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
