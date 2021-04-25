@@ -1,0 +1,96 @@
+﻿* {
+    margin: 0 auto;
+    padding: 0px;
+}
+
+.header {
+    height: 50px;
+}
+
+ul.a {
+    list-style-type: circle;
+    margin: 0 0 0 30px;
+}
+
+.top {
+    height: 40px;
+    margin-top: 4px;
+    margin-top: 10px;
+    display: table;
+    width: 100%;
+    text-align: center;
+}
+
+#social, #website, #title {
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+}
+
+#social {
+    position: page;
+    right: 0;
+}
+
+#website {
+    text-align: center;
+}
+
+#title {
+    position: absolute;
+    left: 0;
+}
+
+p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ostatnie {
+    margin: 10px;
+    font-size: large;
+    font-family: fantasy;
+    color: rgb(112, 112, 112);
+}
+
+.column {
+    float: left;
+}
+
+.left {
+    width: 15%;
+}
+
+.right {
+    width: 85%;
+}
+
+.row {
+    position: page;
+    display: flex;
+}
+
+article {
+    overflow: hidden;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 2px 2px 4px #636363;
+    border-radius: 5px;
+    width: 200px;
+    display: inline-flex;
+    height: 300px;
+}
+
+.bookimg {
+    margin: 10px;
+    box-shadow: 2px 2px 4px #000000;
+    width: 150px;
+    display: block;
+    margin: 0 auto;
+}
+.bookText {
+    text-align:center;
+}
+
+.pSameLine {
+    display: inline-block;
+}

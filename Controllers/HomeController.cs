@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibrARRRy.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,18 @@ namespace LibrARRRy.Controllers
 {
     public class HomeController : Controller
     {
+        private LibrARRRyContext db = new LibrARRRyContext();
         public ActionResult Index()
         {
+            var books = db.Books.OrderBy(b => b.Title);
+            var categories = db.Categories.OrderBy(c => c.Name);
+            var tags = db.Tags.OrderBy(t => t.Name);
+            
+
+            ViewBag.BooksList = books.ToList();
+            ViewBag.CategoriesList = categories.ToList();
+            ViewBag.TagsList = tags.ToList();
+
             return View();
         }
 

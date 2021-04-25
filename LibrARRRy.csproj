@@ -227,10 +227,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\MyStyleSheet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\search.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -244,6 +246,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="img\chow-chow.jpg" />
+    <Content Include="img\jamnik.jpg" />
+    <Content Include="img\piesek1.jpg" />
+    <Content Include="img\piesek2.jpg" />
+    <Content Include="img\piesek3.jpg" />
+    <Content Include="img\pitbull.jpg" />
+    <Content Include="img\ShihTzuPup.jpg" />
+    <Content Include="img\szczenak-buldoga-franuskiego.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
