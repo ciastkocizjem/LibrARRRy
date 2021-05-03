@@ -1,15 +1,5 @@
-﻿* {
-    margin: 0 auto;
-    padding: 0px;
-}
-
-.header {
+﻿.header {
     height: 50px;
-}
-
-ul.a {
-    list-style-type: circle;
-    margin: 0 0 0 30px;
 }
 
 .top {
@@ -19,21 +9,18 @@ ul.a {
     display: table;
     width: 100%;
     text-align: center;
+    display: inline-block;
 }
 
-#social, #website, #title {
-    display: inline-block;
+#social, #title {
     vertical-align: top;
     margin: 5px;
 }
 
 #social {
-    position: page;
+    position: absolute;
     right: 0;
-}
-
-#website {
-    text-align: center;
+    float: right;
 }
 
 #title {
@@ -41,15 +28,11 @@ ul.a {
     left: 0;
 }
 
-p {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.ostatnie {
-    margin: 10px;
+.categoriesAndTags {
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-bottom: 5px;
     font-size: large;
-    font-family: fantasy;
-    color: rgb(112, 112, 112);
 }
 
 .column {
@@ -57,11 +40,11 @@ p {
 }
 
 .left {
-    width: 15%;
+    width: 13%;
 }
 
 .right {
-    width: 85%;
+    width: 87%;
 }
 
 .row {
@@ -87,10 +70,22 @@ article {
     display: block;
     margin: 0 auto;
 }
+
 .bookText {
-    text-align:center;
+    text-align: center;
 }
 
 .pSameLine {
     display: inline-block;
+}
+
+.mycontent-left {
+    border-right: 1px solid lightgray;
+    margin-right: 5px;
+    margin-bottom:0;
+    margin-top: 5px;
+}
+
+.checkBoxMargin {
+    margin-left: 20px;
 }

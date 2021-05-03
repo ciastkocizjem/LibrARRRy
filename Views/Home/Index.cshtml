@@ -3,105 +3,82 @@
 }
 
 @section Styles {
-    <link href="@Url.Content("~/Content/MyStyleSheet.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/IndexStyleSheet.css")" rel="stylesheet" type="text/css" />
 }
-@*<div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>*@
 
-<!-- Nagłówek strony -->
 
 <div class="header">
     <div class="top">
         <h1 id="title">LibrARRRy</h1>
         <div id="social">
-             <div class="form-group has-search">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" class="form-control" placeholder="Search">
-             </div>
+            <div class="form-inline">
+                <input type="text" class="form-control">
+                <button class="btn btn-outline-secondary" type="button"><i class="fa fa-search"></i></button>
+                <button class="btn btn-outline-secondary" type="button"><i class="fa fa-shopping-basket"></i></button> 
+            </div>
         </div>
-
-        <div id="social">
-            <p>Tu ikonka koszyka</p>
-        </div>
-
     </div>
 </div>
 
 
+
 <div class="row">
-    <div class="column left">
+    <div class="column left mycontent-left">
         <aside>
             <div>
                 <!-- DODAĆ LINKI -->
-                <p class="ostatnie">Categories:</p>
-                <ul class="a">
+                <p class="categoriesAndTags">Categories:</p>
+                <div class="form-group">
                     @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
                     {
-                        <li>@item.Name</li>
+                        <div class="checkbox checkBoxMargin">
+                            <label>
+                                @Html.CheckBox(item.Name) @item.Name
+                            </label>
+                        </div>
                     }
-                </ul>
-                <p class="ostatnie">Tags:</p>
-                <ul class="a">
+                </div>
+                <hr />
+                <p class="categoriesAndTags">Tags:</p>
+                 <div class="form-group">
                     @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
                     {
-                        <li>@item.Name</li>
+                     <div class="checkbox checkBoxMargin">
+                         <label>
+                             @Html.CheckBox(item.Name) @item.Name
+                         </label>
+                     </div>
                     }
-                </ul>
-            </div>
-            
-        </aside>
+                 </div>
+                </div>
+</aside>
 
     </div>
     <div class="column right">
         <section>
-                <!--ON CLICKI DODAC-->
-                @foreach (LibrARRRy.Models.Book item in ViewBag.BooksList)
-                {
-                        <article>
-                            <div>
-                                <img class="bookimg" src="~/img/pitbull.jpg" />
-                                <br />
-                                <p class="bookText">Title: @item.Title</p>
-                                <p class="bookText pSameLine"></p>
-                                Authors:
-                                @foreach (LibrARRRy.Models.Author authors in item.Authors)
-                                {
-                                    <p class="pSameLine"> @authors.Name @authors.Surname</p>
-                                    if (item.Authors.Count > 1)
-                                    {
-                                        <p class="pSameLine">...</p>
-                                        break;
-                                    }
-                                }
-                            </div>
-                        </article>
-                 }
-
+            <!--ON CLICKI DODAC-->
+            @foreach (LibrARRRy.Models.Book item in ViewBag.BooksList)
+            {
+                <article>
+                    <div>
+                        <img class="bookimg" src="~/img/pitbull.jpg" />
+                        <br />
+                        <p class="bookText">Title: @item.Title</p>
+                        <p class="bookText pSameLine"></p>
+                        Authors:
+                        @foreach (LibrARRRy.Models.Author authors in item.Authors)
+                        {
+                            <p class="pSameLine"> @authors.Name @authors.Surname</p>
+                            if (item.Authors.Count > 1)
+                            {
+                                <p class="pSameLine">...</p>
+                                break;
+                            }
+                        }
+                    </div>
+                </article>
+            }
         </section>
     </div>
 </div>
 
-<div class="row">
-    @*<div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </div>*@
-</div>
