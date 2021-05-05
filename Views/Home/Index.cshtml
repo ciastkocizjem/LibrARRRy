@@ -27,31 +27,35 @@
         <aside>
             <div>
                 <!-- DODAĆ LINKI -->
-                <p class="categoriesAndTags">Categories:</p>
-                <div class="form-group">
-                    @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
-                    {
-                        <div class="checkbox checkBoxMargin">
-                            <label>
-                                @Html.CheckBox(item.Name) @item.Name
-                            </label>
-                        </div>
-                    }
-                </div>
-                <hr />
-                <p class="categoriesAndTags">Tags:</p>
-                 <div class="form-group">
-                    @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
-                    {
-                     <div class="checkbox checkBoxMargin">
-                         <label>
-                             @Html.CheckBox(item.Name) @item.Name
-                         </label>
-                     </div>
-                    }
-                 </div>
-                </div>
-</aside>
+                @using (Html.BeginForm("Filter", "Home", FormMethod.Post))
+                {
+                    <p class="categoriesAndTags">Categories:</p>
+                    <div class="form-group">
+                        @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
+                        {
+                            <div class="checkbox checkBoxMargin">
+                                <label>
+                                    @Html.CheckBox("C_" + item.Name, false) @item.Name
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <hr />
+                    <p class="categoriesAndTags">Tags:</p>
+                    <div class="form-group">
+                        @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
+                        {
+                            <div class="checkbox checkBoxMargin">
+                                <label>
+                                    @Html.CheckBox("T_" + item.Name, false) @item.Name
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <input type="submit" value="Filter" />
+                }
+            </div>
+        </aside>
 
     </div>
     <div class="column right">
