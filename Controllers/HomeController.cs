@@ -61,16 +61,41 @@ namespace LibrARRRy.Controllers
 
             foreach (Book book in books)
             {
-                if (selectedCategories.Contains(book.Category.Name))
+                // Selected both categories and tags
+                if (selectedCategories.Count > 0 && selectedTags.Count > 0)
                 {
-                    selectedBooks.Add(book);
-                    continue;
+                    if (selectedCategories.Contains(book.Category.Name) && selectedTags.Any(t => book.Tags.Any(bt => bt.Name == t)))
+                    {
+                        selectedBooks.Add(book);
+                    }
                 }
-
-                if (selectedTags.Any(t => book.Tags.Any(bt => bt.Name == t)))
+                else
                 {
-                    selectedBooks.Add(book);
-                    continue;
+                    // Selected only categories
+                    if (selectedCategories.Count > 0)
+                    {
+                        if (selectedCategories.Contains(book.Category.Name))
+                        {
+                            selectedBooks.Add(book);
+                        }
+                    }
+                    else 
+                    {
+                        // Selected only tags
+                        if (selectedTags.Count > 0)
+                        {
+                            if (selectedTags.Any(t => book.Tags.Any(bt => bt.Name == t)))
+                            {
+                                selectedBooks.Add(book);
+                            }
+                        }
+                        else
+                        {
+                            // Selection is empty
+                            selectedBooks = books.ToList();
+                            break;
+                        }
+                    }
                 }
             }
 
