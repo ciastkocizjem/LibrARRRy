@@ -1,4 +1,8 @@
-﻿.header {
+﻿body {
+    margin: 10px;
+}
+
+.header {
     height: 50px;
 }
 
@@ -58,20 +62,22 @@ article {
     margin: 10px;
     box-shadow: 2px 2px 4px #636363;
     border-radius: 5px;
-    width: 200px;
+    width: 250px;
     display: inline-flex;
-    height: 300px;
+    height: 350px;
 }
 
-.bookimg {
-    margin: 10px;
+.bookImg {
     box-shadow: 2px 2px 4px #000000;
-    width: 150px;
     display: block;
-    margin: 0 auto;
+    margin: 5px auto 0px auto;
+    width: 78%;
+    display: block;
+    align-content: center;
 }
 
 .bookText {
+    margin: 2px 5px 0px 5px;
     text-align: center;
 }
 
@@ -82,10 +88,15 @@ article {
 .mycontent-left {
     border-right: 1px solid lightgray;
     margin-right: 5px;
-    margin-bottom:0;
+    margin-bottom: 0;
     margin-top: 5px;
 }
 
 .checkBoxMargin {
     margin-left: 20px;
+}
+
+.floatRight {
+    float: right;
+    margin-right: 10px;
 }
