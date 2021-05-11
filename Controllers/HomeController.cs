@@ -11,7 +11,7 @@ namespace LibrARRRy.Controllers
     public class HomeController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();
-
+        private readonly string[] operators = { " AND ", " OR ", "NOT " };
         
         private List<string> CategoriesCheckBoxes { get; set; }
 
@@ -30,7 +30,7 @@ namespace LibrARRRy.Controllers
         }
 
         [HttpPost]
-        public ActionResult SearchBook(string searchString)
+        public ActionResult SearchBooks(string searchString)
         {
             var books = db.Books.OrderBy(b => b.Title);
             var categories = db.Categories.OrderBy(c => c.Name);
@@ -38,8 +38,57 @@ namespace LibrARRRy.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                ViewBag.BooksList = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
-                    || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString)));
+                // Check if search string contains operators 
+                if (operators.Any(searchString.Contains))
+                {
+                    List<Book> searchedBooks = books.ToList();
+                    string[] splittedSearch = searchString.Split(new char[] { ' ' }, 3, StringSplitOptions.RemoveEmptyEntries);
+                    for (int i = 0; i < splittedSearch.Length; i++)
+                    {
+                        string s = splittedSearch[i];
+                        switch (s)
+                        {
+                            case "AND":
+                                if (i != 0 && splittedSearch.Length == 3)
+                                {
+                                    searchedBooks = searchedBooks.Where(b => b.ISBN.Contains(splittedSearch[i - 1]) || b.Title.Contains(splittedSearch[i - 1])
+                                        || b.Authors.Any(a => a.Name.Contains(splittedSearch[i - 1]) || a.Surname.Contains(splittedSearch[i - 1]))).ToList();
+                                    searchedBooks = searchedBooks.Where(b => b.ISBN.Contains(splittedSearch[i + 1]) || b.Title.Contains(splittedSearch[i + 1])
+                                        || b.Authors.Any(a => a.Name.Contains(splittedSearch[i + 1]) || a.Surname.Contains(splittedSearch[i + 1]))).ToList();
+                                }
+                                break;
+
+                            case "OR":
+                                if (i != 0 && splittedSearch.Length == 3)
+                                {
+                                    searchedBooks = searchedBooks.Where(b => (b.ISBN.Contains(splittedSearch[i - 1]) || b.ISBN.Contains(splittedSearch[i + 1]))
+                                        || (b.Title.Contains(splittedSearch[i - 1]) || b.Title.Contains(splittedSearch[i + 1]))
+                                        || b.Authors.Any(a => 
+                                            (a.Name.Contains(splittedSearch[i - 1]) || a.Name.Contains(splittedSearch[i + 1])) 
+                                            || (a.Surname.Contains(splittedSearch[i - 1]) || a.Surname.Contains(splittedSearch[i + 1])))).ToList();
+                                }
+                                break;
+
+                            case "NOT":
+                                if (i == 0 && splittedSearch.Length == 2)
+                                {
+                                    searchedBooks = searchedBooks.Where(b => !b.ISBN.Contains(splittedSearch[i + 1]) && !b.Title.Contains(splittedSearch[i + 1])
+                                        && b.Authors.Any(a => !a.Name.Contains(splittedSearch[i + 1]) && !a.Surname.Contains(splittedSearch[i + 1]))).ToList();
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+
+                    ViewBag.BooksList = searchedBooks;
+                }
+                else
+                {
+                    ViewBag.BooksList = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
+                        || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString)));
+                }
             }
             else
             {
@@ -53,7 +102,7 @@ namespace LibrARRRy.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(FormCollection formCollection)
+        public ActionResult FilterBooks(FormCollection formCollection)
         {
             var books = db.Books;
             var categories = db.Categories.OrderBy(c => c.Name);
@@ -126,7 +175,7 @@ namespace LibrARRRy.Controllers
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
 
-            return View();
+            return View("~/Views/Home/Index.cshtml");
         }
 
         public ActionResult About()
