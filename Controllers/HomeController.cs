@@ -30,6 +30,29 @@ namespace LibrARRRy.Controllers
         }
 
         [HttpPost]
+        public ActionResult SearchBook(string searchString)
+        {
+            var books = db.Books.OrderBy(b => b.Title);
+            var categories = db.Categories.OrderBy(c => c.Name);
+            var tags = db.Tags.OrderBy(t => t.Name);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ViewBag.BooksList = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
+                    || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString)));
+            }
+            else
+            {
+                ViewBag.BooksList = books.ToList();
+            }
+
+            ViewBag.CategoriesList = categories.ToList();
+            ViewBag.TagsList = tags.ToList();
+
+            return View("~/Views/Home/Index.cshtml");
+        }
+
+        [HttpPost]
         public ActionResult Index(FormCollection formCollection)
         {
             var books = db.Books;
