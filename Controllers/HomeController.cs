@@ -30,6 +30,25 @@ namespace LibrARRRy.Controllers
         }
 
         [HttpPost]
+        public ActionResult NewBooks()
+        {
+            int numerOfDays = 5;
+
+            var books = db.Books.OrderBy(b => b.Title);
+            var categories = db.Categories.OrderBy(c => c.Name);
+            var tags = db.Tags.OrderBy(t => t.Name);
+
+            DateTime limitDate = DateTime.Now.AddDays(-numerOfDays);
+
+            ViewBag.BooksList = books.Where(b => b.AdditionDate.CompareTo(limitDate) > 0).ToList();
+
+            ViewBag.CategoriesList = categories.ToList();
+            ViewBag.TagsList = tags.ToList();
+
+            return View("~/Views/Home/Index.cshtml");
+        }
+
+        [HttpPost]
         public ActionResult SearchBooks(string searchString)
         {
             var books = db.Books.OrderBy(b => b.Title);
