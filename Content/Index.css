@@ -69,8 +69,9 @@ article {
 
 .bookImg {
     box-shadow: 2px 2px 4px #000000;
+    border-radius: 2px;
     display: block;
-    margin: 5px auto 0px auto;
+    margin: 5px auto 10px auto;
     width: 78%;
     display: block;
     align-content: center;
@@ -79,6 +80,7 @@ article {
 .bookText {
     margin: 2px 5px 0px 5px;
     text-align: center;
+    font-weight: bold;
 }
 
 .pSameLine {
