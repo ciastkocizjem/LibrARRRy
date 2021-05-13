@@ -22,6 +22,8 @@ namespace LibrARRRy.Models
         [Required]
         [DataType(DataType.Date)]
         public DateTime AdditionDate { get; set; }
+        [Required]
+        public string Description { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<Author> Authors { get; set; }

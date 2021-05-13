@@ -201,6 +201,10 @@
     <Compile Include="Migrations\202104201010570_Authentication.Designer.cs">
       <DependentUpon>202104201010570_Authentication.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105131653240_StorageAdded.cs" />
+    <Compile Include="Migrations\202105131653240_StorageAdded.Designer.cs">
+      <DependentUpon>202105131653240_StorageAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -211,6 +215,7 @@
     <Compile Include="Models\Reader.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\State.cs" />
+    <Compile Include="Models\Storage.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Worker.cs" />
@@ -378,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104201010570_Authentication.resx">
       <DependentUpon>202104201010570_Authentication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105131653240_StorageAdded.resx">
+      <DependentUpon>202105131653240_StorageAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

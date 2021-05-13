@@ -13,6 +13,7 @@ namespace LibrARRRy.DAL
         public LibrARRRyContext()
             : base("LibrARRRyDB", throwIfV1Schema: false)
         {
+            
         }
 
         public DbSet<Author> Authors { get; set; }
@@ -20,14 +21,21 @@ namespace LibrARRRy.DAL
         public DbSet<Tag> Tags { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<User> Users { get; set; } //To przykrywa userów z Identity!! (coś trzeba z tym zrobić, lol)
+        public DbSet<User> OurUsers { get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Search> Searches { get; set; }
+        public DbSet<Storage> Storages { get; set; }
 
         public static LibrARRRyContext Create()
         {
             return new LibrARRRyContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Storage>();
         }
     }
 }

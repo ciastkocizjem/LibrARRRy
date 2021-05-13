@@ -18,7 +18,7 @@ namespace LibrARRRy.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View(db.Users.ToList());
+            return View(db.OurUsers.ToList());
         }
 
         // GET: Users/Details/5
@@ -28,7 +28,7 @@ namespace LibrARRRy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = db.OurUsers.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace LibrARRRy.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
+                db.OurUsers.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,7 +66,7 @@ namespace LibrARRRy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = db.OurUsers.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -97,7 +97,7 @@ namespace LibrARRRy.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = db.OurUsers.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -110,8 +110,8 @@ namespace LibrARRRy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
+            User user = db.OurUsers.Find(id);
+            db.OurUsers.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
