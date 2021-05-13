@@ -104,14 +104,15 @@ namespace LibrARRRy.Controllers
             {
                 var bookToAdd = db.Books.Include(i => i.Authors).Include(i => i.Tags).First();
 
-                if (TryUpdateModel(bookToAdd, "Book", new string[] { "Title", "ISBN", "CategoryId", "sAdditionDate" }))
+                if (TryUpdateModel(bookToAdd, "Book", new string[] { "Title", "ISBN", "CategoryId", "AdditionDate", "Description" }))
                 {
                     var updatedAuthors = new HashSet<int>(booksViewModel.SelectedAuthors);
                     foreach (Author author in db.Authors)
                     {
                         if (!updatedAuthors.Contains(author.AuthorId))
                             bookToAdd.Authors.Remove(author);
-                        else bookToAdd.Authors.Add(author);
+                        else
+                            bookToAdd.Authors.Add(author);
                     }
 
                     var updateTags = new HashSet<int>(booksViewModel.SelectedTags);
@@ -119,7 +120,8 @@ namespace LibrARRRy.Controllers
                     {
                         if (!updateTags.Contains(tag.TagId))
                             bookToAdd.Tags.Remove(tag);
-                        else bookToAdd.Tags.Add(tag);
+                        else
+                            bookToAdd.Tags.Add(tag);
                     }
                 }
 
@@ -132,7 +134,6 @@ namespace LibrARRRy.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
             return View(booksViewModel);
         }
-
 
         // GET: Books/Edit/5
         public ActionResult Edit(int? id)
@@ -176,20 +177,22 @@ namespace LibrARRRy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BooksViewModel booksViewModel)
         {
-            if (booksViewModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (booksViewModel == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (ModelState.IsValid)
             {
                 var bookToUpdate = db.Books.Include(i => i.Authors).Include(i => i.Tags).First(i => i.BookId == booksViewModel.Book.BookId);
 
-                if(TryUpdateModel(bookToUpdate, "Book", new string[] { "Title","ISBN","CategoryId","sAdditionDate" }))
+                if (TryUpdateModel(bookToUpdate, "Book", new string[] { "Title", "ISBN", "CategoryId", "AdditionDate", "Description" }))
                 {
                     var newAuthor = db.Authors.Where(m => booksViewModel.SelectedAuthors.Contains(m.AuthorId)).ToList();
                     var updatedAuthors = new HashSet<int>(booksViewModel.SelectedAuthors);
-                    foreach(Author author in db.Authors)
+                    foreach (Author author in db.Authors)
                     {
                         if (!updatedAuthors.Contains(author.AuthorId))
                             bookToUpdate.Authors.Remove(author);
-                        else bookToUpdate.Authors.Add(author);
+                        else
+                            bookToUpdate.Authors.Add(author);
                     }
 
                     var newTag = db.Tags.Where(m => booksViewModel.SelectedTags.Contains(m.TagId)).ToList();
@@ -198,7 +201,8 @@ namespace LibrARRRy.Controllers
                     {
                         if (!updateTags.Contains(tag.TagId))
                             bookToUpdate.Tags.Remove(tag);
-                        else bookToUpdate.Tags.Add(tag);
+                        else
+                            bookToUpdate.Tags.Add(tag);
                     }
                 }
                 db.Entry(bookToUpdate).State = EntityState.Modified;

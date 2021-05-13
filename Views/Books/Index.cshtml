@@ -4,7 +4,7 @@
     ViewBag.Title = "Books";
 }
 
-<h2>Books List</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -22,6 +22,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AdditionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Authors)
@@ -45,6 +48,9 @@
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.AdditionDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
     </td>
     <td>
         @Html.ListBox("Id", new SelectList(item.Authors, "AuthorId", "Name"))
