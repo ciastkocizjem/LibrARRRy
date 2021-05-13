@@ -92,6 +92,13 @@ article {
     margin-top: 5px;
 }
 
+.mycontent-bottom {
+    border-bottom: 1px solid lightgray;
+    margin-right: 5px;
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
 .checkBoxMargin {
     margin-left: 20px;
 }
@@ -99,4 +106,29 @@ article {
 .floatRight {
     float: right;
     margin-right: 10px;
+}
+
+.window {
+    position: relative;
+    margin: 1em auto;
+    overflow-x: hidden;
+    height: 390px;
+    overflow-y: hidden;
+}
+
+.menu {
+    margin: 0;
+    padding: 0;
+    height: 410px;
+    list-style-type: none;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+.menu-item {
+    display: inline-block;
 }

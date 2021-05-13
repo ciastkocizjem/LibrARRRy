@@ -62,6 +62,34 @@
     </div>
     <div class="column right">
         <section>
+                <h1>Newest books! Check them out:</h1>
+                <div class="window mycontent-bottom">
+                    <ul class="menu">
+                        @foreach (LibrARRRy.Models.Book item in ViewBag.BooksList)
+                        {
+                            <li class="menu-item">
+                                <article>
+                                    <div>
+                                        <img class="bookImg" src="~/img/bookCover.jpg" />
+                                        <br />
+                                        <p class="bookText">Title: @item.Title</p>
+                                        <p class="bookText pSameLine"></p>
+                                        Authors:
+                                        @foreach (LibrARRRy.Models.Author authors in item.Authors)
+                                        {
+                                            <p class="pSameLine">@authors.Name @authors.Surname</p>
+                                            if (item.Authors.Count > 1)
+                                            {
+                                                <p class="pSameLine">...</p>
+                                                break;
+                                            }
+                                        }
+                                    </div>
+                                </article>
+                            </li>
+                        }
+                    </ul>
+                </div>
             <!--ON CLICKI DODAC-->
             @foreach (LibrARRRy.Models.Book item in ViewBag.BooksList)
             {
