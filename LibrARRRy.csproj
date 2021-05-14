@@ -205,12 +205,17 @@
     <Compile Include="Migrations\202105131653240_StorageAdded.Designer.cs">
       <DependentUpon>202105131653240_StorageAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105141837311_LoanAdded.cs" />
+    <Compile Include="Migrations\202105141837311_LoanAdded.Designer.cs">
+      <DependentUpon>202105141837311_LoanAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Loan.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Reader.cs" />
     <Compile Include="Models\Search.cs" />
@@ -386,6 +391,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105131653240_StorageAdded.resx">
       <DependentUpon>202105131653240_StorageAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105141837311_LoanAdded.resx">
+      <DependentUpon>202105141837311_LoanAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
