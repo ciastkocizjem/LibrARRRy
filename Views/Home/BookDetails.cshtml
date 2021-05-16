@@ -1,0 +1,58 @@
+﻿@model LibrARRRy.Models.Book
+
+@{
+    ViewBag.Title = "BookDetails";
+}
+
+<div>
+    @Html.ActionLink(" ", "Index", null, new { @class = "btn btn-info fa fa-backward" })
+</div>
+
+<h2>  @Html.DisplayFor(model => model.Title)</h2>
+
+<div>
+    <h4>Book</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ISBN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ISBN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdditionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdditionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+</div>

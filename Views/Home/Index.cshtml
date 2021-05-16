@@ -3,7 +3,7 @@
 }
 
 @section Styles {
-    <link href="@Url.Content("~/Content/Index.css")" rel="stylesheet" type="text/css" />
+    <link href="~/Content/IndexStyleSheet.css" rel="stylesheet" />
 }
 
 
@@ -14,9 +14,9 @@
             <div class="form-inline">
                 @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
                 {
-                <input type="text" name="searchString" class="form-control" placeholder="Search book...">
-                <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
-                <button class="btn btn-outline-secondary" type="button"><i class="fa fa-shopping-basket"></i></button> 
+                    <input type="text" name="searchString" class="form-control" placeholder="Search book...">
+                    <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-outline-secondary" type="button"><i class="fa fa-shopping-basket"></i></button>
                 }
             </div>
         </div>
@@ -65,8 +65,10 @@
     </div>
     <div class="column right">
         <section>
+            @if (ViewBag.NewBookList.Count != 0)
+            {
                 <h1>Newest books! Check them out:</h1>
-                <div class="window mycontent-bottom">
+                <div class="window">
                     <ul class="menu">
                         @foreach (LibrARRRy.Models.Book item in ViewBag.NewBookList)
                         {
@@ -75,19 +77,19 @@
                                     <div>
                                         <img class="bookImg" src="~/img/bookCover.jpg" />
                                         <p class="bookText">@item.Title</p>
-                                        <p class="bookText pSameLine"></p>
-                                        Authors:
-                                        @foreach (LibrARRRy.Models.Author authors in item.Authors)
-                                        {
-                                            <p class="pSameLine">@authors.Name @authors.Surname</p>
-                                            if (item.Authors.Count > 1)
+                                        <div class="authorsText">
+                                            @foreach (LibrARRRy.Models.Author authors in item.Authors)
                                             {
-                                                <p class="pSameLine">...</p>
-                                                break;
+                                                <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
+                                                if (item.Authors.Count > 1 && item.Authors.Last() != authors)
+                                                {
+                                                    <p class="pSameLine">and</p>
+                                                }
+
                                             }
-                                        }
+                                        </div>
                                         <div class="floatRight">
-                                            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-cart-plus"></i></button>
+                                            @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info" })
                                         </div>
                                     </div>
                                 </article>
@@ -95,26 +97,28 @@
                         }
                     </ul>
                 </div>
+                <hr />
+            }
             <!--ON CLICKI DODAC-->
             @foreach (LibrARRRy.Models.Book item in ViewBag.BooksList)
             {
                 <article>
                     <div>
-                        <p class="bookText">@item.Title</p>
                         <img class="bookImg" src="~/img/bookCover.jpg" />
-                        <p class="bookText pSameLine"></p>
-                        Authors:
-                        @foreach (LibrARRRy.Models.Author authors in item.Authors)
-                        {
-                            <p class="pSameLine">@authors.Name @authors.Surname</p>
-                            if (item.Authors.Count > 1)
+                        <p class="bookText">@item.Title</p>
+                        <div class="authorsText">
+                            @foreach (LibrARRRy.Models.Author authors in item.Authors)
                             {
-                                <p class="pSameLine">...</p>
-                                break;
+                                <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
+                                if (item.Authors.Count > 1 && item.Authors.Last() != authors)
+                                {
+                                    <p class="pSameLine">and</p>
+                                }
+
                             }
-                        }
+                        </div>
                         <div class="floatRight">
-                            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-cart-plus"></i></button>
+                            @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info" })
                         </div>
                     </div>
                 </article>
