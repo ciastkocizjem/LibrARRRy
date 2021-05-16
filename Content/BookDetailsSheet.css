@@ -1,0 +1,56 @@
+﻿body {
+    margin:10px;
+}
+.button {
+    margin: 5px;
+}
+
+.mycontent-left {
+    border-right: 1px solid #eee;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+
+.description {
+    border-radius: 25px;
+    border: 2px solid #eee;
+    padding: 20px;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.left {
+    width: 25%
+}
+
+.middle {
+    width: 65%
+}
+
+.right {
+    width: 10%;
+}
+
+h1 {
+    margin: 5px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row {
+    display: flex;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}

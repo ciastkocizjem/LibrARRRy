@@ -234,6 +234,7 @@
     <Content Include="App_Data\LibrARRRyDB_log.ldf">
       <DependentUpon>LibrARRRyDB.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\BookDetailsSheet.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

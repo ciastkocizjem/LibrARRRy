@@ -1,58 +1,31 @@
 ﻿@model LibrARRRy.Models.Book
 
+<link href="~/Content/BookDetailsSheet.css" rel="stylesheet" />
 @{
     ViewBag.Title = "BookDetails";
 }
 
-<div>
+<div class="button">
     @Html.ActionLink(" ", "Index", null, new { @class = "btn btn-info fa fa-backward" })
 </div>
 
-<h2>  @Html.DisplayFor(model => model.Title)</h2>
 
-<div>
-    <h4>Book</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ISBN)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ISBN)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AdditionDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AdditionDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
+<div class="row">
+    <div class="column left">
+        <img src="~/img/bookCover.jpg"/> 
+    </div>
+    <div class="column middle">
+        <h1>@Html.DisplayFor(model => model.Title)</h1>
+        <div class="description">
+            <h3>@Html.DisplayNameFor(model => model.Description)</h3>
+            <hr />
             @Html.DisplayFor(model => model.Description)
-        </dd>
+        </div>
 
-    </dl>
+    </div>
+    <div class="column right">
+        @Html.ActionLink(" ", "BookDetails", null, new { @class = "btn btn-info fa fa-shopping-cart" })
+    </div>
 </div>
+
+
