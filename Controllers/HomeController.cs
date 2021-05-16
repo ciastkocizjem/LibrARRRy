@@ -212,6 +212,9 @@ namespace LibrARRRy.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = db.Books.Find(id);
+            ViewBag.AuthorsList = book.Authors.ToList();
+            ViewBag.TagsList = book.Tags.ToList();
+
             if (book == null)
             {
                 return HttpNotFound();

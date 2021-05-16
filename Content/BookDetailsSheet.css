@@ -18,6 +18,10 @@
     padding: 20px;
 }
 
+.button-right {
+    float: right;
+}
+
 .column {
     float: left;
     padding: 10px;
@@ -35,7 +39,7 @@
     width: 10%;
 }
 
-h1 {
+h1, h3 {
     margin: 5px;
 }
 
@@ -53,4 +57,8 @@ h1 {
     .column {
         width: 100%;
     }
+}
+
+.pSameLine {
+    display: inline-block;
 }

@@ -17,13 +17,51 @@
     <div class="column middle">
         <h1>@Html.DisplayFor(model => model.Title)</h1>
         <div class="description">
+            <h3>@Html.DisplayNameFor(model => model.Authors)</h3>
+            <hr />
+            @foreach (LibrARRRy.Models.Author authors in ViewBag.AuthorsList)
+            {
+                <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
+                if (ViewBag.AuthorsList.Count > 1 && ViewBag.AuthorsList[ViewBag.AuthorsList.Count - 1] != authors)
+                {
+                    <p class="pSameLine">and</p>
+                }
+            }
+            <br />
+            <br />
+
+            <h3>Category</h3>
+            <hr />
+            @Html.DisplayFor(model => model.Category.Name)
+            <br />
+            <br />
+            <h3>@Html.DisplayNameFor(model => model.Tags)</h3>
+            <hr />
+            @foreach (LibrARRRy.Models.Tag authors in ViewBag.TagsList)
+            {
+                <p class="pSameLine">@(authors.Name)</p>
+                if (ViewBag.TagsList.Count > 1 && ViewBag.TagsList[ViewBag.TagsList.Count - 1] != authors)
+                {
+                    <p class="pSameLine">and</p>
+                }
+            }
+            <br />
+            <br />
             <h3>@Html.DisplayNameFor(model => model.Description)</h3>
             <hr />
             @Html.DisplayFor(model => model.Description)
+
+            <br />
+            <br />
+            <h3>@Html.DisplayNameFor(model => model.ISBN)</h3>
+            <hr />
+            @Html.DisplayFor(model => model.ISBN)
+
+
         </div>
 
     </div>
-    <div class="column right">
+    <div class="column right button-right">
         @Html.ActionLink(" ", "BookDetails", null, new { @class = "btn btn-info fa fa-shopping-cart" })
     </div>
 </div>
