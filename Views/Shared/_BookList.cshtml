@@ -1,0 +1,60 @@
+﻿@model IEnumerable<LibrARRRy.Models.Book>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISBN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdditionDate)
+        </th>
+        <th >
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Authors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tags)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISBN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdditionDate)
+            </td>
+            <td style="width: 65%;">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ListBox("Id", new SelectList(item.Authors, "AuthorId", "Name"))
+            </td>
+            <td>
+                @Html.ListBox("Id", new SelectList(item.Tags, "TagId", "Name"))
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Books", new { id = item.BookId }, new { @class = "btn btn-outline" }) |
+                @Html.ActionLink("Details", "Details", "Books", new { id = item.BookId }, new { @class = "btn btn-outline" }) |
+                @Html.ActionLink("Delete", "Delete", "Books", new { id = item.BookId }, new { @class = "btn btn-outline" })
+            </td>
+        </tr>
+    }
+
+</table>

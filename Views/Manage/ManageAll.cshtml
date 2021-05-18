@@ -1,7 +1,27 @@
-﻿
+﻿@model IEnumerable<LibrARRRy.Models.Book>
 @{
     ViewBag.Title = "ManageAll";
 }
+<link href="~/Content/ManageAllSheet.css" rel="stylesheet" />
 
-<h2>ManageAll</h2>
-
+<div class="row" style="margin:10px; align-content: center;">
+    <div class="columnLeft">
+        <table class="table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>TEST</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="columnRight">
+        @{
+            Html.RenderPartial("_BookList", Model);
+        }
+    </div>
+</div>

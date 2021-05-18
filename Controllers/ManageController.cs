@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibrARRRy.Models;
+using LibrARRRy.DAL;
 
 namespace LibrARRRy.Controllers
 {
@@ -15,6 +16,8 @@ namespace LibrARRRy.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private LibrARRRyContext db = new LibrARRRyContext();
+
 
         public ManageController()
         {
@@ -52,7 +55,7 @@ namespace LibrARRRy.Controllers
 
         public ActionResult ManageAll()
         {
-            return View();
+            return View(db.Books.ToList());
         }
 
         //

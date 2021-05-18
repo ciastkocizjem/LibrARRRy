@@ -17,6 +17,12 @@ namespace LibrARRRy.Controllers
     {
         private LibrARRRyContext db = new LibrARRRyContext();
 
+        List<Book> books;
+        public BooksController()
+        {
+            books = db.Books.Include(b => b.Category).ToList();
+        }
+
         // Used when view is reloaded when no authors or tags was chosen
         private void CreateViewBags()
         {
@@ -40,7 +46,6 @@ namespace LibrARRRy.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            var books = db.Books.Include(b => b.Category);
             return View(books.ToList());
         }
 
