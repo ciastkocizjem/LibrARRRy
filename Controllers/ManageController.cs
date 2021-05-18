@@ -50,6 +50,11 @@ namespace LibrARRRy.Controllers
             }
         }
 
+        public ActionResult ManageAll()
+        {
+            return View();
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)

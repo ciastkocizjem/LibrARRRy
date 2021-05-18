@@ -480,6 +480,7 @@
     <Content Include="Views\ShoppingCart\Order.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\BookLoans\Loans.cshtml" />
+    <Content Include="Views\Manage\ManageAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104031602363_Init.resx">
