@@ -5,26 +5,32 @@
 
 <h2>Order</h2>
 <div>
-    <table class="table table-hover" width="100%">
+    <table class="table table-hover" width="80%">
         <thead>
             <tr>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Remove</th>
+                <th style="text-align:center;">Cover</th>
+                <th style="text-align:center;">ISBN</th>
+                <th style="text-align:center;">Title</th>
+                <th style="text-align:center;">Remove</th>
             </tr>
         </thead>
 
         <tbody>
             @foreach(var book in Model)
-            {
-                <tr>
+             {
+                <tr style="text-align:center">
+                    <td style="width: 200px; align-content:center;"><img src="~/img/bookCover.jpg" style="width:200px;" /></td>
                     <td>@book.ISBN</td>
                     <td>@book.Title</td>
-                    @*<td>@book.Category.Name</td>*@
-                    <td>USUN</td>
+                   
+                    <td>
+
+                        <button class="btn btn-info btn-sm" data-slno="@book.BookId" onclick="location.href='@Url.Action("Remove", "ShoppingCart", book)'">
+                            ✖
+                        </button>
+                    </td>
                 </tr>
-            }
+             }
         </tbody>
     </table>
 </div>

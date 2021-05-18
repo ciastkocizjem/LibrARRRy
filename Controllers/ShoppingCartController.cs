@@ -19,7 +19,6 @@ namespace LibrARRRy.Controllers
             {
                 List<Book> books = new List<Book>();
                 books.Add(book);
-                ViewBag.cart = books.Count();
                 Session["cart"] = books;
                 Session["count"] = 1;
             } 
@@ -28,7 +27,6 @@ namespace LibrARRRy.Controllers
                 List<Book> books = (List<Book>)Session["cart"];
                 books.Add(book);
                 Session["cart"] = books;
-                ViewBag.cart = books.Count();
                 Session["count"] = Convert.ToInt32(Session["count"]) + 1;
             }
             return RedirectToAction("Index", "Home");
@@ -36,7 +34,8 @@ namespace LibrARRRy.Controllers
 
         public ActionResult Order()
         {
-            return View((List<Book>)Session["cart"]);
+            if (Session["cart"] != null) return View((List<Book>)Session["cart"]);
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Remove(Book book)
