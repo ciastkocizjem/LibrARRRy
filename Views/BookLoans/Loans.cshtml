@@ -1,0 +1,37 @@
+﻿@model IEnumerable<LibrARRRy.Models.Book>
+@{
+    ViewBag.Title = "Loans";
+}
+
+<h2>Loans</h2>
+<div>
+    <table class="table table-hover" width="80%">
+        <thead>
+            <tr>
+                <th style="text-align:center;">Cover</th>
+                <th style="text-align:center;">ISBN</th>
+                <th style="text-align:center;">Title</th>
+                <th style="text-align:center;">Return</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr style="text-align:center">
+                    <td style="width: 200px; align-content:center;"><img src="~/img/bookCover.jpg" style="width:200px;" /></td>
+                    <td>@book.ISBN</td>
+                    <td>@book.Title</td>
+
+                    <td>
+
+                        <button class="btn btn-info btn-sm" data-slno="@book.BookId" onclick="location.href='@Url.Action("Return", "BookLoans", book)'">
+                            ✔
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

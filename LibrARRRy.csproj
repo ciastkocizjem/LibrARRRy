@@ -263,6 +263,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorsController.cs" />
+    <Compile Include="Controllers\BookLoansController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -478,6 +479,7 @@
     <Content Include="Views\Home\BookDetails.cshtml" />
     <Content Include="Views\ShoppingCart\Order.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\BookLoans\Loans.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104031602363_Init.resx">
