@@ -11,6 +11,7 @@ using LibrARRRy.Models;
 
 namespace LibrARRRy.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AuthorsController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();

@@ -1,6 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using LibrARRRy.DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -18,26 +20,106 @@ namespace LibrARRRy.Models
         }
     }
 
-    //public class LibrARRRyContext : IdentityDbContext<ApplicationUser>
-    //{
-    //    public LibrARRRyContext()
-    //        : base("LibrARRRyDB", throwIfV1Schema: false)
-    //    {
-    //    }
+	public class IdentityManager
+	{
+		public RoleManager<IdentityRole> LocalRoleManager
+		{
+			get
+			{
+				return new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new LibrARRRyContext()));
+			}
+		}
 
-    //    public DbSet<Author> Authors { get; set; }
-    //    public DbSet<Book> Books { get; set; }
-    //    public DbSet<Tag> Tags { get; set; }
-    //    public DbSet<State> States { get; set; }
-    //    public DbSet<Category> Categories { get; set; }
-    //    public DbSet<User> Users { get; set; } //To przykrywa userów z Identity!! (coś trzeba z tym zrobić, lol)
-    //    public DbSet<Worker> Workers { get; set; }
-    //    public DbSet<Reader> Readers { get; set; }
-    //    public DbSet<Search> Searches { get; set; }
 
-    //    public static LibrARRRyContext Create()
-    //    {
-    //        return new LibrARRRyContext();
-    //    }
-    //}
+		public UserManager<ApplicationUser> LocalUserManager
+		{
+			get
+			{
+				return new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new LibrARRRyContext()));
+			}
+		}
+
+
+		public ApplicationUser GetUserByID(string userID)
+		{
+			ApplicationUser user = null;
+			UserManager<ApplicationUser> um = this.LocalUserManager;
+
+			user = um.FindById(userID);
+
+			return user;
+		}
+
+
+		public ApplicationUser GetUserByName(string email)
+		{
+			ApplicationUser user = null;
+			UserManager<ApplicationUser> um = this.LocalUserManager;
+
+			user = um.FindByEmail(email);
+
+			return user;
+		}
+
+
+		public bool RoleExists(string name)
+		{
+			var rm = LocalRoleManager;
+
+			return rm.RoleExists(name);
+		}
+
+
+		public bool CreateRole(string name)
+		{
+			var rm = LocalRoleManager;
+			var idResult = rm.Create(new IdentityRole(name));
+
+			return idResult.Succeeded;
+		}
+
+
+		public bool CreateUser(ApplicationUser user, string password)
+		{
+			var um = LocalUserManager;
+			var idResult = um.Create(user, password);
+
+			return idResult.Succeeded;
+		}
+
+
+		public bool AddUserToRole(string userId, string roleName)
+		{
+			var um = LocalUserManager;
+			var idResult = um.AddToRole(userId, roleName);
+
+			return idResult.Succeeded;
+		}
+
+
+		public bool AddUserToRoleByUsername(string username, string roleName)
+		{
+			var um = LocalUserManager;
+
+			string userID = um.FindByName(username).Id;
+			var idResult = um.AddToRole(userID, roleName);
+
+			return idResult.Succeeded;
+		}
+
+
+		public void ClearUserRoles(string userId)
+		{
+			var um = LocalUserManager;
+			var user = um.FindById(userId);
+			var currentRoles = new List<IdentityUserRole>();
+
+			currentRoles.AddRange(user.Roles);
+
+			foreach (var role in currentRoles)
+			{
+				um.RemoveFromRole(userId, role.RoleId);
+			}
+		}
+	}
 }
