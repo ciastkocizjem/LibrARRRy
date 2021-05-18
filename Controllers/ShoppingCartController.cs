@@ -20,7 +20,7 @@ namespace LibrARRRy.Controllers
                 List<Book> books = new List<Book>();
                 books.Add(book);
                 ViewBag.cart = books.Count();
-
+                Session["cart"] = books;
                 Session["count"] = 1;
             } 
             else
