@@ -10,9 +10,9 @@ namespace LibrARRRy.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private LibrARRRyContext db = new LibrARRRyContext();
+        private readonly LibrARRRyContext db = new LibrARRRyContext();
 
-        // GET: ShopiingCart
+        // GET: ShoppingCart
         public ActionResult Add(Book book)
         {
             if (Session["cart"] == null)

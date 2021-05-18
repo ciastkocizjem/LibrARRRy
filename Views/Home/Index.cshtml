@@ -118,8 +118,12 @@
                             }
                         </div>
                         <div class="floatRight">
-                            @Html.ActionLink(" ", "BookDetails", null, new { @class = "btn btn-info fa fa-shopping-cart" })
-                            @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info" })
+                            <a href="@Url.Action("Add", "ShoppingCart", item)" class="btn btn-info btn-sm">
+                                <span class="fa fa-shopping-cart"></span> 
+                            </a>
+                           @* @Html.ActionLink(" ", "A", null, new { @class = "btn btn-info fa fa-shopping-cart" })*@
+
+                            @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info btn-md" })
                         </div>
                     </div>
                 </article>

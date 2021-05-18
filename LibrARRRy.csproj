@@ -381,6 +381,7 @@
     <Content Include="Views\Storages\Edit.cshtml" />
     <Content Include="Views\Storages\Index.cshtml" />
     <Content Include="Views\Home\BookDetails.cshtml" />
+    <Content Include="Views\ShoppingCart\Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104031602363_Init.resx">
@@ -418,9 +419,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\ShopiingCart\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
