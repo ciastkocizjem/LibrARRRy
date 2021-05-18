@@ -62,3 +62,7 @@ h1, h3 {
 .pSameLine {
     display: inline-block;
 }
+
+.buttonFont {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

@@ -61,8 +61,10 @@
         </div>
 
     </div>
-    <div class="column right button-right">
-        @Html.ActionLink(" ", "BookDetails", null, new { @class = "btn btn-info fa fa-shopping-cart" })
+    <div class="column right">
+        <div class="button-right">
+            @Html.ActionLink(" Add to cart", "BookDetails", null, new { @class = "btn btn-info fa fa-shopping-cart" })
+        </div>
     </div>
 </div>
 
