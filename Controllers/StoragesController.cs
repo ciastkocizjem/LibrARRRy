@@ -12,6 +12,7 @@ using LibrARRRy.Models;
 namespace LibrARRRy.Controllers
 {
     //TODO: CURRENT AMOUNT = AMOUNT IN CREATE
+    [Authorize(Roles = "admin")]
     public class StoragesController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();

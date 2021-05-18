@@ -4,6 +4,7 @@
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using LibrARRRy.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<LibrARRRy.DAL.LibrARRRyContext>
     {
@@ -31,6 +32,20 @@
             //    CategoryId = context.Categories.First().CategoryId,
             //    Authors = context.Authors.First().
             //});
+
+            //IdentityManager im = new IdentityManager();
+            //// Create admin
+            //im.CreateUser(new ApplicationUser() { Email = "admin@librarrry.com", UserName = "Admin" }, "Admin123.");
+            //im.CreateUser(new ApplicationUser() { Email = "worker@librarrry.com", UserName = "Worker" }, "Worker123.");
+            //im.CreateUser(new ApplicationUser() { Email = "anita@mail.com", UserName = "Anita" }, "Anita123.");
+            //// Create roles
+            //im.CreateRole("admin");
+            //im.CreateRole("worker");
+            //im.CreateRole("reader");
+            //// Assign roles
+            //im.AddUserToRoleByUsername("admin@librarrry.com", "admin");
+            //im.AddUserToRoleByUsername("worker@librarrry.com", "worker");
+            //im.AddUserToRoleByUsername("anita@mail.com", "reader");
         }
     }
 }

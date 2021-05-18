@@ -12,6 +12,7 @@ using LibrARRRy.ViewModel;
 
 namespace LibrARRRy.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class BooksController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();
