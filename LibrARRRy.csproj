@@ -307,6 +307,18 @@
     <Compile Include="Migrations\202105141837311_LoanAdded.Designer.cs">
       <DependentUpon>202105141837311_LoanAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105191828503_UserChanges.cs" />
+    <Compile Include="Migrations\202105191828503_UserChanges.Designer.cs">
+      <DependentUpon>202105191828503_UserChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105191831348_LoanChanges.cs" />
+    <Compile Include="Migrations\202105191831348_LoanChanges.Designer.cs">
+      <DependentUpon>202105191831348_LoanChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105191834525_LoanChanges2.cs" />
+    <Compile Include="Migrations\202105191834525_LoanChanges2.Designer.cs">
+      <DependentUpon>202105191834525_LoanChanges2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -505,6 +517,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105141837311_LoanAdded.resx">
       <DependentUpon>202105141837311_LoanAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105191828503_UserChanges.resx">
+      <DependentUpon>202105191828503_UserChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105191831348_LoanChanges.resx">
+      <DependentUpon>202105191831348_LoanChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105191834525_LoanChanges2.resx">
+      <DependentUpon>202105191834525_LoanChanges2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -108,7 +108,11 @@ namespace LibrARRRy.Controllers
 
             if (ModelState.IsValid)
             {
-                var bookToAdd = db.Books.Include(i => i.Authors).Include(i => i.Tags).First();
+                var bookToAdd = db.Books.Include(i => i.Authors).Include(i => i.Tags).FirstOrDefault();
+                if (bookToAdd == null)
+                {
+                    bookToAdd = new Book();
+                }
 
                 if (TryUpdateModel(bookToAdd, "Book", new string[] { "Title", "ISBN", "CategoryId", "AdditionDate", "Description" }))
                 {

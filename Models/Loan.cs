@@ -14,8 +14,8 @@ namespace LibrARRRy.Models
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
         [Required]
-        public int ReaderId { get; set; }
-        public virtual Reader Reader { get; set; }
+        public string ReaderId { get; set; }
+        public virtual ApplicationUser Reader { get; set; }
 
         [Required]
         public DateTime LoanedDate { get; set; }

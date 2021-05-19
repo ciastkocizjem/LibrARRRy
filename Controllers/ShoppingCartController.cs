@@ -11,6 +11,7 @@ namespace LibrARRRy.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly LibrARRRyContext db = new LibrARRRyContext();
+        private readonly int loanDuration = 14; // In days
 
         // GET: ShoppingCart
         public ActionResult Add(Book book)
@@ -45,6 +46,64 @@ namespace LibrARRRy.Controllers
             Session["cart"] = books;
             Session["count"] = Convert.ToInt32(Session["count"]) - 1;
 
+            return RedirectToAction("Order", "ShoppingCart");
+        }
+
+        [Authorize] // To force being logged in
+        public ActionResult Index()
+        {
+            if (Session["cart"] != null)
+            {
+                // Get books in cart and storage
+                List<Book> books = Session["cart"] as List<Book>;
+                List<Book> notLoanedBooks = new List<Book>();   // For books unavaliable
+                var storage = db.Storages.ToList();
+                var loans = db.Loans.ToList();
+
+                foreach(Book b in books)
+                {
+                    // Find book in storage
+                    var bookInStorage = storage.Where(sb => sb.BookId == b.BookId).FirstOrDefault();
+                    if (bookInStorage != null)
+                    {
+                        // Decrement amount of books in storage if possible and delete book from cart
+                        if (bookInStorage.CurrentAmount > 0)
+                        {
+                            bookInStorage.CurrentAmount--;
+
+                            // Get current user and add books to his loaned books
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                string userName = User.Identity.Name;
+                                IdentityManager im = new IdentityManager();
+                                ApplicationUser user = im.GetUserByName(userName);
+                                //List<Loan> userLoans = user.Loaned.ToList();
+                                var loan = new Loan() {
+                                    LoanId = 111,
+                                    Book = b,
+                                    BookId = b.BookId,
+                                    Reader = user,
+                                    ReaderId = user.Id,
+                                    LoanedDate = DateTime.Now,
+                                    LoanExpireDate = DateTime.Now.AddDays(loanDuration)
+                                };
+                                loans.Add(loan);
+
+                            }
+                        }
+                        else
+                        {
+                            // TODO: Add message in UI that the book is not in storage
+                            notLoanedBooks.Add(b);
+                        }
+                    }
+                }
+
+                db.SaveChanges();
+                // Update session (not clear in case some books arent avaliable rn)
+                Session["cart"] = notLoanedBooks;
+                Session["count"] = notLoanedBooks.Count;
+            }
             return RedirectToAction("Order", "ShoppingCart");
         }
     }
