@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace LibrARRRy.Controllers
 {
@@ -58,9 +59,9 @@ namespace LibrARRRy.Controllers
                 List<Book> books = Session["cart"] as List<Book>;
                 List<Book> notLoanedBooks = new List<Book>();   // For books unavaliable
                 var storage = db.Storages.ToList();
-                var loans = db.Loans.ToList();
+                //var loans = db.Loans.ToList();
 
-                foreach(Book b in books)
+                foreach (Book b in books)
                 {
                     // Find book in storage
                     var bookInStorage = storage.Where(sb => sb.BookId == b.BookId).FirstOrDefault();
@@ -77,9 +78,9 @@ namespace LibrARRRy.Controllers
                                 string userName = User.Identity.Name;
                                 IdentityManager im = new IdentityManager();
                                 ApplicationUser user = im.GetUserByName(userName);
-                                //List<Loan> userLoans = user.Loaned.ToList();
-                                var loan = new Loan() {
-                                    LoanId = 111,
+                                Loan loan = new Loan()
+                                {
+                                    LoanId = 10000,
                                     Book = b,
                                     BookId = b.BookId,
                                     Reader = user,
@@ -87,8 +88,9 @@ namespace LibrARRRy.Controllers
                                     LoanedDate = DateTime.Now,
                                     LoanExpireDate = DateTime.Now.AddDays(loanDuration)
                                 };
-                                loans.Add(loan);
 
+                                db.Loans.Add(loan);
+                                db.SaveChanges();
                             }
                         }
                         else
@@ -99,7 +101,6 @@ namespace LibrARRRy.Controllers
                     }
                 }
 
-                db.SaveChanges();
                 // Update session (not clear in case some books arent avaliable rn)
                 Session["cart"] = notLoanedBooks;
                 Session["count"] = notLoanedBooks.Count;
