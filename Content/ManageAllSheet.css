@@ -1,16 +1,3 @@
-﻿.columnLeft {
-    float: left;
-    width: 5%;
-    align-content: center;
-}
-
-.columnRight {
-    float: left;
-    width: 95%;
-}
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
+﻿.vr {
+    border-left: 1px solid #eee;
 }

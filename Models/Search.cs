@@ -12,8 +12,8 @@ namespace LibrARRRy.Models
         [Key]
         public int SearchId { get; set; }
         public string Content { get; set; }
-        [ForeignKey("Reader")]
-        public int ReaderId { get; set; }
-        public virtual Reader Reader { get; set; }
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

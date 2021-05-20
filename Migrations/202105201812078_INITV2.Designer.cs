@@ -6,14 +6,14 @@ namespace LibrARRRy.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Authentication : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class INITV2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Authentication));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(INITV2));
         
         string IMigrationMetadata.Id
         {
-            get { return "202104201010570_Authentication"; }
+            get { return "202105201812078_INITV2"; }
         }
         
         string IMigrationMetadata.Source

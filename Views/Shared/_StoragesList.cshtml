@@ -1,0 +1,42 @@
+﻿@model IEnumerable<LibrARRRy.Models.Storage>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrentAmount)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentAmount)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Storages", new { id = item.BookId }, new { @class = "btn btn-outline" }) |
+                @Html.ActionLink("Details", "Details", "Storages", new { id = item.BookId }, new { @class = "btn btn-outline" }) |
+                @Html.ActionLink("Delete", "Delete", "Storages", new { id = item.BookId }, new { @class = "btn btn-outline" })
+            </td>
+        </tr>
+    }
+
+</table>

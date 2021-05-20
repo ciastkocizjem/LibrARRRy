@@ -21,9 +21,6 @@ namespace LibrARRRy.DAL
         public DbSet<Tag> Tags { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<User> OurUsers { get; set; }
-        public DbSet<Worker> Workers { get; set; }
-        public DbSet<Reader> Readers { get; set; }
         public DbSet<Search> Searches { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<Loan> Loans { get; set; }

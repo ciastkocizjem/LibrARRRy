@@ -268,56 +268,17 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ReadersController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StoragesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\WorkersController.cs" />
     <Compile Include="DAL\LibrARRRyContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104031602363_Init.cs" />
-    <Compile Include="Migrations\202104031602363_Init.designer.cs">
-      <DependentUpon>202104031602363_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104111746541_UserFix.cs" />
-    <Compile Include="Migrations\202104111746541_UserFix.designer.cs">
-      <DependentUpon>202104111746541_UserFix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104111825167_InitializerFix.cs" />
-    <Compile Include="Migrations\202104111825167_InitializerFix.designer.cs">
-      <DependentUpon>202104111825167_InitializerFix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104122049192_UserFix2.cs" />
-    <Compile Include="Migrations\202104122049192_UserFix2.designer.cs">
-      <DependentUpon>202104122049192_UserFix2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202104201010570_Authentication.cs" />
-    <Compile Include="Migrations\202104201010570_Authentication.Designer.cs">
-      <DependentUpon>202104201010570_Authentication.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105131653240_StorageAdded.cs" />
-    <Compile Include="Migrations\202105131653240_StorageAdded.Designer.cs">
-      <DependentUpon>202105131653240_StorageAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105141837311_LoanAdded.cs" />
-    <Compile Include="Migrations\202105141837311_LoanAdded.Designer.cs">
-      <DependentUpon>202105141837311_LoanAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105191828503_UserChanges.cs" />
-    <Compile Include="Migrations\202105191828503_UserChanges.Designer.cs">
-      <DependentUpon>202105191828503_UserChanges.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105191831348_LoanChanges.cs" />
-    <Compile Include="Migrations\202105191831348_LoanChanges.Designer.cs">
-      <DependentUpon>202105191831348_LoanChanges.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105191834525_LoanChanges2.cs" />
-    <Compile Include="Migrations\202105191834525_LoanChanges2.Designer.cs">
-      <DependentUpon>202105191834525_LoanChanges2.cs</DependentUpon>
+    <Compile Include="Migrations\202105201812078_INITV2.cs" />
+    <Compile Include="Migrations\202105201812078_INITV2.Designer.cs">
+      <DependentUpon>202105201812078_INITV2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -327,13 +288,10 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Loan.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Reader.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\BooksViewModel.cs" />
@@ -459,74 +417,31 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Readers\Create.cshtml" />
-    <Content Include="Views\Readers\Delete.cshtml" />
-    <Content Include="Views\Readers\Details.cshtml" />
-    <Content Include="Views\Readers\Edit.cshtml" />
-    <Content Include="Views\Readers\Index.cshtml" />
     <Content Include="Views\Tags\Create.cshtml" />
     <Content Include="Views\Tags\Delete.cshtml" />
     <Content Include="Views\Tags\Details.cshtml" />
     <Content Include="Views\Tags\Edit.cshtml" />
     <Content Include="Views\Tags\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Workers\Create.cshtml" />
-    <Content Include="Views\Workers\Delete.cshtml" />
-    <Content Include="Views\Workers\Details.cshtml" />
-    <Content Include="Views\Workers\Edit.cshtml" />
-    <Content Include="Views\Workers\Index.cshtml" />
     <Content Include="Views\Books\Create.cshtml" />
     <Content Include="Views\Books\Delete.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
-    <Content Include="Views\Storages\Create.cshtml" />
-    <Content Include="Views\Storages\Delete.cshtml" />
-    <Content Include="Views\Storages\Details.cshtml" />
-    <Content Include="Views\Storages\Edit.cshtml" />
-    <Content Include="Views\Storages\Index.cshtml" />
     <Content Include="Views\Home\BookDetails.cshtml" />
     <Content Include="Views\ShoppingCart\Order.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\BookLoans\Loans.cshtml" />
     <Content Include="Views\Manage\ManageAll.cshtml" />
     <Content Include="Views\Shared\_BookList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202104031602363_Init.resx">
-      <DependentUpon>202104031602363_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104111746541_UserFix.resx">
-      <DependentUpon>202104111746541_UserFix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104111825167_InitializerFix.resx">
-      <DependentUpon>202104111825167_InitializerFix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104122049192_UserFix2.resx">
-      <DependentUpon>202104122049192_UserFix2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202104201010570_Authentication.resx">
-      <DependentUpon>202104201010570_Authentication.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105131653240_StorageAdded.resx">
-      <DependentUpon>202105131653240_StorageAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105141837311_LoanAdded.resx">
-      <DependentUpon>202105141837311_LoanAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105191828503_UserChanges.resx">
-      <DependentUpon>202105191828503_UserChanges.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105191831348_LoanChanges.resx">
-      <DependentUpon>202105191831348_LoanChanges.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105191834525_LoanChanges2.resx">
-      <DependentUpon>202105191834525_LoanChanges2.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="Views\Shared\_AuthorsList.cshtml" />
+    <Content Include="Views\Shared\_CategoriesList.cshtml" />
+    <Content Include="Views\Shared\_StoragesList.cshtml" />
+    <Content Include="Views\Shared\_TagsList.cshtml" />
+    <Content Include="Views\Storages\Create.cshtml" />
+    <Content Include="Views\Storages\Delete.cshtml" />
+    <Content Include="Views\Storages\Details.cshtml" />
+    <Content Include="Views\Storages\Edit.cshtml" />
+    <Content Include="Views\Storages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -541,7 +456,11 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202105201812078_INITV2.resx">
+      <DependentUpon>202105201812078_INITV2.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

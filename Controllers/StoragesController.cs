@@ -11,8 +11,6 @@ using LibrARRRy.Models;
 
 namespace LibrARRRy.Controllers
 {
-    //TODO: CURRENT AMOUNT = AMOUNT IN CREATE
-    [Authorize(Roles = "admin")]
     public class StoragesController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();
@@ -20,7 +18,8 @@ namespace LibrARRRy.Controllers
         // GET: Storages
         public ActionResult Index()
         {
-            return View(db.Storages.ToList());
+            var storages = db.Storages.Include(s => s.Book);
+            return View(storages.ToList());
         }
 
         // GET: Storages/Details/5
@@ -41,6 +40,7 @@ namespace LibrARRRy.Controllers
         // GET: Storages/Create
         public ActionResult Create()
         {
+            ViewBag.BookId = new SelectList(db.Books, "BookId", "Title");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace LibrARRRy.Controllers
         // Aby uzyskać więcej szczegółów, zobacz https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookId,Amount,CurrentAmount")] Storage storage)
+        public ActionResult Create([Bind(Include = "BookStorageId,BookId,Amount,CurrentAmount")] Storage storage)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +58,7 @@ namespace LibrARRRy.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", storage.BookId);
             return View(storage);
         }
 
@@ -73,6 +74,7 @@ namespace LibrARRRy.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", storage.BookId);
             return View(storage);
         }
 
@@ -81,7 +83,7 @@ namespace LibrARRRy.Controllers
         // Aby uzyskać więcej szczegółów, zobacz https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookId,Amount,CurrentAmount")] Storage storage)
+        public ActionResult Edit([Bind(Include = "BookStorageId,BookId,Amount,CurrentAmount")] Storage storage)
         {
             if (ModelState.IsValid)
             {
@@ -89,6 +91,7 @@ namespace LibrARRRy.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", storage.BookId);
             return View(storage);
         }
 
