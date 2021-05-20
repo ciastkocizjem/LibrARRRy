@@ -65,6 +65,18 @@ namespace LibrARRRy.Models
 			return user;
 		}
 
+		// Returns list of all roles
+		public List<IdentityRole> GetRoles()
+        {
+			var rm = LocalRoleManager;
+
+			List<IdentityRole> allRoles = new List<IdentityRole>();
+			foreach(var r in rm.Roles)
+            {
+				allRoles.Add(r);
+            }
+			return allRoles;
+        }
 
 		public bool RoleExists(string name)
 		{
