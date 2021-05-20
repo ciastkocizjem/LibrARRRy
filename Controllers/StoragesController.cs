@@ -53,6 +53,7 @@ namespace LibrARRRy.Controllers
         {
             if (ModelState.IsValid)
             {
+                storage.CurrentAmount = storage.Amount;
                 db.Storages.Add(storage);
                 db.SaveChanges();
                 return RedirectToAction("Index");

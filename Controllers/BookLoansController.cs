@@ -16,6 +16,13 @@ namespace LibrARRRy.Controllers
         public ActionResult Loans()
         {
             List<Book> books = db.Books.ToList();
+            // Get user
+            string userName = User.Identity.Name;
+            IdentityManager im = new IdentityManager();
+            ApplicationUser user = im.GetUserByName(userName);
+
+            books = books.Where(b => user.Loaned.Any(l => l.BookId == b.BookId)).ToList();
+
             return View(books);
         }
 
