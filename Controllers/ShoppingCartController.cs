@@ -71,6 +71,7 @@ namespace LibrARRRy.Controllers
                         if (bookInStorage.CurrentAmount > 0)
                         {
                             bookInStorage.CurrentAmount--;
+                            db.SaveChanges();
 
                             // Get current user and add books to his loaned books
                             if (User.Identity.IsAuthenticated)
@@ -78,6 +79,7 @@ namespace LibrARRRy.Controllers
                                 string userName = User.Identity.Name;
                                 IdentityManager im = new IdentityManager();
                                 ApplicationUser user = im.GetUserByName(userName);
+
                                 Loan loan = new Loan()
                                 {
                                     Book = b,
@@ -87,6 +89,7 @@ namespace LibrARRRy.Controllers
                                     LoanedDate = DateTime.Now,
                                     LoanExpireDate = DateTime.Now.AddDays(loanDuration)
                                 };
+
 
                                 loansController.CreateFromCart(b, user);
                             }
