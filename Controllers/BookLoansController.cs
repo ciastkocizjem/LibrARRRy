@@ -16,18 +16,35 @@ namespace LibrARRRy.Controllers
         public ActionResult Loans()
         {
             List<Book> books = db.Books.ToList();
+
             // Get user
             string userName = User.Identity.Name;
             IdentityManager im = new IdentityManager();
             ApplicationUser user = im.GetUserByName(userName);
-
-            books = books.Where(b => user.Loaned.Any(l => l.BookId == b.BookId)).ToList();
+            List<Loan> currentlyLoaned = user.Loaned.Where(l => l.ReturnedDate == null).ToList();
+            books = books.Where(b => currentlyLoaned.Any(l => l.BookId == b.BookId)).ToList();
 
             return View(books);
         }
 
+        [Authorize]
         public ActionResult Return(Book book)
         {
+            IdentityManager im = new IdentityManager();
+            var storage = db.Storages.ToList();
+
+            // Increment current amount in storage
+            var bookInStorage = storage.Where(sb => sb.BookId == book.BookId).FirstOrDefault();
+            if (bookInStorage != null)
+            {
+                bookInStorage.CurrentAmount++;
+                db.SaveChanges();
+
+                // Add returned date to loan
+                var loansController = DependencyResolver.Current.GetService<LoansController>();
+                loansController.EditFromBookLoans(book, im.GetUserByName(User.Identity.Name));
+            }
+
             return RedirectToAction("Loans", "BookLoans");
         }
     }

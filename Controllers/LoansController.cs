@@ -79,8 +79,6 @@ namespace LibrARRRy.Controllers
                 db.SaveChanges();
             }
         }
-
-
         // GET: Loans/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -115,6 +113,19 @@ namespace LibrARRRy.Controllers
             ViewBag.ReaderId = new SelectList(db.Users, "Id", "Email", loan.ReaderId);
             return View(loan);
         }
+
+        public void EditFromBookLoans(Book book, ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                Loan toEdit = db.Loans.Where(l => l.BookId == book.BookId && l.ReaderId == user.Id && l.ReturnedDate == null).FirstOrDefault();
+                toEdit.ReturnedDate = DateTime.Now;
+
+                db.Entry(toEdit).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
 
         // GET: Loans/Delete/5
         public ActionResult Delete(int? id)
