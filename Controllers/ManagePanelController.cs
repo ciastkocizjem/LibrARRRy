@@ -3,6 +3,7 @@ using LibrARRRy.Models;
 using LibrARRRy.ViewModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -18,6 +19,29 @@ namespace LibrARRRy.Controllers
     {
         private readonly LibrARRRyContext db = new LibrARRRyContext();
 
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public ManagePanelController()
+        {
+        }
+
+        public ManagePanelController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
         // GET: ManagePanel
         [Authorize(Roles = "admin,worker")]
         public ActionResult All()
@@ -31,7 +55,6 @@ namespace LibrARRRy.Controllers
 
             var confirmReaders = new List<ConfirmReadersViewModel>();
             var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
 
             foreach (var user in userStore.Users)
             {
@@ -45,7 +68,7 @@ namespace LibrARRRy.Controllers
             }
             foreach (var user in confirmReaders)
             {
-                user.Role = userManager.GetRoles(userStore.Users.First(s => s.Email == user.Email).Id);
+                user.Role = UserManager.GetRoles(userStore.Users.First(s => s.Email == user.Email).Id);
             }
 
             confirmReaders = confirmReaders.Where(s => s.Role.Contains("reader")).ToList();
@@ -56,49 +79,43 @@ namespace LibrARRRy.Controllers
 
         public async Task<ActionResult> ConfirmAsync(string id)
         {
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-
             if (id == "")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = await userManager.FindByIdAsync(id);
+            var user = await UserManager.FindByIdAsync(id);
 
             user.EmailConfirmed = true;
-            userManager.Update(user);
+            UserManager.Update(user);
             return RedirectToAction("All");
         }
 
         public async Task<ActionResult> Delete(string id)
         {
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-
             if (id == "")
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = await userManager.FindByIdAsync(id);
+            var user = await UserManager.FindByIdAsync(id);
             var logins = user.Logins.ToList();
-            var rolesForUser = await userManager.GetRolesAsync(id);
+            var rolesForUser = await UserManager.GetRolesAsync(id);
 
             using(var transaction = db.Database.BeginTransaction())
             {
                 foreach(var login in logins)
                 {
-                    await userManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                    await UserManager.RemoveLoginAsync(login.UserId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
                 }
 
                 if(rolesForUser.Count() > 0)
                 {
                     foreach(var item in rolesForUser.ToList())
                     {
-                        var result = await userManager.RemoveFromRoleAsync(user.Id, item);
+                        var result = await UserManager.RemoveFromRoleAsync(user.Id, item);
                     }
                 }
 
-                await userManager.DeleteAsync(user);
+                await UserManager.DeleteAsync(user);
 
                 TempData["Message"] = "User Deleted Successfully. ";
                 TempData["MessageValue"] = "1";
