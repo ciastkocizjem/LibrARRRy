@@ -284,6 +284,10 @@
     <Compile Include="Migrations\202105211425303_UserConfirmInPanel.Designer.cs">
       <DependentUpon>202105211425303_UserConfirmInPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105211542223_IdentityFix.cs" />
+    <Compile Include="Migrations\202105211542223_IdentityFix.Designer.cs">
+      <DependentUpon>202105211542223_IdentityFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -471,6 +475,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105211425303_UserConfirmInPanel.resx">
       <DependentUpon>202105211425303_UserConfirmInPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105211542223_IdentityFix.resx">
+      <DependentUpon>202105211542223_IdentityFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

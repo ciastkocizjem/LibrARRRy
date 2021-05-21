@@ -76,7 +76,7 @@ namespace LibrARRRy.Controllers
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    IsConfirmed = user.ConfimedInPanel
+                    IsConfirmed = user.EmailConfirmed
                 };
                 confirmReaders.Add(r);
             }
@@ -92,7 +92,7 @@ namespace LibrARRRy.Controllers
             }
             var user = await UserManager.FindByIdAsync(id);
 
-            user.ConfimedInPanel = true;
+            user.EmailConfirmed = true;
             UserManager.Update(user);
             return RedirectToAction("ManageAll");
         }

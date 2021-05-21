@@ -22,7 +22,6 @@ namespace LibrARRRy.Models
 		public virtual ICollection<Book> BooksRead { get; set; }
 		public virtual ICollection<Search> SearchHistory { get; set; }
 		public virtual ICollection<Loan> Loaned { get; set; }
-		public bool ConfimedInPanel { get; set; }
 	}
 
 	public class IdentityManager

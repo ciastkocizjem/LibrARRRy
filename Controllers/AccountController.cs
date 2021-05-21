@@ -76,7 +76,7 @@ namespace LibrARRRy.Controllers
             var user = await UserManager.FindAsync(model.Email, model.Password);
             if (user != null)
             {
-                if (user.ConfimedInPanel == false)
+                if (user.EmailConfirmed == false)
                 {
                     ModelState.AddModelError("", "Your account hasn't been confirmed yet.");
                     return View(model);
