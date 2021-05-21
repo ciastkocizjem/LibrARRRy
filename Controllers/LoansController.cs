@@ -79,7 +79,6 @@ namespace LibrARRRy.Controllers
                 db.SaveChanges();
             }
         }
-
         // GET: Loans/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -126,6 +125,7 @@ namespace LibrARRRy.Controllers
                 db.SaveChanges();
             }
         }
+
 
         // GET: Loans/Delete/5
         public ActionResult Delete(int? id)

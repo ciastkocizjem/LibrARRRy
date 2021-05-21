@@ -80,6 +80,17 @@ namespace LibrARRRy.Controllers
                                 IdentityManager im = new IdentityManager();
                                 ApplicationUser user = im.GetUserByName(userName);
 
+                                Loan loan = new Loan()
+                                {
+                                    Book = b,
+                                    BookId = b.BookId,
+                                    Reader = user,
+                                    ReaderId = user.Id,
+                                    LoanedDate = DateTime.Now,
+                                    LoanExpireDate = DateTime.Now.AddDays(loanDuration)
+                                };
+
+
                                 loansController.CreateFromCart(b, user);
                             }
                         }
