@@ -306,6 +306,7 @@
     <Compile Include="ViewModel\ConfirmReadersViewModel.cs" />
     <Compile Include="ViewModel\UsersViewModels.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\LoansController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LibrARRRyDB.mdf" />
@@ -454,6 +455,13 @@
     <Content Include="Views\Storages\Edit.cshtml" />
     <Content Include="Views\Storages\Index.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+
+    <Content Include="Views\Loans\Create.cshtml" />
+    <Content Include="Views\Loans\Delete.cshtml" />
+    <Content Include="Views\Loans\Details.cshtml" />
+    <Content Include="Views\Loans\Edit.cshtml" />
+    <Content Include="Views\Loans\Index.cshtml" />
+
     <Content Include="Views\Shared\_ReadersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
