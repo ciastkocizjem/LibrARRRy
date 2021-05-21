@@ -58,6 +58,8 @@ namespace LibrARRRy.Controllers
             }
         }
 
+
+        [Authorize(Roles = "admin,worker")]
         public ActionResult ManageAll()
         {
             dynamic dynamicObject = new ExpandoObject();
@@ -80,8 +82,20 @@ namespace LibrARRRy.Controllers
                 };
                 confirmReaders.Add(r);
             }
+            foreach(var user in confirmReaders)
+            {
+                user.Role = UserManager.GetRoles(userStore.Users.First(s => s.Email == user.Email).Id);
+            }
+
+            confirmReaders = confirmReaders.Where(s => s.Role.Contains("reader")).ToList();
+
             dynamicObject.Readers = confirmReaders;
             return View(dynamicObject);
+        }
+
+        public ActionResult ManageUsers()
+        { 
+            return View();
         }
 
         public async Task<ActionResult> ConfirmAsync(string id)
