@@ -280,6 +280,10 @@
     <Compile Include="Migrations\202105201812078_INITV2.Designer.cs">
       <DependentUpon>202105201812078_INITV2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105211425303_UserConfirmInPanel.cs" />
+    <Compile Include="Migrations\202105211425303_UserConfirmInPanel.Designer.cs">
+      <DependentUpon>202105211425303_UserConfirmInPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -295,6 +299,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\BooksViewModel.cs" />
+    <Compile Include="ViewModel\ConfirmReadersViewModel.cs" />
     <Compile Include="ViewModel\UsersViewModels.cs" />
     <Compile Include="Controllers\UsersController.cs" />
   </ItemGroup>
@@ -445,6 +450,7 @@
     <Content Include="Views\Storages\Edit.cshtml" />
     <Content Include="Views\Storages\Index.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Shared\_ReadersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -462,6 +468,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202105201812078_INITV2.resx">
       <DependentUpon>202105201812078_INITV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105211425303_UserConfirmInPanel.resx">
+      <DependentUpon>202105211425303_UserConfirmInPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

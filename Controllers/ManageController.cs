@@ -10,6 +10,9 @@ using LibrARRRy.Models;
 using LibrARRRy.DAL;
 using System.Dynamic;
 using System.Collections.Generic;
+using LibrARRRy.ViewModel;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net;
 
 namespace LibrARRRy.Controllers
 {
@@ -63,7 +66,35 @@ namespace LibrARRRy.Controllers
             dynamicObject.Categories = db.Categories.ToList();
             dynamicObject.Tags = db.Tags.ToList();
             dynamicObject.Storages = db.Storages.ToList();
+
+            var confirmReaders = new List<ConfirmReadersViewModel>();
+            var userStore = new UserStore<ApplicationUser>(db);
+
+            foreach(var user in userStore.Users)
+            {
+                var r = new ConfirmReadersViewModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    IsConfirmed = user.ConfimedInPanel
+                };
+                confirmReaders.Add(r);
+            }
+            dynamicObject.Readers = confirmReaders;
             return View(dynamicObject);
+        }
+
+        public async Task<ActionResult> ConfirmAsync(string id)
+        {
+            if(id == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = await UserManager.FindByIdAsync(id);
+
+            user.ConfimedInPanel = true;
+            UserManager.Update(user);
+            return RedirectToAction("ManageAll");
         }
 
         //

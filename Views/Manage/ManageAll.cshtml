@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <th scope="row">6</th>
-                    <td id="Users">Users</td>
+                    <td id="Users">Readers</td>
                 </tr>
             </tbody>
         </table>
@@ -69,6 +69,11 @@
         <div id="StoragesDiv" style="display:none;">
             @{
                 Html.RenderPartial("_StoragesList", Model.Storages as IEnumerable<LibrARRRy.Models.Storage>);
+            }
+        </div>
+        <div id="UsersDiv" style="display:none;">
+            @{
+                Html.RenderPartial("_ReadersList", Model.Readers as IEnumerable<LibrARRRy.ViewModel.ConfirmReadersViewModel>);
             }
         </div>
     </div>
