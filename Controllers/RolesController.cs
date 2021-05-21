@@ -18,6 +18,7 @@ namespace LibrARRRy.Controllers
             im.CreateRole("worker");
             im.AddUserToRoleByUsername("admin@admin.com", "admin");
             im.AddUserToRoleByUsername("user@user.com", "reader");
+            im.AddUserToRoleByUsername("test@test.com", "worker");
             return View();
         }
     }
