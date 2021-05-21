@@ -21,18 +21,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EmailConfirmed)
             </td>
-            
+
             <td>
                 @if (item.EmailConfirmed == false)
                 {
-                    @Html.ActionLink("Confirm", "ConfirmAsync", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" }) <span>| </span>
+                    @Html.ActionLink("Confirm", "ConfirmWorkerAsync", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" }) <span>| </span>
                 }
+                @Html.ActionLink("Change role", "ChangeRole", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" }) |
                 @Html.ActionLink("Delete", "Delete", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
             </td>
-            @*<td>
-                    @Html.ActionLink("Details", "Details", "Authors", new { id = item.AuthorId }, new { @class = "btn btn-outline" }) |
-                    @Html.ActionLink("Delete", "Delete", "Authors", new { id = item.AuthorId }, new { @class = "btn btn-outline" })
-                </td>*@
         </tr>
     }
 

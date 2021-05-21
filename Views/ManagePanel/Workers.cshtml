@@ -1,0 +1,9 @@
+﻿@using LibrARRRy.ViewModel
+@model dynamic
+
+<h2>Workers</h2>
+
+@{
+    Html.RenderPartial("_UsersList", Model.Users as IEnumerable<ConfirmReadersViewModel>);
+}
+

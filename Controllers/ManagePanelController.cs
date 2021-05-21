@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Dynamic;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,7 @@ using System.Web.Mvc;
 
 namespace LibrARRRy.Controllers
 {
+    [Authorize]
     public class ManagePanelController : Controller
     {
         private readonly LibrARRRyContext db = new LibrARRRyContext();
@@ -62,7 +64,7 @@ namespace LibrARRRy.Controllers
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    IsConfirmed = user.EmailConfirmed
+                    EmailConfirmed = user.EmailConfirmed
                 };
                 confirmReaders.Add(r);
             }
@@ -85,9 +87,24 @@ namespace LibrARRRy.Controllers
             }
             var user = await UserManager.FindByIdAsync(id);
 
-            user.EmailConfirmed = true;
+            if (user.EmailConfirmed == false) user.EmailConfirmed = true;
+
             UserManager.Update(user);
             return RedirectToAction("All");
+        }
+
+        public async Task<ActionResult> ConfirmWorkerAsync(string id)
+        {
+            if (id == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = await UserManager.FindByIdAsync(id);
+
+            if(user.EmailConfirmed == false) user.EmailConfirmed = true;
+
+            UserManager.Update(user);
+            return RedirectToAction("Workers");
         }
 
         public async Task<ActionResult> Delete(string id)
@@ -126,6 +143,83 @@ namespace LibrARRRy.Controllers
             return RedirectToAction("All");
 
         }
+        [Authorize(Roles = "admin")]
+        public ActionResult Workers()
+        {
+            dynamic dynamicObject = new ExpandoObject();
 
+            var confirmReaders = new List<ConfirmReadersViewModel>();
+            var userStore = new UserStore<ApplicationUser>(db);
+
+            foreach (var user in userStore.Users)
+            {
+                var r = new ConfirmReadersViewModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed
+                };
+                confirmReaders.Add(r);
+            }
+            foreach (var user in confirmReaders)
+            {
+                user.Role = UserManager.GetRoles(userStore.Users.First(s => s.Email == user.Email).Id);
+            }
+
+            confirmReaders = confirmReaders.Where(s => s.Role.Contains("worker")).ToList();
+
+            dynamicObject.Users = confirmReaders;
+            return View(dynamicObject);
+        }
+
+        public async Task<ActionResult> ChangeRole(string id)
+        {
+            var roleStore = new RoleStore<IdentityRole>(db);
+            var roleMngr = new RoleManager<IdentityRole>(roleStore);
+
+            if (id == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var user = await UserManager.FindByIdAsync(id);
+            ConfirmReadersViewModel model = new ConfirmReadersViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                Role = UserManager.GetRoles(user.Id)
+            };
+
+            ViewBag.Roles = new SelectList(roleMngr.Roles.ToList(), "Name", "Name");
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeRole(ConfirmReadersViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var roles = await UserManager.GetRolesAsync(user.Id);
+                await UserManager.RemoveFromRolesAsync(user.Id, roles.ToArray());
+
+                IdentityManager im = new IdentityManager();
+                im.AddUserToRole(user.Id, user.Role.First().ToString());
+
+                return RedirectToAction("Workers");
+            }
+            return View(user);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
