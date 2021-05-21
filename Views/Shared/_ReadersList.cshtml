@@ -1,0 +1,36 @@
+﻿@using LibrARRRy.ViewModel
+@model IEnumerable<ConfirmReadersViewModel>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsConfirmed)
+            </td>
+            
+            <td>
+                @Html.ActionLink("Confirm", "ConfirmAsync", "Manage", new { id = item.Id }, new { @class = "btn btn-outline" }) 
+            </td>
+            @*<td>
+                    @Html.ActionLink("Details", "Details", "Authors", new { id = item.AuthorId }, new { @class = "btn btn-outline" }) |
+                    @Html.ActionLink("Delete", "Delete", "Authors", new { id = item.AuthorId }, new { @class = "btn btn-outline" })
+                </td>*@
+        </tr>
+    }
+
+</table>
+
