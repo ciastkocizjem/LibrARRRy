@@ -57,9 +57,9 @@ namespace LibrARRRy.Controllers
             {
                 // Get books in cart and storage
                 List<Book> books = Session["cart"] as List<Book>;
-                List<Book> notLoanedBooks = new List<Book>();   // For books unavaliable
+                var loansController = DependencyResolver.Current.GetService<LoansController>();
+                List<Book> notLoanedBooks = new List<Book>();   // For unavaliable books
                 var storage = db.Storages.ToList();
-                //var loans = db.Loans.ToList();
 
                 foreach (Book b in books)
                 {
@@ -80,7 +80,6 @@ namespace LibrARRRy.Controllers
                                 ApplicationUser user = im.GetUserByName(userName);
                                 Loan loan = new Loan()
                                 {
-                                    LoanId = 10000,
                                     Book = b,
                                     BookId = b.BookId,
                                     Reader = user,
@@ -89,8 +88,7 @@ namespace LibrARRRy.Controllers
                                     LoanExpireDate = DateTime.Now.AddDays(loanDuration)
                                 };
 
-                                db.Loans.Add(loan);
-                                db.SaveChanges();
+                                loansController.CreateFromCart(b, user);
                             }
                         }
                         else
@@ -101,7 +99,7 @@ namespace LibrARRRy.Controllers
                     }
                 }
 
-                // Update session (not clear in case some books arent avaliable rn)
+                //// Update session (not clear in case some books arent avaliable rn)
                 Session["cart"] = notLoanedBooks;
                 Session["count"] = notLoanedBooks.Count;
             }
