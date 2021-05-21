@@ -66,10 +66,6 @@ namespace LibrARRRy.Controllers
             return View(loan);
         }
 
-        // POST: Loans/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
         public void CreateFromCart(Book book, ApplicationUser user)
         {
             if (ModelState.IsValid)
@@ -79,7 +75,6 @@ namespace LibrARRRy.Controllers
                 db.SaveChanges();
             }
         }
-
 
         // GET: Loans/Edit/5
         public ActionResult Edit(int? id)
@@ -114,6 +109,18 @@ namespace LibrARRRy.Controllers
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", loan.BookId);
             ViewBag.ReaderId = new SelectList(db.Users, "Id", "Email", loan.ReaderId);
             return View(loan);
+        }
+
+        public void EditFromBookLoans(Book book, ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                Loan toEdit = db.Loans.Where(l => l.BookId == book.BookId && l.ReaderId == user.Id && l.ReturnedDate == null).FirstOrDefault();
+                toEdit.ReturnedDate = DateTime.Now;
+
+                db.Entry(toEdit).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         // GET: Loans/Delete/5
