@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LibrARRRy.Models;
 using LibrARRRy.DAL;
+using System.Dynamic;
+using System.Collections.Generic;
 
 namespace LibrARRRy.Controllers
 {
@@ -55,7 +57,13 @@ namespace LibrARRRy.Controllers
 
         public ActionResult ManageAll()
         {
-            return View(db.Books.ToList());
+            dynamic dynamicObject = new ExpandoObject();
+            dynamicObject.Books = db.Books.ToList();
+            dynamicObject.Authors = db.Authors.ToList();
+            dynamicObject.Categories = db.Categories.ToList();
+            dynamicObject.Tags = db.Tags.ToList();
+            dynamicObject.Storages = db.Storages.ToList();
+            return View(dynamicObject);
         }
 
         //
