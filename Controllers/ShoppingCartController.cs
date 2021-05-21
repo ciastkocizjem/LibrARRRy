@@ -91,7 +91,7 @@ namespace LibrARRRy.Controllers
                     }
                 }
 
-                // Update session (not clear in case some books arent avaliable rn)
+                //// Update session (not clear in case some books arent avaliable rn)
                 Session["cart"] = notLoanedBooks;
                 Session["count"] = notLoanedBooks.Count;
             }

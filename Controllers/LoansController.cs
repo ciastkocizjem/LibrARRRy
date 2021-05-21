@@ -66,6 +66,10 @@ namespace LibrARRRy.Controllers
             return View(loan);
         }
 
+        // POST: Loans/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
         public void CreateFromCart(Book book, ApplicationUser user)
         {
             if (ModelState.IsValid)
