@@ -23,7 +23,11 @@
             </td>
             
             <td>
-                @Html.ActionLink("Confirm", "ConfirmAsync", "Manage", new { id = item.Id }, new { @class = "btn btn-outline" }) 
+                @if (item.IsConfirmed == false)
+                {
+                    @Html.ActionLink("Confirm", "ConfirmAsync", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" }) <span>| </span>
+                }
+                @Html.ActionLink("Delete", "Delete", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
             </td>
             @*<td>
                     @Html.ActionLink("Details", "Details", "Authors", new { id = item.AuthorId }, new { @class = "btn btn-outline" }) |
