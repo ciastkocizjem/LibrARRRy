@@ -17,10 +17,10 @@ namespace LibrARRRy.Controllers
         private LibrARRRyContext db = new LibrARRRyContext();
 
         // GET: Tags
-        public ActionResult Index()
-        {
-            return View(db.Tags.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    return View(db.Tags.ToList());
+        //}
 
         // GET: Tags/Details/5
         public ActionResult Details(int? id)
@@ -54,7 +54,7 @@ namespace LibrARRRy.Controllers
             {
                 db.Tags.Add(tag);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
 
             return View(tag);
@@ -86,7 +86,7 @@ namespace LibrARRRy.Controllers
             {
                 db.Entry(tag).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
             return View(tag);
         }
@@ -114,7 +114,7 @@ namespace LibrARRRy.Controllers
             Tag tag = db.Tags.Find(id);
             db.Tags.Remove(tag);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("All", "ManagePanel");
         }
 
         protected override void Dispose(bool disposing)

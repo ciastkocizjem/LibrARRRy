@@ -17,11 +17,11 @@ namespace LibrARRRy.Controllers
         private LibrARRRyContext db = new LibrARRRyContext();
 
         // GET: Categories
-        public ActionResult Index()
-        {
-            var categories = db.Categories.Include(c => c.ParentCategory);
-            return View(categories.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var categories = db.Categories.Include(c => c.ParentCategory);
+        //    return View(categories.ToList());
+        //}
 
         // GET: Categories/Details/5
         public ActionResult Details(int? id)
@@ -56,7 +56,7 @@ namespace LibrARRRy.Controllers
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
 
             ViewBag.ParentCategoryId = new SelectList(db.Categories, "CategoryId", "Name", category.ParentCategoryId);
@@ -90,7 +90,7 @@ namespace LibrARRRy.Controllers
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
             ViewBag.ParentCategoryId = new SelectList(db.Categories, "CategoryId", "Name", category.ParentCategoryId);
             return View(category);
@@ -119,7 +119,7 @@ namespace LibrARRRy.Controllers
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("All", "ManagePanel");
         }
 
         protected override void Dispose(bool disposing)

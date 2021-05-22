@@ -16,11 +16,11 @@ namespace LibrARRRy.Controllers
         private LibrARRRyContext db = new LibrARRRyContext();
 
         // GET: Storages
-        public ActionResult Index()
-        {
-            var storages = db.Storages.Include(s => s.Book);
-            return View(storages.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var storages = db.Storages.Include(s => s.Book);
+        //    return View(storages.ToList());
+        //}
 
         // GET: Storages/Details/5
         public ActionResult Details(int? id)
@@ -56,7 +56,7 @@ namespace LibrARRRy.Controllers
                 storage.CurrentAmount = storage.Amount;
                 db.Storages.Add(storage);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
 
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", storage.BookId);
@@ -90,7 +90,7 @@ namespace LibrARRRy.Controllers
             {
                 db.Entry(storage).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", storage.BookId);
             return View(storage);
@@ -119,7 +119,7 @@ namespace LibrARRRy.Controllers
             Storage storage = db.Storages.Find(id);
             db.Storages.Remove(storage);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("All", "ManagePanel");
         }
 
         protected override void Dispose(bool disposing)

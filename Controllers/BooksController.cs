@@ -44,10 +44,10 @@ namespace LibrARRRy.Controllers
         }
 
         // GET: Books
-        public ActionResult Index()
-        {
-            return View(books.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    return View(books.ToList());
+        //}
 
         // GET: Books/Details/5
         public ActionResult Details(int? id)
@@ -137,7 +137,7 @@ namespace LibrARRRy.Controllers
 
                 db.Books.Add(bookToAdd);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
 
             }
 
@@ -217,7 +217,7 @@ namespace LibrARRRy.Controllers
                 }
                 db.Entry(bookToUpdate).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", booksViewModel.Book.CategoryId);
             return View(booksViewModel);
@@ -246,7 +246,7 @@ namespace LibrARRRy.Controllers
             Book book = db.Books.Find(id);
             db.Books.Remove(book);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("All", "ManagePanel");
         }
 
         protected override void Dispose(bool disposing)

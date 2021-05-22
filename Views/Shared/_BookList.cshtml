@@ -1,4 +1,10 @@
 ﻿@model IEnumerable<LibrARRRy.Models.Book>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create", "Books", null, new { @class = "btn btn-outline" })
+</p>
+
 <table class="table">
     <tr>
         <th>
@@ -13,7 +19,7 @@
         <th>
             @Html.DisplayNameFor(model => model.AdditionDate)
         </th>
-        <th >
+        <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
