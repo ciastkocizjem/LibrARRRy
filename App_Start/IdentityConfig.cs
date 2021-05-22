@@ -17,6 +17,7 @@ using System.Net;
 using System.Configuration;
 using System.Diagnostics;
 using SendGrid;
+using System.Net.Mail;
 
 namespace LibrARRRy
 {
@@ -25,6 +26,22 @@ namespace LibrARRRy
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("librarrryemails@gmail.com", "Library123.");
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.Body = message.Body;
+            mailMessage.Subject = message.Subject;
+            mailMessage.IsBodyHtml = true;
+            mailMessage.To.Add(message.Destination);
+
+            client.Send(mailMessage);
+
             return Task.FromResult(0);
         }
 
