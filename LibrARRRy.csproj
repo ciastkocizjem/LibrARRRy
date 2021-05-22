@@ -465,6 +465,7 @@
     <Content Include="Views\ManagePanel\Workers.cshtml" />
     <Content Include="Views\Shared\_UsersList.cshtml" />
     <Content Include="Views\ManagePanel\ChangeRole.cshtml" />
+    <Content Include="Views\Shared\_LoansList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

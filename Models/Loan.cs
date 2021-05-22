@@ -18,9 +18,12 @@ namespace LibrARRRy.Models
         public virtual ApplicationUser Reader { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime LoanedDate { get; set; }
         [Required]
+        [DataType(DataType.Date)]
         public DateTime LoanExpireDate { get; set; }    // When reader should return book
+        [DataType(DataType.Date)]
         public DateTime? ReturnedDate { get; set; }  // When reader actually returns book
     }
 }
