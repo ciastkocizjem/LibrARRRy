@@ -54,6 +54,7 @@ namespace LibrARRRy.Controllers
             dynamicObject.Categories = db.Categories.ToList();
             dynamicObject.Tags = db.Tags.ToList();
             dynamicObject.Storages = db.Storages.ToList();
+            dynamicObject.Loans = db.Loans.ToList();
 
             var confirmReaders = new List<ConfirmReadersViewModel>();
             var userStore = new UserStore<ApplicationUser>(db);
