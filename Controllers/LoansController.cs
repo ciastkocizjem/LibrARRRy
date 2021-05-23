@@ -4,10 +4,14 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LibrARRRy.DAL;
 using LibrARRRy.Models;
+using Quartz;
+using Quartz.Impl;
 
 namespace LibrARRRy.Controllers
 {
@@ -15,6 +19,28 @@ namespace LibrARRRy.Controllers
     {
         private LibrARRRyContext db = new LibrARRRyContext();
         private readonly int collectionAfter = 3, loanDuration = 14; // In days
+
+        // To schedule sending emails
+        StdSchedulerFactory factory = new StdSchedulerFactory();
+
+        public async void ScheduleEmail(ApplicationUser user, bool collectionMessage, int loanId) // collection = false -> returning book message
+        {
+            string emailBody = collectionMessage ? "Hello, we just want to remind you to collect your book tomorrow!" : "Hello, we just want to remind you to return borrowed book!";
+
+            IScheduler scheduler = await factory.GetScheduler();
+            await scheduler.Start();
+
+            IJobDetail job = JobBuilder.Create<SendMailJob>()
+                .UsingJobData("userId", user.Id)
+                .UsingJobData("body", emailBody)
+                .UsingJobData("loanId", loanId)
+                .UsingJobData("type", collectionMessage ? "c" : "r")
+                .Build();
+
+            ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddDays(collectionMessage ? collectionAfter - 1 : loanDuration + 1)).Build();
+
+            await scheduler.ScheduleJob(job, trigger);
+        }
 
         // GET: Loans
         public ActionResult Index()
@@ -78,6 +104,9 @@ namespace LibrARRRy.Controllers
                     ReaderId = user.Id,
                     CollectionDate = DateTime.Now.AddDays(collectionAfter)
                 });
+
+                
+
                 db.SaveChanges();
             }
         }
