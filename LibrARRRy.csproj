@@ -281,6 +281,7 @@
     <Compile Include="Controllers\StoragesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="DAL\LibrARRRyContext.cs" />
+    <Compile Include="EmailSender.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

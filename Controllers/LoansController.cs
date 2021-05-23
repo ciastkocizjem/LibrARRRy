@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -23,7 +24,7 @@ namespace LibrARRRy.Controllers
         // To schedule sending emails
         StdSchedulerFactory factory = new StdSchedulerFactory();
 
-        public async void ScheduleEmail(ApplicationUser user, bool collectionMessage, int loanId) // collection = false -> returning book message
+        public async Task ScheduleEmail(ApplicationUser user, bool collectionMessage, int loanId) // collection = false -> returning book message
         {
             string emailBody = collectionMessage ? "Hello, we just want to remind you to collect your book tomorrow!" : "Hello, we just want to remind you to return borrowed book!";
 
@@ -33,11 +34,12 @@ namespace LibrARRRy.Controllers
             IJobDetail job = JobBuilder.Create<SendMailJob>()
                 .UsingJobData("userId", user.Id)
                 .UsingJobData("body", emailBody)
-                .UsingJobData("loanId", loanId)
+                .UsingJobData("loanId", loanId.ToString())
                 .UsingJobData("type", collectionMessage ? "c" : "r")
                 .Build();
 
             ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddDays(collectionMessage ? collectionAfter - 1 : loanDuration + 1)).Build();
+            //ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddSeconds(collectionMessage ? 20 : 40)).Build();
 
             await scheduler.ScheduleJob(job, trigger);
         }
@@ -91,7 +93,7 @@ namespace LibrARRRy.Controllers
             return View(loan);
         }
 
-        public void CreateFromCart(Book book, ApplicationUser user)
+        public async Task CreateFromCart(Book book, ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
@@ -105,9 +107,10 @@ namespace LibrARRRy.Controllers
                     CollectionDate = DateTime.Now.AddDays(collectionAfter)
                 });
 
-                
-
                 db.SaveChanges();
+
+                await ScheduleEmail(user, true, db.Loans.ToList().LastOrDefault().LoanId);
+                await ScheduleEmail(user, false, db.Loans.ToList().LastOrDefault().LoanId);
             }
         }
 

@@ -26,21 +26,23 @@ namespace LibrARRRy
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            SmtpClient client = new SmtpClient();
-            client.Port = 587;
-            client.Host = "smtp.gmail.com";
-            client.EnableSsl = true;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential("librarrryemails@gmail.com", "Library123.");
+            //SmtpClient client = new SmtpClient();
+            //client.Port = 587;
+            //client.Host = "smtp.gmail.com";
+            //client.EnableSsl = true;
+            //client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            //client.UseDefaultCredentials = false;
+            //client.Credentials = new NetworkCredential("librarrryemails@gmail.com", "Library123.");
 
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.Body = message.Body;
-            mailMessage.Subject = message.Subject;
-            mailMessage.IsBodyHtml = true;
-            mailMessage.To.Add(message.Destination);
+            //MailMessage mailMessage = new MailMessage();
+            //mailMessage.Body = message.Body;
+            //mailMessage.Subject = message.Subject;
+            //mailMessage.IsBodyHtml = true;
+            //mailMessage.To.Add(message.Destination);
 
-            client.Send(mailMessage);
+            //client.Send(mailMessage);
+
+            EmailSender.SendMail(message.Body, message.Subject, true, message.Destination);
 
             return Task.FromResult(0);
         }
