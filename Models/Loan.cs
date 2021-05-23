@@ -19,7 +19,10 @@ namespace LibrARRRy.Models
 
         [Required]
         [DataType(DataType.Date)]
-        public DateTime LoanedDate { get; set; }
+        public DateTime LoanedDate { get; set; }    // when reader loaned on website
+        [Required]
+        [DataType(DataType.Date)]
+        public DateTime CollectionDate { get; set; }    // when reader collected book
         [Required]
         [DataType(DataType.Date)]
         public DateTime LoanExpireDate { get; set; }    // When reader should return book

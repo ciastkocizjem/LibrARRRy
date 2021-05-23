@@ -11,18 +11,17 @@ using LibrARRRy.Models;
 
 namespace LibrARRRy.Controllers
 {
-    [Authorize(Roles = "admin,worker")]
     public class LoansController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();
-        private readonly int loanDuration = 14; // In days
+        private readonly int collectionAfter = 3, loanDuration = 14; // In days
 
         // GET: Loans
-        //public ActionResult Index()
-        //{
-        //    var loans = db.Loans.Include(l => l.Book).Include(l => l.Reader);
-        //    return View(loans.ToList());
-        //}
+        public ActionResult Index()
+        {
+            var loans = db.Loans.Include(l => l.Book).Include(l => l.Reader);
+            return View(loans.ToList());
+        }
 
         // GET: Loans/Details/5
         public ActionResult Details(int? id)
@@ -52,13 +51,13 @@ namespace LibrARRRy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,LoanExpireDate,ReturnedDate")] Loan loan)
+        public ActionResult Create([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,CollectionDate,LoanExpireDate,ReturnedDate")] Loan loan)
         {
             if (ModelState.IsValid)
             {
                 db.Loans.Add(loan);
                 db.SaveChanges();
-                return RedirectToAction("All", "ManagePanel");
+                return RedirectToAction("Index");
             }
 
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", loan.BookId);
@@ -66,16 +65,19 @@ namespace LibrARRRy.Controllers
             return View(loan);
         }
 
-        // POST: Loans/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
         public void CreateFromCart(Book book, ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
                 IdentityManager im = new IdentityManager();
-                db.Loans.Add(new Loan() { BookId = book.BookId, LoanedDate = DateTime.Now, LoanExpireDate = DateTime.Now.AddDays(loanDuration), ReaderId = user.Id});
+                db.Loans.Add(new Loan()
+                {
+                    BookId = book.BookId,
+                    LoanedDate = DateTime.Now,
+                    LoanExpireDate = DateTime.Now.AddDays(collectionAfter + loanDuration),
+                    ReaderId = user.Id,
+                    CollectionDate = DateTime.Now.AddDays(collectionAfter)
+                });
                 db.SaveChanges();
             }
         }
@@ -102,13 +104,13 @@ namespace LibrARRRy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,LoanExpireDate,ReturnedDate")] Loan loan)
+        public ActionResult Edit([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,CollectionDate,LoanExpireDate,ReturnedDate")] Loan loan)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(loan).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("All", "ManagePanel");
+                return RedirectToAction("Index");
             }
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", loan.BookId);
             ViewBag.ReaderId = new SelectList(db.Users, "Id", "Email", loan.ReaderId);
@@ -150,7 +152,7 @@ namespace LibrARRRy.Controllers
             Loan loan = db.Loans.Find(id);
             db.Loans.Remove(loan);
             db.SaveChanges();
-            return RedirectToAction("All", "ManagePanel");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
