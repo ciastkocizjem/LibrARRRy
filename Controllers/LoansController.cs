@@ -2,20 +2,47 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LibrARRRy.DAL;
 using LibrARRRy.Models;
+using Quartz;
+using Quartz.Impl;
 
 namespace LibrARRRy.Controllers
 {
-    [Authorize(Roles = "admin,worker")]
     public class LoansController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();
-        private readonly int loanDuration = 14; // In days
+        private readonly int collectionAfter = 3, loanDuration = 14; // In days
+
+        // To schedule sending emails
+        StdSchedulerFactory factory = new StdSchedulerFactory();
+
+        public async Task ScheduleEmail(ApplicationUser user, bool collectionMessage, int loanId) // collection = false -> returning book message
+        {
+            string emailBody = collectionMessage ? "Hello, we just want to remind you to collect your book tomorrow!" : "Hello, we just want to remind you to return borrowed book!";
+
+            IScheduler scheduler = await factory.GetScheduler();
+            await scheduler.Start();
+
+            IJobDetail job = JobBuilder.Create<SendMailJob>()
+                .UsingJobData("userId", user.Id)
+                .UsingJobData("body", emailBody)
+                .UsingJobData("loanId", loanId.ToString())
+                .UsingJobData("type", collectionMessage ? "c" : "r")
+                .Build();
+
+            ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddDays(collectionMessage ? collectionAfter - 1 : loanDuration + 1)).Build();
+            //ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddSeconds(collectionMessage ? 20 : 40)).Build();
+
+            await scheduler.ScheduleJob(job, trigger);
+        }
 
         // GET: Loans
         //public ActionResult Index()
@@ -52,7 +79,7 @@ namespace LibrARRRy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,LoanExpireDate,ReturnedDate")] Loan loan)
+        public ActionResult Create([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,CollectionDate,LoanExpireDate,ReturnedDate")] Loan loan)
         {
             if (ModelState.IsValid)
             {
@@ -66,17 +93,24 @@ namespace LibrARRRy.Controllers
             return View(loan);
         }
 
-        // POST: Loans/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        public void CreateFromCart(Book book, ApplicationUser user)
+        public async Task CreateFromCart(Book book, ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
                 IdentityManager im = new IdentityManager();
-                db.Loans.Add(new Loan() { BookId = book.BookId, LoanedDate = DateTime.Now, LoanExpireDate = DateTime.Now.AddDays(loanDuration), ReaderId = user.Id});
+                db.Loans.Add(new Loan()
+                {
+                    BookId = book.BookId,
+                    LoanedDate = DateTime.Now,
+                    LoanExpireDate = DateTime.Now.AddDays(collectionAfter + loanDuration),
+                    ReaderId = user.Id,
+                    CollectionDate = DateTime.Now.AddDays(collectionAfter)
+                });
+
                 db.SaveChanges();
+
+                await ScheduleEmail(user, true, db.Loans.ToList().LastOrDefault().LoanId);
+                await ScheduleEmail(user, false, db.Loans.ToList().LastOrDefault().LoanId);
             }
         }
 
@@ -102,7 +136,7 @@ namespace LibrARRRy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,LoanExpireDate,ReturnedDate")] Loan loan)
+        public ActionResult Edit([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,CollectionDate,LoanExpireDate,ReturnedDate")] Loan loan)
         {
             if (ModelState.IsValid)
             {

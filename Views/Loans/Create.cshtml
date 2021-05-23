@@ -38,13 +38,21 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.CollectionDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CollectionDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CollectionDate, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
             @Html.LabelFor(model => model.LoanExpireDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LoanExpireDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.LoanExpireDate, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ReturnedDate, htmlAttributes: new { @class = "control-label col-md-2" })
