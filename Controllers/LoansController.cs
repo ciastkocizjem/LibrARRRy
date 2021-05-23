@@ -18,11 +18,11 @@ namespace LibrARRRy.Controllers
         private readonly int loanDuration = 14; // In days
 
         // GET: Loans
-        public ActionResult Index()
-        {
-            var loans = db.Loans.Include(l => l.Book).Include(l => l.Reader);
-            return View(loans.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var loans = db.Loans.Include(l => l.Book).Include(l => l.Reader);
+        //    return View(loans.ToList());
+        //}
 
         // GET: Loans/Details/5
         public ActionResult Details(int? id)
@@ -58,7 +58,7 @@ namespace LibrARRRy.Controllers
             {
                 db.Loans.Add(loan);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
 
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", loan.BookId);
@@ -108,7 +108,7 @@ namespace LibrARRRy.Controllers
             {
                 db.Entry(loan).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("All", "ManagePanel");
             }
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title", loan.BookId);
             ViewBag.ReaderId = new SelectList(db.Users, "Id", "Email", loan.ReaderId);
@@ -150,7 +150,7 @@ namespace LibrARRRy.Controllers
             Loan loan = db.Loans.Find(id);
             db.Loans.Remove(loan);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("All", "ManagePanel");
         }
 
         protected override void Dispose(bool disposing)

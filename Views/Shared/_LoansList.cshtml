@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LibrARRRy.Models.Loan>
+
+<p>
+    @Html.ActionLink("Create New", "Create", "Loans", null, new { @class = "btn btn-outline" })
+</p>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reader.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoanedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoanExpireDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnedDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reader.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoanedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoanExpireDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Loans", new { id = item.LoanId }, new { @class = "btn btn-outline" }) |
+                @Html.ActionLink("Details", "Details", "Loans", new { id = item.LoanId }, new { @class = "btn btn-outline" }) |
+                @Html.ActionLink("Delete", "Delete", "Loans", new { id = item.LoanId }, new { @class = "btn btn-outline" })
+            </td>
+        </tr>
+    }
+
+</table>

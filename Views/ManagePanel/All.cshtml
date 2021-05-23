@@ -40,6 +40,10 @@
                 </tr>
                 <tr>
                     <th scope="row">6</th>
+                    <td id="Loans">Loans</td>
+                </tr>
+                <tr>
+                    <th scope="row">7</th>
                     <td id="Users">Readers</td>
                 </tr>
             </tbody>
@@ -74,6 +78,11 @@
         <div id="UsersDiv" style="display:none;">
             @{
                 Html.RenderPartial("_ReadersList", Model.Readers as IEnumerable<LibrARRRy.ViewModel.ConfirmReadersViewModel>);
+            }
+        </div>
+        <div id="LoansDiv" style="display:none;">
+            @{
+                Html.RenderPartial("_LoansList", Model.Loans as IEnumerable<LibrARRRy.Models.Loan>);
             }
         </div>
     </div>

@@ -21,8 +21,6 @@ namespace LibrARRRy.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private LibrARRRyContext db = new LibrARRRyContext();
-
 
         public ManageController()
         {
@@ -58,57 +56,9 @@ namespace LibrARRRy.Controllers
             }
         }
 
-
-        [Authorize(Roles = "admin,worker")]
-        public ActionResult ManageAll()
-        {
-            dynamic dynamicObject = new ExpandoObject();
-            dynamicObject.Books = db.Books.ToList();
-            dynamicObject.Authors = db.Authors.ToList();
-            dynamicObject.Categories = db.Categories.ToList();
-            dynamicObject.Tags = db.Tags.ToList();
-            dynamicObject.Storages = db.Storages.ToList();
-
-            var confirmReaders = new List<ConfirmReadersViewModel>();
-            var userStore = new UserStore<ApplicationUser>(db);
-
-            foreach(var user in userStore.Users)
-            {
-                var r = new ConfirmReadersViewModel
-                {
-                    Id = user.Id,
-                    Email = user.Email,
-                    IsConfirmed = user.EmailConfirmed
-                };
-                confirmReaders.Add(r);
-            }
-            foreach(var user in confirmReaders)
-            {
-                user.Role = UserManager.GetRoles(userStore.Users.First(s => s.Email == user.Email).Id);
-            }
-
-            confirmReaders = confirmReaders.Where(s => s.Role.Contains("reader")).ToList();
-
-            dynamicObject.Readers = confirmReaders;
-            return View(dynamicObject);
-        }
-
         public ActionResult ManageUsers()
         { 
             return View();
-        }
-
-        public async Task<ActionResult> ConfirmAsync(string id)
-        {
-            if(id == "")
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var user = await UserManager.FindByIdAsync(id);
-
-            user.EmailConfirmed = true;
-            UserManager.Update(user);
-            return RedirectToAction("ManageAll");
         }
 
         //
