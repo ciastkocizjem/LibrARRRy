@@ -26,6 +26,7 @@ namespace LibrARRRy
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+
             //SmtpClient client = new SmtpClient();
             //client.Port = 587;
             //client.Host = "smtp.gmail.com";
