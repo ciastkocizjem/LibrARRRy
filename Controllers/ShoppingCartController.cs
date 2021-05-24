@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace LibrARRRy.Controllers
 {
@@ -51,7 +52,7 @@ namespace LibrARRRy.Controllers
         }
 
         [Authorize] // To force being logged in
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             if (Session["cart"] != null)
             {
@@ -80,18 +81,7 @@ namespace LibrARRRy.Controllers
                                 IdentityManager im = new IdentityManager();
                                 ApplicationUser user = im.GetUserByName(userName);
 
-                                Loan loan = new Loan()
-                                {
-                                    Book = b,
-                                    BookId = b.BookId,
-                                    Reader = user,
-                                    ReaderId = user.Id,
-                                    LoanedDate = DateTime.Now,
-                                    LoanExpireDate = DateTime.Now.AddDays(loanDuration)
-                                };
-
-
-                                loansController.CreateFromCart(b, user);
+                                await loansController.CreateFromCart(b, user);
                             }
                         }
                         else
