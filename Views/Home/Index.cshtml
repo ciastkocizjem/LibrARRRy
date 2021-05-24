@@ -67,8 +67,11 @@
     <div class="column right">
         <section>
             <div class="info">
-                <span class="closebtn fa fa-times" onclick="this.parentElement.style.display='none';"></span>
-                <span class="closebtn fa fa-edit" onclick="this.parentElement.style.display='none';"></span>
+                <span class="closebtn fa fa-times" onclick="this.parentElement.style.hidden='none';"></span>
+                @if (ViewBag.roleName == "admin")
+                {
+                    <span class="closebtn fa fa-edit" onclick="this.parentElement.style.display='none';"></span>
+                }
 
                 <p class="info-id"><strong>Info!</strong> New books have been added.</p>
             </div>

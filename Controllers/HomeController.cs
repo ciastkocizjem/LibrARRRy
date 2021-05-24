@@ -1,5 +1,8 @@
 ﻿using LibrARRRy.DAL;
 using LibrARRRy.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,29 @@ namespace LibrARRRy.Controllers
         
         private List<string> CategoriesCheckBoxes { get; set; }
 
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public HomeController()
+        {
+        }
+
+        public HomeController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
         public ActionResult Index()
         {
             var books = db.Books.OrderBy(b => b.Title);
@@ -26,6 +52,16 @@ namespace LibrARRRy.Controllers
             ViewBag.BooksList = books.ToList();
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
+
+            //get current user email
+            string userName = HttpContext.User.Identity.Name;
+
+            if(userName != "")
+            {
+                string userId = UserManager.FindByEmail(userName).Id;
+                ViewBag.roleName = UserManager.GetRoles(userId)[0];
+            }
+
             NewBooks();
 
             return View();
