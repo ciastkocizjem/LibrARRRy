@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -56,7 +57,8 @@ namespace LibrARRRy.Controllers
             try
             {
                 ViewBag.message = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/AdminMessage.txt"));
-                ViewBag.lastModified = System.IO.File.GetLastWriteTime(Server.MapPath(@"~/Content/AdminMessage.txt"));
+                DateTime date = System.IO.File.GetLastWriteTime(Server.MapPath(@"~/Content/AdminMessage.txt"));
+                ViewBag.lastModified = date.ToString("MM/dd/yyyy");
             } 
             catch(Exception ex)
             {
@@ -75,6 +77,20 @@ namespace LibrARRRy.Controllers
             NewBooks();
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveMessage(string messsage)
+        {
+            if(messsage != "")
+            {
+                using (StreamWriter writer = new StreamWriter(Server.MapPath(@"~/Content/AdminMessage.txt"), false))
+                {
+                    writer.WriteLine(messsage);
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         public void NewBooks()
