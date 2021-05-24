@@ -21,10 +21,10 @@ namespace LibrARRRy.Controllers
             string userName = User.Identity.Name;
             IdentityManager im = new IdentityManager();
             ApplicationUser user = im.GetUserByName(userName);
-            List<Loan> currentlyLoaned = user.Loaned.Where(l => l.ReturnedDate == null).ToList();
+            List<Loan> currentlyLoaned = user.Loaned.OrderBy(l => l.ReturnedDate).ToList();
             books = books.Where(b => currentlyLoaned.Any(l => l.BookId == b.BookId)).ToList();
 
-            return View(books);
+            return View(currentlyLoaned);
         }
 
         [Authorize]
@@ -46,6 +46,15 @@ namespace LibrARRRy.Controllers
             }
 
             return RedirectToAction("Loans", "BookLoans");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

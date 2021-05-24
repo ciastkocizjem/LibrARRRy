@@ -3,7 +3,7 @@
 }
 
 @section Styles {
-    <link href="~/Content/IndexStyleSheet.css" rel="stylesheet" />
+    <link href="~/Content/IndexSheet.css" rel="stylesheet" />
 }
 
 
@@ -66,6 +66,33 @@
     </div>
     <div class="column right">
         <section>
+            <div class="info">
+
+                @if (ViewBag.roleName == "admin")
+                {
+                    <span id="edit" class="closebtn fa fa-edit"></span>
+                }
+                else
+                {
+                    <span class="closebtn fa fa-times" onclick="this.parentElement.style.hidden='none';"></span>
+                }
+
+                <p class="info-id pSameLine"><strong>@ViewBag.lastModified Info! </strong></p> 
+                <p class="info-id pSameLine" id="messageP">@ViewBag.message</p>
+
+                <form id="formMessage" style="display:none;">
+                    <br />
+                    <div class="form-group-lg">
+                        <label for="messageText">Message text</label>
+                        <textarea class="form-control" id="messageText" rows="2" wrap="soft" style="min-inline-size: 100%; resize:vertical; font-size: 15px;"></textarea>
+                    </div>
+                    <br />
+                    <span id="save" class="closebtn fa fa-save"></span>
+                    <br />
+                </form>
+            </div>
+        </section>
+        <section>
             @if (ViewBag.NewBookList.Count != null)
             {
                 <h1>Newest books! Check them out:</h1>
@@ -120,9 +147,9 @@
                         </div>
                         <div class="floatRight">
                             <a href="@Url.Action("Add", "ShoppingCart", item)" class="btn btn-info btn-sm">
-                                <span class="fa fa-shopping-cart"></span> 
+                                <span class="fa fa-shopping-cart"></span>
                             </a>
-                           @* @Html.ActionLink(" ", "A", null, new { @class = "btn btn-info fa fa-shopping-cart" })*@
+                            @* @Html.ActionLink(" ", "A", null, new { @class = "btn btn-info fa fa-shopping-cart" })*@
 
                             @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info btn-md" })
                         </div>
@@ -132,4 +159,34 @@
         </section>
     </div>
 </div>
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#edit").click(function () {
+                $("#formMessage").show();
+            });
+            $("#save").click(function () {
+
+                var text = $("#messageText").val();
+
+                $.ajax({
+                    url: '/Home/SaveMessage',
+                    data: { messsage: text }, 
+                    type: "post",
+                    cache: false,
+                    success: function () {
+                        $('#messageP').text(text)
+                        $("#messageText").val('');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $('#messageP').text("ERROR")
+                    }
+                });
+                $("#formMessage").hide();
+            });
+        });
+    </script>
+}
 

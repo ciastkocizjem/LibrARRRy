@@ -187,6 +187,18 @@ namespace LibrARRRy.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BooksViewModel booksViewModel)
         {
+            if (booksViewModel.SelectedAuthors == null)
+            {
+                ModelState.AddModelError("", "Proszę wybrać autora");
+                CreateViewBags();
+            }
+
+            if (booksViewModel.SelectedTags == null)
+            {
+                ModelState.AddModelError("", "Proszę wybrać przynajmniej jeden tag");
+                CreateViewBags();
+            }
+
             if (booksViewModel == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (ModelState.IsValid)
