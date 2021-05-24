@@ -53,6 +53,16 @@ namespace LibrARRRy.Controllers
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
 
+            try
+            {
+                ViewBag.message = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/AdminMessage.txt"));
+                ViewBag.lastModified = System.IO.File.GetLastWriteTime(Server.MapPath(@"~/Content/AdminMessage.txt"));
+            } 
+            catch(Exception ex)
+            {
+                ViewBag.message = ex.ToString();
+            }
+
             //get current user email
             string userName = HttpContext.User.Identity.Name;
 

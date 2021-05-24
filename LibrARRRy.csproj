@@ -323,6 +323,7 @@
     <Compile Include="Controllers\LoansController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminMessage.txt" />
     <Content Include="App_Data\LibrARRRyDB.mdf" />
     <Content Include="App_Data\LibrARRRyDB_log.ldf">
       <DependentUpon>LibrARRRyDB.mdf</DependentUpon>
