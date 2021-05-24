@@ -3,7 +3,7 @@
 }
 
 @section Styles {
-    <link href="~/Content/IndexStyleSheet.css" rel="stylesheet" />
+    <link href="~/Content/IndexSheet.css" rel="stylesheet" />
 }
 
 
@@ -65,6 +65,14 @@
 
     </div>
     <div class="column right">
+        <section>
+            <div class="info">
+                <span class="closebtn fa fa-times" onclick="this.parentElement.style.display='none';"></span>
+                <span class="closebtn fa fa-edit" onclick="this.parentElement.style.display='none';"></span>
+
+                <p class="info-id"><strong>Info!</strong> New books have been added.</p>
+            </div>
+        </section>
         <section>
             @if (ViewBag.NewBookList.Count != null)
             {
