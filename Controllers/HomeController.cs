@@ -60,7 +60,7 @@ namespace LibrARRRy.Controllers
             } 
             catch(Exception ex)
             {
-                ViewBag.message = ex.ToString();
+                ViewBag.message = ex.Message;
             }
 
             //get current user email
