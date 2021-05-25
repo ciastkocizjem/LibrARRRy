@@ -1,0 +1,30 @@
+﻿@model IEnumerable<LibrARRRy.Models.Book>
+
+@foreach (LibrARRRy.Models.Book item in @Model)
+{
+    <article>
+        <div>
+            <img class="bookImg" src="~/img/bookCover.jpg" />
+            <p class="bookText">@item.Title</p>
+            <div class="authorsText">
+                @foreach (LibrARRRy.Models.Author authors in item.Authors)
+                {
+                    <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
+                    if (item.Authors.Count > 1 && item.Authors.Last() != authors)
+                    {
+                        <p class="pSameLine">and</p>
+                    }
+
+                }
+            </div>
+            <div class="floatRight">
+                <a href="@Url.Action("Add", "ShoppingCart", item)" class="btn btn-info btn-sm">
+                    <span class="fa fa-shopping-cart"></span>
+                </a>
+                @* @Html.ActionLink(" ", "A", null, new { @class = "btn btn-info fa fa-shopping-cart" })*@
+
+                @Html.ActionLink(" ", "BookDetails", "Index", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info btn-md" })
+            </div>
+        </div>
+    </article>
+}
