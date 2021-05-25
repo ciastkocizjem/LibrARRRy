@@ -14,8 +14,8 @@
             <div class="form-inline">
                 @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
                 {
-                    <input type="text" name="searchString" class="form-control" placeholder="Search book...">
-                    <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+                    <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook">
+                    <button class="btn btn-outline-secondary" id="searchButton"><i class="fa fa-search"></i></button>
                     @Html.ActionLink(" ", "Order", "ShoppingCart", null, new { @class = "btn btn-info fa fa-shopping-basket" })
 
                 }
@@ -62,7 +62,7 @@
     </div>
     <div class="column right">
         <section>
-            <div class="info">
+            <div class="info" id="info">
 
                 @if (ViewBag.roleName == "admin")
                 {
@@ -70,10 +70,10 @@
                 }
                 else
                 {
-                    <span class="closebtn fa fa-times" onclick="this.parentElement.style.hidden='none';"></span>
+                    <span class="closebtn fa fa-times" id="close"></span>
                 }
 
-                <p class="info-id pSameLine"><strong>@ViewBag.lastModified Info! </strong></p> 
+                <p class="info-id pSameLine"><strong>@ViewBag.lastModified Info! </strong></p>
                 <p class="info-id pSameLine" id="messageP">@ViewBag.message</p>
 
                 <div id="formMessage" style="display:none;">
@@ -128,7 +128,7 @@
                 <hr />
             }
             <div id="booksList">
-                @Html.Partial("_IndexBooksList", (IEnumerable<LibrARRRy.Models.Book>) ViewBag.BooksList)
+                @Html.Partial("_IndexBooksList", (IEnumerable<LibrARRRy.Models.Book>)ViewBag.BooksList)
             </div>
         </section>
     </div>
@@ -140,6 +140,10 @@
         $(document).ready(function () {
             $("#edit").click(function () {
                 $("#formMessage").show();
+            });
+
+            $("#close").click(function () {
+                $("#info").slideUp();
             });
 
             $("#btnNewBooks").click(function () {
@@ -156,9 +160,7 @@
             });
 
             $("#save").click(function () {
-
                 var text = $("#messageText").val();
-
                 $.ajax({
                     url: '/Home/SaveMessage',
                     data: { messsage: text },
@@ -176,13 +178,10 @@
             });
 
             $("#filterBooks").click(function () {
-
                 var data = [];
-
                 $("input[name='filters[]']:checked").each(function () {
                     data.push($(this).attr("id"));
                 });
-
                 $.ajax({
                     url: '@Url.Content("~/Home/FilterBooks")',
                     data: { formCollection: JSON.stringify(data) },
@@ -194,7 +193,23 @@
                 });
             });
 
+            $("#searchButton").click(function (e) {
+
+                var data = $('#searchBook').val();
+
+                e.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("SearchBooks")',
+                    data: { searchString: data },
+                    type: "get",
+                    success: function (result) {
+                        $('#booksList').empty();
+                        $('#booksList').html(result);
+                    }
+                });
+            });
+
         });
     </script>
 }
-
