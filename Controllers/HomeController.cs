@@ -1,7 +1,11 @@
 ﻿using LibrARRRy.DAL;
 using LibrARRRy.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,6 +20,29 @@ namespace LibrARRRy.Controllers
         
         private List<string> CategoriesCheckBoxes { get; set; }
 
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public HomeController()
+        {
+        }
+
+        public HomeController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
         public ActionResult Index()
         {
             var books = db.Books.OrderBy(b => b.Title);
@@ -26,9 +53,44 @@ namespace LibrARRRy.Controllers
             ViewBag.BooksList = books.ToList();
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
+
+            try
+            {
+                ViewBag.message = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/AdminMessage.txt"));
+                DateTime date = System.IO.File.GetLastWriteTime(Server.MapPath(@"~/Content/AdminMessage.txt"));
+                ViewBag.lastModified = date.ToString("MM/dd/yyyy");
+            } 
+            catch(Exception ex)
+            {
+                ViewBag.message = ex.Message;
+            }
+
+            //get current user email
+            string userName = HttpContext.User.Identity.Name;
+
+            if(userName != "")
+            {
+                string userId = UserManager.FindByEmail(userName).Id;
+                ViewBag.roleName = UserManager.GetRoles(userId)[0];
+            }
+
             NewBooks();
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult SaveMessage(string messsage)
+        {
+            if(messsage != "")
+            {
+                using (StreamWriter writer = new StreamWriter(Server.MapPath(@"~/Content/AdminMessage.txt"), false))
+                {
+                    writer.WriteLine(messsage);
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         public void NewBooks()

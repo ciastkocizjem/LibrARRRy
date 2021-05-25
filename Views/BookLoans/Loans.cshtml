@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LibrARRRy.Models.Book>
+﻿@model IEnumerable<LibrARRRy.Models.Loan>
 @{
     ViewBag.Title = "Loans";
 }
@@ -11,6 +11,10 @@
                 <th style="text-align:center;">Cover</th>
                 <th style="text-align:center;">ISBN</th>
                 <th style="text-align:center;">Title</th>
+                <th style="text-align:center;">Loanded Date</th>
+                <th style="text-align:center;">Collection Date</th>
+                <th style="text-align:center;">Loan Expire Date</th>
+                <th style="text-align:center;">Returned Date</th>
                 <th style="text-align:center;">Return</th>
             </tr>
         </thead>
@@ -20,18 +24,38 @@
             {
                 <tr style="text-align:center">
                     <td style="width: 200px; align-content:center;"><img src="~/img/bookCover.jpg" style="width:200px;" /></td>
-                    <td>@book.ISBN</td>
-                    <td>@book.Title</td>
+                    <td>@book.Book.ISBN</td>
+                    <td>@book.Book.Title</td>
+                    <td>@book.LoanedDate</td>
+                    <td>@book.CollectionDate</td>
+                    <td>@book.LoanExpireDate</td>
+                    @if(book.ReturnedDate != null)
+                    {
+                        <td>@book.ReturnedDate</td>
+                    }
+                    else
+                    {
+                        <td>———</td>
+                    }
 
-                    <td>
-
-                        <button class="btn btn-info btn-sm" data-slno="@book.BookId" onclick="location.href='@Url.Action("Return", "BookLoans", book)'">
+                <td>
+                    @if (book.ReturnedDate == null)
+                    {
+                        <button class="btn btn-info btn-sm" data-slno="@book.Book.BookId" onclick="location.href='@Url.Action("Return", "BookLoans", book.Book)'">
                             ✔
                         </button>
-                    </td>
+                    }
+                    else
+                    {
+                        <button class="btn btn-info btn-sm" disabled>
+                            ✔
+                        </button>
+                    }
+                </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
 
