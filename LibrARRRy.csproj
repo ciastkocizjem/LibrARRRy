@@ -278,6 +278,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePanelController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SearchesController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StoragesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
@@ -301,6 +302,10 @@
     <Compile Include="Migrations\202105231645306_LoanAndUserUpdate.cs" />
     <Compile Include="Migrations\202105231645306_LoanAndUserUpdate.Designer.cs">
       <DependentUpon>202105231645306_LoanAndUserUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105271804034_SearchUpdate.cs" />
+    <Compile Include="Migrations\202105271804034_SearchUpdate.Designer.cs">
+      <DependentUpon>202105271804034_SearchUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -502,6 +507,11 @@
     <Content Include="Views\Loans\Index.cshtml" />
     <Content Include="Views\Shared\_LoansList.cshtml" />
     <Content Include="Views\Shared\_IndexBooksList.cshtml" />
+    <Content Include="Views\Searches\Create.cshtml" />
+    <Content Include="Views\Searches\Delete.cshtml" />
+    <Content Include="Views\Searches\Details.cshtml" />
+    <Content Include="Views\Searches\Edit.cshtml" />
+    <Content Include="Views\Searches\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -528,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105231645306_LoanAndUserUpdate.resx">
       <DependentUpon>202105231645306_LoanAndUserUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105271804034_SearchUpdate.resx">
+      <DependentUpon>202105271804034_SearchUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -16,8 +16,8 @@
                 {
                     <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook">
                     <button class="btn btn-outline-secondary" id="searchButton"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-outline-secondary" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
                     @Html.ActionLink(" ", "Order", "ShoppingCart", null, new { @class = "btn btn-info fa fa-shopping-basket" })
-
                 }
             </div>
         </div>
@@ -209,6 +209,19 @@
                     }
                 });
             });
+
+            $("#saveSearchButton").click(function (e) {
+                var data = $('#searchBook').val();
+
+                $.ajax({
+                    url: 'Home/SaveSearch',
+                    data: { searchString: data },
+                    type: "post"
+                    //success: function (resultData) {
+                    //    window.location.href = resultData;
+                    //}
+                });
+            })
 
         });
     </script>
