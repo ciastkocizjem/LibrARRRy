@@ -63,7 +63,6 @@
     <div class="column right">
         <section>
             <div class="info" id="info">
-
                 @if (ViewBag.roleName == "admin")
                 {
                     <span id="edit" class="closebtn fa fa-edit"></span>
@@ -122,6 +121,7 @@
                                 </li>
                             }
 
+
                         </ul>
                     </div>
                 </div>
@@ -163,7 +163,8 @@
                 var text = $("#messageText").val();
                 $.ajax({
                     url: '/Home/SaveMessage',
-                    data: { messsage: text },
+                    data: { messsage: text }, 
+
                     type: "post",
                     cache: false,
                     success: function () {
@@ -176,7 +177,6 @@
                 });
                 $("#formMessage").hide();
             });
-
             $("#filterBooks").click(function () {
                 var data = [];
                 $("input[name='filters[]']:checked").each(function () {
