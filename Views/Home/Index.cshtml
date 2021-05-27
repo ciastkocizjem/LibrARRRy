@@ -14,8 +14,8 @@
             <div class="form-inline">
                 @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
                 {
-                    <input type="text" name="searchString" class="form-control" placeholder="Search book...">
-                    <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+                    <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook">
+                    <button class="btn btn-outline-secondary" id="searchButton"><i class="fa fa-search"></i></button>
                     @Html.ActionLink(" ", "Order", "ShoppingCart", null, new { @class = "btn btn-info fa fa-shopping-basket" })
 
                 }
@@ -30,43 +30,39 @@
     <div class="column left mycontent-left">
         <aside>
             <div>
-                <!-- DODAĆ LINKI -->
-                @*@using (Html.BeginForm("FilterBooks", "Home", FormMethod.Post))
-                {*@
-                    <p class="categoriesAndTags">Categories:</p>
-                    <div class="form-group">
-                        @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
-                        {
-                            <div class="checkbox checkBoxMargin">
-                                <label>
-                                    <input type="checkbox" value="@item.Name" id="C_@item.Name" name="filters[]" /> @item.Name
-                                </label>
-                            </div>
-                        }
-                    </div>
-                    <hr />
-                    <p class="categoriesAndTags">Tags:</p>
-                    <form class="form-group" id="formTags">
-                        @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
-                        {
-                            <div class="checkbox checkBoxMargin">
-                                <label>
-                                    <input type="checkbox" value="@item.Name" id="T_@item.Name" name="filters[]" /> @item.Name
-                                </label>
-                            </div>
-                        }
-                    </form>
-                    <div class="floatRight">
-                        <button class="btn btn-outline-secondary" id="filterBooks"><i class="fa fa-filter"></i></button>
-                    </div>
-                @*}*@
+                <p class="categoriesAndTags">Categories:</p>
+                <div class="form-group">
+                    @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
+                    {
+                        <div class="checkbox checkBoxMargin">
+                            <label>
+                                <input type="checkbox" value="@item.Name" id="C_@item.Name" name="filters[]" /> @item.Name
+                            </label>
+                        </div>
+                    }
+                </div>
+                <hr />
+                <p class="categoriesAndTags">Tags:</p>
+                <form class="form-group" id="formTags">
+                    @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
+                    {
+                        <div class="checkbox checkBoxMargin">
+                            <label>
+                                <input type="checkbox" value="@item.Name" id="T_@item.Name" name="filters[]" /> @item.Name
+                            </label>
+                        </div>
+                    }
+                </form>
+                <div class="floatRight">
+                    <button class="btn btn-outline-secondary" id="filterBooks"><i class="fa fa-filter"></i></button>
+                </div>
             </div>
         </aside>
 
     </div>
     <div class="column right">
         <section>
-            <div class="info">
+            <div class="info" id="info">
 
                 @if (ViewBag.roleName == "admin")
                 {
@@ -74,10 +70,10 @@
                 }
                 else
                 {
-                    <span class="closebtn fa fa-times" onclick="this.parentElement.style.hidden='none';"></span>
+                    <span class="closebtn fa fa-times" id="close"></span>
                 }
 
-                <p class="info-id pSameLine"><strong>@ViewBag.lastModified Info! </strong></p> 
+                <p class="info-id pSameLine"><strong>@ViewBag.lastModified Info! </strong></p>
                 <p class="info-id pSameLine" id="messageP">@ViewBag.message</p>
 
                 <div id="formMessage" style="display:none;">
@@ -93,42 +89,46 @@
             </div>
         </section>
         <section>
+            <span class="closebtn fa fa-chevron-up" style="float: right; color: dimgray; margin: 10px;" id="btnNewBooks"></span>
+            <h1>Newest books! Check them out:</h1>
             @if (ViewBag.NewBookList.Count != null)
             {
-                <h1>Newest books! Check them out:</h1>
-                <div class="window">
-                    <ul class="menu">
-                        @foreach (LibrARRRy.Models.Book item in ViewBag.NewBookList)
-                        {
-                            <li class="menu-item">
-                                <article>
-                                    <div>
-                                        <img class="bookImg" src="~/img/bookCover.jpg" />
-                                        <p class="bookText">@item.Title</p>
-                                        <div class="authorsText">
-                                            @foreach (LibrARRRy.Models.Author authors in item.Authors)
-                                            {
-                                                <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
-                                                if (item.Authors.Count > 1 && item.Authors.Last() != authors)
+                <div id="newBooksList">
+                    <div class="window">
+                        <ul class="menu">
+                            @foreach (LibrARRRy.Models.Book item in ViewBag.NewBookList)
+                            {
+                                <li class="menu-item">
+                                    <article>
+                                        <div>
+                                            <img class="bookImg" src="~/img/bookCover.jpg" />
+                                            <p class="bookText">@item.Title</p>
+                                            <div class="authorsText">
+                                                @foreach (LibrARRRy.Models.Author authors in item.Authors)
                                                 {
-                                                    <p class="pSameLine">and</p>
-                                                }
+                                                    <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
+                                                    if (item.Authors.Count > 1 && item.Authors.Last() != authors)
+                                                    {
+                                                        <p class="pSameLine">and</p>
+                                                    }
 
-                                            }
+                                                }
+                                            </div>
+                                            <div class="floatRight">
+                                                @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info" })
+                                            </div>
                                         </div>
-                                        <div class="floatRight">
-                                            @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info" })
-                                        </div>
-                                    </div>
-                                </article>
-                            </li>
-                        }
-                    </ul>
+                                    </article>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
                 </div>
                 <hr />
             }
             <div id="booksList">
-                @Html.Partial("_IndexBooksList", (IEnumerable<LibrARRRy.Models.Book>) ViewBag.BooksList)
+                @Html.Partial("_IndexBooksList", (IEnumerable<LibrARRRy.Models.Book>)ViewBag.BooksList)
             </div>
         </section>
     </div>
@@ -141,10 +141,26 @@
             $("#edit").click(function () {
                 $("#formMessage").show();
             });
+
+            $("#close").click(function () {
+                $("#info").slideUp();
+            });
+
+            $("#btnNewBooks").click(function () {
+                if ($("#newBooksList").is(':visible')) {
+                    $("#newBooksList").slideUp();
+                    $(this).removeClass('fa-chevron-up')
+                    $(this).addClass('fa-chevron-down')
+                } else {
+                    $("#newBooksList").slideDown();
+                    $(this).removeClass('fa-chevron-down')
+                    $(this).addClass('fa-chevron-up')
+                }
+
+            });
+
             $("#save").click(function () {
-
                 var text = $("#messageText").val();
-
                 $.ajax({
                     url: '/Home/SaveMessage',
                     data: { messsage: text },
@@ -162,13 +178,10 @@
             });
 
             $("#filterBooks").click(function () {
-
                 var data = [];
-
                 $("input[name='filters[]']:checked").each(function () {
                     data.push($(this).attr("id"));
                 });
-
                 $.ajax({
                     url: '@Url.Content("~/Home/FilterBooks")',
                     data: { formCollection: JSON.stringify(data) },
@@ -180,7 +193,23 @@
                 });
             });
 
+            $("#searchButton").click(function (e) {
+
+                var data = $('#searchBook').val();
+
+                e.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("SearchBooks")',
+                    data: { searchString: data },
+                    type: "get",
+                    success: function (result) {
+                        $('#booksList').empty();
+                        $('#booksList').html(result);
+                    }
+                });
+            });
+
         });
     </script>
 }
-
