@@ -500,6 +500,7 @@
     <Content Include="Views\Loans\Edit.cshtml" />
     <Content Include="Views\Loans\Index.cshtml" />
     <Content Include="Views\Shared\_LoansList.cshtml" />
+    <Content Include="Views\Shared\_IndexBooksList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
