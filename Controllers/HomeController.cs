@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace LibrARRRy.Controllers
 {
@@ -104,12 +105,12 @@ namespace LibrARRRy.Controllers
             ViewBag.NewBookList = books.Where(b => b.AdditionDate.CompareTo(limitDate) > 0).ToList();
         }
 
-        [HttpPost]
         public ActionResult SearchBooks(string searchString)
         {
             var books = db.Books.OrderBy(b => b.Title);
             var categories = db.Categories.OrderBy(c => c.Name);
             var tags = db.Tags.OrderBy(t => t.Name);
+            List<Book> finalBooks = new List<Book>();
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -157,28 +158,39 @@ namespace LibrARRRy.Controllers
                         }
                     }
 
-                    ViewBag.BooksList = searchedBooks;
+                    //ViewBag.BooksList = searchedBooks;
+                    finalBooks = searchedBooks;
                 }
                 else
                 {
-                    ViewBag.BooksList = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
-                        || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString)));
+                    //ViewBag.BooksList = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
+                    //    || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString)));
+                   finalBooks = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
+                        || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString))).ToList();
                 }
             }
             else
             {
-                ViewBag.BooksList = books.ToList();
+                //ViewBag.BooksList = books.ToList();
+                finalBooks = books.ToList();
             }
 
+            ModelState.Clear();
+
+            NewBooks();
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
+            ViewBag.BooksList = finalBooks;
 
-            return View("~/Views/Home/Index.cshtml");
+            //return RedirectToAction("Index");
+
+            return PartialView("_IndexBooksList", finalBooks);
         }
 
-        [HttpPost]
-        public ActionResult FilterBooks(FormCollection formCollection)
+        public ActionResult FilterBooks(string formCollection)
         {
+            List<string> form = new JavaScriptSerializer().Deserialize<List<string>>(formCollection); 
+
             var books = db.Books;
             var categories = db.Categories.OrderBy(c => c.Name);
             var tags = db.Tags.OrderBy(t => t.Name);
@@ -186,22 +198,18 @@ namespace LibrARRRy.Controllers
             List<string> selectedCategories = new List<string>();
             List<string> selectedTags = new List<string>();
 
-            foreach (var item in formCollection.AllKeys)
+            foreach (var item in form)
             {
-                if ((bool)this.ValueProvider.GetValue(item).ConvertTo(typeof(bool)))
+                
+                if (item.StartsWith("C_"))
                 {
-                    if (item.StartsWith("C_"))
-                    {
-                        selectedCategories.Add(item.Replace("C_", ""));
-                    }
-                    else
-                    {
-                        if (item.StartsWith("T_"))
-                        {
-                            selectedTags.Add(item.Replace("T_", ""));
-                        }
-                    }
+                    selectedCategories.Add(item.Replace("C_", ""));
                 }
+                else
+                {
+                    selectedTags.Add(item.Replace("T_", ""));   
+                }
+               
             }
 
             List<Book> selectedBooks = new List<Book>();
@@ -246,11 +254,13 @@ namespace LibrARRRy.Controllers
                 }
             }
 
+            ModelState.Clear();
             ViewBag.BooksList = selectedBooks;
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
+            NewBooks();
 
-            return View("~/Views/Home/Index.cshtml");
+            return PartialView("_IndexBooksList", selectedBooks);
         }
 
         public ActionResult About()
