@@ -3,7 +3,7 @@
 }
 
 @section Styles {
-    <link href="~/Content/IndexSheet.css" rel="stylesheet" />
+    <link href="~/Content/Index.css" rel="stylesheet" />
 }
 
 
@@ -95,34 +95,52 @@
             {
                 <div id="newBooksList">
                     <div class="window">
-                        <ul class="menu">
-                            @foreach (LibrARRRy.Models.Book item in ViewBag.NewBookList)
-                            {
-                                <li class="menu-item">
-                                    <article>
-                                        <div>
-                                            <img class="bookImg" src="~/img/bookCover.jpg" />
-                                            <p class="bookText">@item.Title</p>
-                                            <div class="authorsText">
-                                                @foreach (LibrARRRy.Models.Author authors in item.Authors)
+                        <div class="container-fluid">
+                            <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+                                @foreach (LibrARRRy.Models.Book item in ViewBag.NewBookList)
+                                {
+                                    <div class="card" style="max-width: 28rem; min-width: 28rem; margin: 13px;">
+                                        <h5 class="card-title"><strong>@item.Title</strong></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            @foreach (LibrARRRy.Models.Author authors in item.Authors)
+                                            {
+                                                @(authors.Name + "  " + authors.Surname)
+                                                if (item.Authors.Count > 1 && item.Authors.Last() != authors)
                                                 {
-                                                    <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
-                                                    if (item.Authors.Count > 1 && item.Authors.Last() != authors)
+                                                    @:and
+                                                }
+
+                                            }
+                                        </h6>
+                                        <div class="card-body">
+                                            <img class="card-img" src="~/img/bookCover.jpg" alt="Card book cover">
+                                            <p class="card-text">
+                                                <strong>Description: </strong>
+                                                @if (item.Description.Length > 100)
+                                                {
+                                                    if (item.Description.Substring(0, Math.Min(item.Description.Length, 100)).EndsWith(" "))
                                                     {
-                                                        <p class="pSameLine">and</p>
+                                                        @item.Description.Substring(0, Math.Min(item.Description.Length, 99))@:...
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Description.Substring(0, Math.Min(item.Description.Length, 100))@:...
                                                     }
 
                                                 }
-                                            </div>
-                                            <div class="floatRight">
-                                                @Html.ActionLink(" ", "BookDetails", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info" })
+                                                else
+                                                {
+                                                    @item.Description
+                                                }
+                                            </p>
+                                            <div style="float:right">
+                                                <a href="@Url.Action("BookDetails", "Home", new { id = item.BookId })" class="btn btn-light btn-md fa fa-info"></a>
                                             </div>
                                         </div>
-                                    </article>
-                                </li>
-                            }
-
-                        </ul>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr />
@@ -212,4 +230,4 @@
 
         });
     </script>
-
+}

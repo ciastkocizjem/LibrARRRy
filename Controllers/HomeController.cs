@@ -101,7 +101,6 @@ namespace LibrARRRy.Controllers
             var books = db.Books.OrderBy(b => b.Title);
 
             DateTime limitDate = DateTime.Now.AddDays(-numerOfDays);
-
             ViewBag.NewBookList = books.Where(b => b.AdditionDate.CompareTo(limitDate) > 0).ToList();
         }
 
