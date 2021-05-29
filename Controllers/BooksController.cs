@@ -43,12 +43,6 @@ namespace LibrARRRy.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
         }
 
-        // GET: Books
-        //public ActionResult Index()
-        //{
-        //    return View(books.ToList());
-        //}
-
         // GET: Books/Details/5
         public ActionResult Details(int? id)
         {

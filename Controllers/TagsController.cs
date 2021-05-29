@@ -16,12 +16,6 @@ namespace LibrARRRy.Controllers
     {
         private LibrARRRyContext db = new LibrARRRyContext();
 
-        // GET: Tags
-        //public ActionResult Index()
-        //{
-        //    return View(db.Tags.ToList());
-        //}
-
         // GET: Tags/Details/5
         public ActionResult Details(int? id)
         {

@@ -21,10 +21,6 @@ namespace LibrARRRy.Controllers
         
         private List<string> CategoriesCheckBoxes { get; set; }
 
-        public HomeController()
-        {
-        }
-
         public ActionResult Index()
         {
             var books = db.Books.OrderBy(b => b.Title);

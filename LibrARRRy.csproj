@@ -329,7 +329,6 @@
     <Compile Include="ViewModel\BooksViewModel.cs" />
     <Compile Include="ViewModel\ConfirmReadersViewModel.cs" />
     <Compile Include="ViewModel\UsersViewModels.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\LoansController.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -442,12 +441,8 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Authors\Create.cshtml" />
@@ -459,17 +454,14 @@
     <Content Include="Views\Categories\Delete.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
-    <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Tags\Create.cshtml" />
     <Content Include="Views\Tags\Delete.cshtml" />
     <Content Include="Views\Tags\Details.cshtml" />
     <Content Include="Views\Tags\Edit.cshtml" />
-    <Content Include="Views\Tags\Index.cshtml" />
     <Content Include="Views\Books\Create.cshtml" />
     <Content Include="Views\Books\Delete.cshtml" />
     <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
-    <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Home\BookDetails.cshtml" />
     <Content Include="Views\ShoppingCart\Order.cshtml" />
     <Content Include="Views\BookLoans\Loans.cshtml" />
@@ -482,8 +474,6 @@
     <Content Include="Views\Storages\Delete.cshtml" />
     <Content Include="Views\Storages\Details.cshtml" />
     <Content Include="Views\Storages\Edit.cshtml" />
-    <Content Include="Views\Storages\Index.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Shared\_ReadersList.cshtml" />
     <Content Include="Views\ManagePanel\All.cshtml" />
     <Content Include="Views\ManagePanel\Workers.cshtml" />
@@ -494,7 +484,6 @@
     <Content Include="Views\Loans\Delete.cshtml" />
     <Content Include="Views\Loans\Details.cshtml" />
     <Content Include="Views\Loans\Edit.cshtml" />
-    <Content Include="Views\Loans\Index.cshtml" />
     <Content Include="Views\Shared\_ReadersList.cshtml" />
     <Content Include="Views\ManagePanel\All.cshtml" />
     <Content Include="Views\ManagePanel\Workers.cshtml" />
@@ -504,7 +493,6 @@
     <Content Include="Views\Loans\Delete.cshtml" />
     <Content Include="Views\Loans\Details.cshtml" />
     <Content Include="Views\Loans\Edit.cshtml" />
-    <Content Include="Views\Loans\Index.cshtml" />
     <Content Include="Views\Shared\_LoansList.cshtml" />
     <Content Include="Views\Shared\_IndexBooksList.cshtml" />
     <Content Include="Views\Searches\Create.cshtml" />

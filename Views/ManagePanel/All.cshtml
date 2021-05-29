@@ -18,7 +18,7 @@
             <li id="Categories"><a href="#Categories">Categories</a></li>
             <li id="Tags"><a href="#Tags">Tags</a></li>
             <li id="Storages"><a href="#Storages">Storages</a></li>
-            <li id="Users"><a href="#Users">Readers</a></li>
+            <li id="Readers"><a href="#Readers">Readers</a></li>
             <li id="Loans"><a href="#Loans">Borrows</a></li>
         </ul>
     </div>
@@ -48,7 +48,7 @@
                 Html.RenderPartial("_StoragesList", Model.Storages as IEnumerable<LibrARRRy.Models.Storage>);
             }
         </div>
-        <div id="UsersDiv" style="display:none;">
+        <div id="ReadersDiv" style="display:none;">
             @{
                 Html.RenderPartial("_ReadersList", Model.Readers as IEnumerable<LibrARRRy.ViewModel.ConfirmReadersViewModel>);
             }
@@ -72,15 +72,18 @@
 
             $("#manage li").each(function () {
                 if ($(this).has('active')) {
-                    if (string.includes(this.id)) {
-                        $("#" + this.id + "Div").show();
-                        $(this).addClass('active');
-                    }
                     if (string == '/' || string.includes("Workers")) {
                         if (this.id == "Books") {
                             $("#" + this.id + "Div").show();
                             $(this).addClass('active');
                         }
+                    } else if (string.includes(this.id)) {
+                        $("#" + this.id + "Div").show();
+                        $(this).addClass('active');
+                    }
+                    else if (string == '/ManagePanel/All') {
+                        $("#ReadersDiv").show();
+                        $("#Readers").addClass('active');
                     }
                 };
             });

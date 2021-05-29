@@ -16,13 +16,6 @@ namespace LibrARRRy.Controllers
     {
         private LibrARRRyContext db = new LibrARRRyContext();
 
-        // GET: Categories
-        //public ActionResult Index()
-        //{
-        //    var categories = db.Categories.Include(c => c.ParentCategory);
-        //    return View(categories.ToList());
-        //}
-
         // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {

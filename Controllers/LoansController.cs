@@ -44,13 +44,6 @@ namespace LibrARRRy.Controllers
             await scheduler.ScheduleJob(job, trigger);
         }
 
-        // GET: Loans
-        //public ActionResult Index()
-        //{
-        //    var loans = db.Loans.Include(l => l.Book).Include(l => l.Reader);
-        //    return View(loans.ToList());
-        //}
-
         // GET: Loans/Details/5
         public ActionResult Details(int? id)
         {

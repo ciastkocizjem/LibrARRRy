@@ -15,12 +15,6 @@ namespace LibrARRRy.Controllers
     {
         private LibrARRRyContext db = new LibrARRRyContext();
 
-        // GET: Storages
-        //public ActionResult Index()
-        //{
-        //    var storages = db.Storages.Include(s => s.Book);
-        //    return View(storages.ToList());
-        //}
 
         // GET: Storages/Details/5
         public ActionResult Details(int? id)
