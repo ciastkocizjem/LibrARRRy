@@ -94,8 +94,9 @@ namespace LibrARRRy.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public ActionResult SaveSearch(string searchString)
+        //[HttpPost]
+        [Authorize]
+        public void SaveSearch(string searchString)
         {
             if (!String.IsNullOrWhiteSpace(searchString))
             {
@@ -110,7 +111,7 @@ namespace LibrARRRy.Controllers
 
                 // TODO: Add alert
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
 
         public void NewBooks()

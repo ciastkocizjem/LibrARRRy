@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LibrARRRy.DAL;
@@ -16,53 +17,53 @@ namespace LibrARRRy.Controllers
         private LibrARRRyContext db = new LibrARRRyContext();
 
         // GET: Searches
-        public ActionResult Index()
-        {
-            var searches = db.Searches.Include(s => s.ApplicationUser);
-            return View(searches.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var searches = db.Searches.Include(s => s.ApplicationUser);
+        //    return View(searches.ToList());
+        //}
 
-        // GET: Searches/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Search search = db.Searches.Find(id);
-            if (search == null)
-            {
-                return HttpNotFound();
-            }
-            return View(search);
-        }
+        //// GET: Searches/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Search search = db.Searches.Find(id);
+        //    if (search == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(search);
+        //}
 
-        // GET: Searches/Create
-        public ActionResult Create()
-        {
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email");
-            return View();
-        }
+        //// GET: Searches/Create
+        //public ActionResult Create()
+        //{
+        //    ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email");
+        //    return View();
+        //}
 
         // POST: Searches/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SearchId,Content,ApplicationUserId")] Search search)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Searches.Add(search);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "SearchId,Content,ApplicationUserId")] Search search)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Searches.Add(search);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", search.ApplicationUserId);
-            return View(search);
-        }
+        //    ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", search.ApplicationUserId);
+        //    return View(search);
+        //}
 
-        public ActionResult CreateFromHome(ApplicationUser user, string searched)
+        public void CreateFromHome(ApplicationUser user, string searched)
         {
             if (ModelState.IsValid)
             {
@@ -77,10 +78,10 @@ namespace LibrARRRy.Controllers
                 db.Searches.Add(search);
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "Home");
+            //RedirectToAction("Index", "Home");
         }
 
-        public List<Book> GetSearchedBooks(string searchString)
+        private List<Book> GetSearchedBooks(string searchString)
         {
             string[] operators = { " AND ", " OR ", "NOT " };
             var books = db.Books.OrderBy(b => b.Title);
@@ -152,64 +153,64 @@ namespace LibrARRRy.Controllers
             return finalBooks;
         }
 
-        // GET: Searches/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Search search = db.Searches.Find(id);
-            if (search == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", search.ApplicationUserId);
-            return View(search);
-        }
+        //// GET: Searches/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Search search = db.Searches.Find(id);
+        //    if (search == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", search.ApplicationUserId);
+        //    return View(search);
+        //}
 
-        // POST: Searches/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SearchId,Content,ApplicationUserId")] Search search)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(search).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", search.ApplicationUserId);
-            return View(search);
-        }
+        //// POST: Searches/Edit/5
+        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "SearchId,Content,ApplicationUserId")] Search search)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(search).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Email", search.ApplicationUserId);
+        //    return View(search);
+        //}
 
-        // GET: Searches/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Search search = db.Searches.Find(id);
-            if (search == null)
-            {
-                return HttpNotFound();
-            }
-            return View(search);
-        }
+        //// GET: Searches/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Search search = db.Searches.Find(id);
+        //    if (search == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(search);
+        //}
 
-        // POST: Searches/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Search search = db.Searches.Find(id);
-            db.Searches.Remove(search);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: Searches/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Search search = db.Searches.Find(id);
+        //    db.Searches.Remove(search);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
