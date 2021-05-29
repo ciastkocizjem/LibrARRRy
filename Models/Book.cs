@@ -25,6 +25,7 @@ namespace LibrARRRy.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime AdditionDate { get; set; }
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
