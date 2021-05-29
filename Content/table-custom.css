@@ -1,0 +1,15 @@
+﻿.table {
+    width: 50%;
+    margin: auto;
+    margin-top: 10px;
+    box-shadow: 2px 2px 4px #636363;
+    border-radius: 15px;
+}
+
+img {
+    border-radius: 15px;
+}
+
+button {
+    margin: inherit;
+}

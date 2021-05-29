@@ -3,9 +3,13 @@
     ViewBag.Title = "Order";
 }
 
-<h2>Order</h2>
+@section Styles {
+    <link href="~/Content/table-custom.css" rel="stylesheet" />
+    <link href="~/Content/button-custom.css" rel="stylesheet" />
+}
+
 <div>
-    <table class="table table-hover" width="80%">
+    <table class="table table-borderless ">
         <thead>
             <tr>
                 <th style="text-align:center;">Cover</th>
@@ -25,7 +29,7 @@
 
                     <td>
 
-                        <button class="btn btn-info btn-sm" data-slno="@book.BookId" onclick="location.href='@Url.Action("Remove", "ShoppingCart", book)'">
+                        <button class="btn btn-light btn-sm" data-slno="@book.BookId" onclick="location.href='@Url.Action("Remove", "ShoppingCart", book)'">
                             ✖
                         </button>
                     </td>
@@ -34,8 +38,10 @@
         </tbody>
     </table>
 
-    <div style="float:right;">
-        @Html.ActionLink(" Wypożycz", "Index", null, new { @class = "btn btn-info fa fa-check btnLoan" })
+    <div class="table">
+        <div style="float:right;">
+            @Html.ActionLink(" Order", "Index", null, new { @class = "btn btn-info btnLoan" })
+        </div>
     </div>
 
 </div>
