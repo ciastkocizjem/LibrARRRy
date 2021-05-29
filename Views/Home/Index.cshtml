@@ -16,8 +16,8 @@
                 {
                     <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook">
                     <button class="btn btn-outline-secondary" id="searchButton"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-outline-secondary" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
                     @Html.ActionLink(" ", "Order", "ShoppingCart", null, new { @class = "btn btn-info fa fa-shopping-basket" })
-
                 }
             </div>
         </div>
@@ -63,7 +63,6 @@
     <div class="column right">
         <section>
             <div class="info" id="info">
-
                 @if (ViewBag.roleName == "admin")
                 {
                     <span id="edit" class="closebtn fa fa-edit"></span>
@@ -181,7 +180,7 @@
                 var text = $("#messageText").val();
                 $.ajax({
                     url: '/Home/SaveMessage',
-                    data: { messsage: text }, 
+                    data: { messsage: text },
 
                     type: "post",
                     cache: false,
@@ -227,6 +226,19 @@
                     }
                 });
             });
+
+            $("#saveSearchButton").click(function (e) {
+                var data = $('#searchBook').val();
+                e.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("SaveSearch")',
+                    data: { searchString: data }
+                    /*type: "post"*/
+                    //success: function (resultData) {
+                    //    window.location.href = resultData;
+                    //}
+                });
+            })
 
         });
     </script>
