@@ -21,6 +21,8 @@ namespace LibrARRRy.Models
         public virtual Category Category { get; set; }
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Collection Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime AdditionDate { get; set; }
         [Required]
         public string Description { get; set; }

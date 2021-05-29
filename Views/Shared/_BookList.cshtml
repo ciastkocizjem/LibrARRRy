@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<LibrARRRy.Models.Book>
 
-
 <p>
     @Html.ActionLink("Create New", "Create", "Books", null, new { @class = "btn btn-outline" })
 </p>
@@ -46,14 +45,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AdditionDate)
             </td>
-            <td style="width: 63%;">
+            <td style="width: 55%;">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ListBox("Id", new SelectList(item.Authors, "AuthorId", "Name"))
+                @foreach(var author in item.Authors)
+                {
+                    <span>@author.Name @author.Surname</span>
+                    <br />
+                }
             </td>
             <td>
-                @Html.ListBox("Id", new SelectList(item.Tags, "TagId", "Name"))
+                @foreach (var tag in item.Tags)
+                {
+                    <span>@tag.Name </span>
+                    <br/>
+                }
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", "Books", new { id = item.BookId }, new { @class = "btn btn-outline" }) |

@@ -13,6 +13,7 @@ namespace LibrARRRy.Models
         public int CategoryId { get; set; }
         public string Name { get; set; }
         [ForeignKey("ParentCategory")]
+        [Display(Name = "Parent Category")]
         public int? ParentCategoryId { get; set; }
         public virtual Category ParentCategory { get; set; }
     }

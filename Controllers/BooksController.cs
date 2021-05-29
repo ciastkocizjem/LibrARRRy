@@ -82,7 +82,6 @@ namespace LibrARRRy.Controllers
                 Text = o.Name,
                 Value = o.TagId.ToString()
             });
-
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
             return View();
         }
