@@ -16,12 +16,14 @@ namespace LibrARRRy.Controllers
     {
         private LibrARRRyContext db = new LibrARRRyContext();
 
-        // GET: Searches
-        //public ActionResult Index()
-        //{
-        //    var searches = db.Searches.Include(s => s.ApplicationUser);
-        //    return View(searches.ToList());
-        //}
+
+
+        //GET: Searches
+        public ActionResult Index()
+        {
+            var searches = db.Searches.Include(s => s.ApplicationUser);
+            return View(searches.ToList());
+        }
 
         //// GET: Searches/Details/5
         //public ActionResult Details(int? id)
@@ -70,15 +72,13 @@ namespace LibrARRRy.Controllers
                 Search search = new Search() { ApplicationUserId = user.Id, Content = searched };
                 search.Books = GetSearchedBooks(searched);
 
-                //foreach (Book b in books)
-                //{
-                //    search.Books.Add(b);
-                //}
 
-                db.Searches.Add(search);
-                db.SaveChanges();
+                if (search.Books.Count > 0)
+                {
+                    db.Searches.Add(search);
+                    db.SaveChanges();
+                }
             }
-            //RedirectToAction("Index", "Home");
         }
 
         private List<Book> GetSearchedBooks(string searchString)
@@ -186,31 +186,31 @@ namespace LibrARRRy.Controllers
         //    return View(search);
         //}
 
-        //// GET: Searches/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Search search = db.Searches.Find(id);
-        //    if (search == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(search);
-        //}
+        // GET: Searches/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Search search = db.Searches.Find(id);
+            if (search == null)
+            {
+                return HttpNotFound();
+            }
+            return View(search);
+        }
 
-        //// POST: Searches/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Search search = db.Searches.Find(id);
-        //    db.Searches.Remove(search);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        // POST: Searches/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Search search = db.Searches.Find(id);
+            db.Searches.Remove(search);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         protected override void Dispose(bool disposing)
         {
