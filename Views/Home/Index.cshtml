@@ -9,6 +9,7 @@
 
 @section Styles {
     <link href="~/Content/Index.css" rel="stylesheet" />
+    <link href="~/Content/button-custom.css" rel="stylesheet" />
 }
 
 <div class="row">
@@ -88,10 +89,10 @@
                     }
                 }
             }
-         </div>
+        </div>
         <section>
             <span class="closebtn fa fa-chevron-up" style="float: right; color: dimgray; margin: 10px;" id="btnNewBooks"></span>
-            <br/>
+            <br />
             @if (ViewBag.NewBookList.Count != null)
             {
                 <div id="newBooksList">
