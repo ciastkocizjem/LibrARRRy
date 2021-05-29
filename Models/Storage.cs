@@ -20,6 +20,7 @@ namespace LibrARRRy.Models
         [Required]
         public int Amount { get; set; } // All copies of book
         [Required]
+        [Display(Name = "Current Amount")]
         public int CurrentAmount { get; set; }  // Currently in storage
     }
 }

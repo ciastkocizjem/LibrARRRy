@@ -11,13 +11,13 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Loan</h4>
+        <h4>Borrow</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.LoanId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BookId, "BookId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BookId, "Book Title", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ReaderId, "ReaderId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ReaderId, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ReaderId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ReaderId, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LoanedDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LoanedDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.LoanedDate, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.LoanedDate, "", new { @class = "text-danger" })
             </div>
         </div>

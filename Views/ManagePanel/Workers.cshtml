@@ -1,7 +1,9 @@
 ﻿@using LibrARRRy.ViewModel
 @model dynamic
 
-<h2>Workers</h2>
+@section Styles {
+    <link href="~/Content/table-custom.css" rel="stylesheet" />
+}
 
 @{
     Html.RenderPartial("_UsersList", Model.Users as IEnumerable<ConfirmReadersViewModel>);
