@@ -251,11 +251,13 @@
                 e.preventDefault();
                 var data = $(this).val();
 
-                 $.ajax({
+                $.ajax({
                     url: '@Url.Action("Add", "ShoppingCart")',
                     data: { id: data },
-                 })
-                alert('Book has been added to cart! :)')
+                    success: function (data) {
+                        alert(data.addMessage);
+                    }
+                });
             })
 
         });

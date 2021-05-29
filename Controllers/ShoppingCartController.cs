@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Web.UI;
 
 namespace LibrARRRy.Controllers
 {
@@ -30,11 +31,22 @@ namespace LibrARRRy.Controllers
             else
             {
                 List<Book> books = (List<Book>)Session["cart"];
-                books.Add(book);
-                Session["cart"] = books;
-                Session["count"] = Convert.ToInt32(Session["count"]) + 1;
+                // Check if book isn't already in cart
+                if (!books.Any(b => b.BookId == book.BookId))
+                {
+                    books.Add(book);
+                    Session["cart"] = books;
+                    Session["count"] = Convert.ToInt32(Session["count"]) + 1;
+                    //ViewBag.AddMessage = "Book has been added to cart :)";
+                }
+                else
+                {
+                    //ViewBag.AddMessage = "You already have this book in your cart! :(";
+                    return Json(new { addMessage = "You already have this book in your cart! :(" }, JsonRequestBehavior.AllowGet);
+                }
             }
-            return RedirectToAction("Index", "Home");
+            return Json(new { addMessage = "Book has been added to cart :)" }, JsonRequestBehavior.AllowGet);
+            //return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Order()
@@ -88,15 +100,23 @@ namespace LibrARRRy.Controllers
                         }
                         else
                         {
-                            // TODO: Add message in UI that the book is not in storage
                             notLoanedBooks.Add(b);
                         }
                     }
                 }
 
-                //// Update session (not clear in case some books arent avaliable rn)
+                // Update session (not clear in case some books arent avaliable rn)
                 Session["cart"] = notLoanedBooks;
                 Session["count"] = notLoanedBooks.Count;
+
+                if (notLoanedBooks.Count == 0)
+                {
+                    return Json(new { message = "All books have been loaned! Please collect them in next 3 days!" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { message = "Not all books were avaliable to loan. Books that weren't loaned are still in your cart!" }, JsonRequestBehavior.AllowGet);
+                }
             }
             return RedirectToAction("Order", "ShoppingCart");
         }

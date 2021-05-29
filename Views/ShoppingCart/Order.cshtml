@@ -35,7 +35,26 @@
     </table>
 
     <div style="float:right;">
-        @Html.ActionLink(" Wypożycz", "Index", null, new { @class = "btn btn-info fa fa-check" })
+        @Html.ActionLink(" Wypożycz", "Index", null, new { @class = "btn btn-info fa fa-check btnLoan" })
     </div>
 
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+             $(".btnLoan").click(function (e) {
+                e.preventDefault();
+                var data = $(this).val();
+
+                $.ajax({
+                    url: '@Url.Action("Index", "ShoppingCart")',
+                    success: function (data) {
+                        alert(data.message);
+                        location.reload(true);
+                    }
+                });
+            })
+        });
+    </script>
+}
