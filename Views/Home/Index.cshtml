@@ -1,4 +1,9 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@{
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).ToList();
     ViewBag.Title = "Home Page";
 }
 
@@ -6,66 +11,50 @@
     <link href="~/Content/Index.css" rel="stylesheet" />
 }
 
-
-<div class="header">
-    <div class="top">
-        <h1 id="title">LibrARRRy</h1>
-        <div id="social">
-            <div class="form-inline">
-                @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
-                {
-                    <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook">
-                    <button class="btn btn-outline-secondary" id="searchButton"><i class="fa fa-search"></i></button>
-                    <button class="btn btn-outline-secondary" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
-                    @Html.ActionLink(" ", "Order", "ShoppingCart", null, new { @class = "btn btn-info fa fa-shopping-basket" })
-                }
-            </div>
+<div class="row">
+    <div class="col-lg-2" style="border-right: 1px solid #eee; padding: 0px;">
+        <p class="categoriesAndTags" style="font-weight: 100; line-height: 1.2;">Categories:</p>
+        <div class="form-group">
+            @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
+            {
+                <div class="checkbox checkBoxMargin">
+                    <label>
+                        <input type="checkbox" value="@item.Name" id="C_@item.Name" name="filters[]" /> @item.Name
+                    </label>
+                </div>
+            }
+        </div>
+        <hr />
+        <p class="categoriesAndTags">Tags:</p>
+        <form class="form-group" id="formTags">
+            @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
+            {
+                <div class="checkbox checkBoxMargin">
+                    <label>
+                        <input type="checkbox" value="@item.Name" id="T_@item.Name" name="filters[]" /> @item.Name
+                    </label>
+                </div>
+            }
+        </form>
+        <div class="floatRight">
+            <button class="btn btn-light" id="filterBooks"><i class="fa fa-filter"></i></button>
         </div>
     </div>
-</div>
 
-
-
-<div class="row">
-    <div class="column left mycontent-left">
-        <aside>
-            <div>
-                <p class="categoriesAndTags">Categories:</p>
-                <div class="form-group">
-                    @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
-                    {
-                        <div class="checkbox checkBoxMargin">
-                            <label>
-                                <input type="checkbox" value="@item.Name" id="C_@item.Name" name="filters[]" /> @item.Name
-                            </label>
-                        </div>
-                    }
-                </div>
-                <hr />
-                <p class="categoriesAndTags">Tags:</p>
-                <form class="form-group" id="formTags">
-                    @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
-                    {
-                        <div class="checkbox checkBoxMargin">
-                            <label>
-                                <input type="checkbox" value="@item.Name" id="T_@item.Name" name="filters[]" /> @item.Name
-                            </label>
-                        </div>
-                    }
-                </form>
-                <div class="floatRight">
-                    <button class="btn btn-outline-secondary" id="filterBooks"><i class="fa fa-filter"></i></button>
-                </div>
-            </div>
-        </aside>
-
-    </div>
-    <div class="column right">
+    <div class="col-lg-10" style="padding: 0px;">
         <section>
             <div class="info" id="info">
-                @if (ViewBag.roleName == "admin")
+                @if (Request.IsAuthenticated)
+
                 {
-                    <span id="edit" class="closebtn fa fa-edit"></span>
+                    if (roles[0] == "admin")
+                    {
+                        <span id="edit" class="closebtn fa fa-edit"></span>
+                    }
+                    else
+                    {
+                        <span class="closebtn fa fa-times" id="close"></span>
+                    }
                 }
                 else
                 {
@@ -87,13 +76,28 @@
                 </div>
             </div>
         </section>
+        <div class="form-inline centered">
+            @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
+            {
+                <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook" style="min-width: 30rem;">
+                <button class="btn btn-light" id="searchButton"><i class="fa fa-search"></i></button>
+                if (Request.IsAuthenticated)
+                {
+                    if (roles[0] == "reader")
+                    {
+                        <button class="btn btn-light" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
+                    }
+                }
+            }
+         </div>
         <section>
             <span class="closebtn fa fa-chevron-up" style="float: right; color: dimgray; margin: 10px;" id="btnNewBooks"></span>
-            <h1>Newest books! Check them out:</h1>
+            <br/>
             @if (ViewBag.NewBookList.Count != null)
             {
                 <div id="newBooksList">
                     <div class="window">
+                        <h1 class="newBooks">Newest books!</h1>
                         <div class="container-fluid">
                             <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
                                 @foreach (LibrARRRy.Models.Book item in ViewBag.NewBookList)
@@ -149,7 +153,9 @@
             </div>
         </section>
     </div>
+
 </div>
+
 
 
 @section scripts {
@@ -232,12 +238,25 @@
                 e.preventDefault();
                 $.ajax({
                     url: '@Url.Action("SaveSearch")',
-                    data: { searchString: data }
+                    data: { searchString: data },
                     /*type: "post"*/
                     //success: function (resultData) {
-                    //    window.location.href = resultData;
+                    //    alert('Your search has been saved!')
                     //}
                 });
+                if (data != '') alert('Your search has been saved!')
+                else alert('Cannot save empty search!')
+            })
+
+            $(".btnAdd").click(function (e) {
+                e.preventDefault();
+                var data = $(this).val();
+
+                 $.ajax({
+                    url: '@Url.Action("Add", "ShoppingCart")',
+                    data: { id: data },
+                 })
+                alert('Book has been added to cart! :)')
             })
 
         });

@@ -16,6 +16,7 @@ namespace LibrARRRy.Controllers
     {
         private LibrARRRyContext db = new LibrARRRyContext();
 
+
         //GET: Searches
         public ActionResult Index()
         {
@@ -69,6 +70,7 @@ namespace LibrARRRy.Controllers
             {
                 Search search = new Search() { ApplicationUserId = user.Id, Content = searched };
                 search.Books = GetSearchedBooks(searched);
+
 
                 if (search.Books.Count > 0)
                 {
@@ -208,6 +210,7 @@ namespace LibrARRRy.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

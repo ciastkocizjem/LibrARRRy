@@ -10,14 +10,16 @@ using System.Threading.Tasks;
 
 namespace LibrARRRy.Controllers
 {
+    [Authorize(Roles = ("reader"))]
     public class ShoppingCartController : Controller
     {
         private readonly LibrARRRyContext db = new LibrARRRyContext();
         private readonly int loanDuration = 14; // In days
 
         // GET: ShoppingCart
-        public ActionResult Add(Book book)
+        public ActionResult Add(int id)
         {
+            Book book = db.Books.Where(b => b.BookId == id).First();
             if (Session["cart"] == null)
             {
                 List<Book> books = new List<Book>();
