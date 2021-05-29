@@ -76,6 +76,13 @@ namespace LibrARRRy.Controllers
 
             confirmReaders = confirmReaders.Where(s => s.Role.Contains("reader")).ToList();
 
+            ViewBag.PreviousUrl = "/"; 
+
+            if (System.Web.HttpContext.Current.Request.UrlReferrer != null) { 
+                string prev = (System.Web.HttpContext.Current.Request.UrlReferrer).LocalPath;
+                ViewBag.PreviousUrl = prev;
+            }
+
             dynamicObject.Readers = confirmReaders;
             return View(dynamicObject);
         }
@@ -150,6 +157,8 @@ namespace LibrARRRy.Controllers
             dynamic dynamicObject = new ExpandoObject();
 
             var confirmReaders = new List<ConfirmReadersViewModel>();
+            var workers = new List<ConfirmReadersViewModel>();
+            var toWorkers = new List<ConfirmReadersViewModel>();
             var userStore = new UserStore<ApplicationUser>(db);
 
             foreach (var user in userStore.Users)
@@ -167,9 +176,11 @@ namespace LibrARRRy.Controllers
                 user.Role = UserManager.GetRoles(userStore.Users.First(s => s.Email == user.Email).Id);
             }
 
-            confirmReaders = confirmReaders.Where(s => s.Role.Contains("worker")).ToList();
+            workers = confirmReaders.Where(s => s.Role.Contains("worker")).ToList();
+            toWorkers = confirmReaders.Where(s => s.Role.Contains("reader")).ToList();
 
-            dynamicObject.Users = confirmReaders;
+            dynamicObject.ToWorkers = toWorkers;
+            dynamicObject.Users = workers;
             return View(dynamicObject);
         }
 

@@ -1,3 +1,7 @@
 ﻿.vr {
     border-left: 1px solid #eee;
 }
+
+.nav-pills > .active > a, .nav-pills > .active > a:hover {
+    background-color: #63a9b9;
+}

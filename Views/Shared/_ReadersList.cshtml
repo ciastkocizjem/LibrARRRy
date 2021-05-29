@@ -1,6 +1,14 @@
 ﻿@using LibrARRRy.ViewModel
 @model IEnumerable<ConfirmReadersViewModel>
 
+@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@{
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).ToList();
+}
+
 <table class="table">
     <tr>
         <th>
@@ -21,18 +29,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EmailConfirmed)
             </td>
-            
+
             <td>
                 @if (item.EmailConfirmed == false)
                 {
                     @Html.ActionLink("Confirm", "ConfirmAsync", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" }) <span>| </span>
                 }
                 @Html.ActionLink("Delete", "Delete", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
+                @if (roles[0] == "admin")
+                {
+                    <span> | </span> @Html.ActionLink("Change role", "ChangeRole", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
+                }
             </td>
-            @*<td>
-                    @Html.ActionLink("Details", "Details", "Authors", new { id = item.AuthorId }, new { @class = "btn btn-outline" }) |
-                    @Html.ActionLink("Delete", "Delete", "Authors", new { id = item.AuthorId }, new { @class = "btn btn-outline" })
-                </td>*@
+
         </tr>
     }
 

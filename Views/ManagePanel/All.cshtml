@@ -6,48 +6,21 @@
     ViewBag.Title = "ManageAll";
 }
 
-<link href="~/Content/ManageAllSheet.css" rel="stylesheet" />
+@section Styles {
+    <link href="~/Content/ManageAllSheet.css" rel="stylesheet" />
+ }
 
 <div class="row" style="margin:10px; align-content: center;">
     <div class="col-sm-1">
-        <table class="table table-hover" id="manage">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td id="Books">Books</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td id="Authors">Authors</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td id="Categories">Categories</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td id="Tags">Tags</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td id="Storages">Storages</td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td id="Loans">Loans</td>
-                </tr>
-                <tr>
-                    <th scope="row">7</th>
-                    <td id="Users">Readers</td>
-                </tr>
-            </tbody>
-        </table>
+        <ul class="nav nav-pills nav-stacked" id="manage">
+            <li id="Books"><a href="#Books">Books</a></li>
+            <li id="Authors"><a href="#Authors">Authors</a></li>
+            <li id="Categories"><a href="#Categories">Categories</a></li>
+            <li id="Tags"><a href="#Tags">Tags</a></li>
+            <li id="Storages"><a href="#Storages">Storages</a></li>
+            <li id="Users"><a href="#Users">Readers</a></li>
+            <li id="Loans"><a href="#Loans">Loans</a></li>
+        </ul>
     </div>
     <div class="col-sm-11" style="border-left: 1px solid #eee;" id="render">
         <div id="BooksDiv">
@@ -90,12 +63,40 @@
 
 @section scripts {
     <script type="text/javascript">
-        $("#manage td").click(function () {
-            var id = this.id;
+        $(document).ready(function () {
+
+            var string = '@ViewBag.PreviousUrl';
             $("#render").children().each(function (i, elm) {
                 $(this).hide();
             });
-            $("#" + id + "Div").show();
+
+            $("#manage li").each(function () {
+                if ($(this).has('active')) {
+                    if (string.includes(this.id)) {
+                        $("#" + this.id + "Div").show();
+                        $(this).addClass('active');
+                    }
+                    if (string == '/' || string.includes("Workers")) {
+                        if (this.id == "Books") {
+                            $("#" + this.id + "Div").show();
+                            $(this).addClass('active');
+                        }
+                    }
+                };
+            });
+
+            $("#manage li").click(function (e) {
+                var id = this.id;
+                $("#render").children().each(function (i, elm) {
+                    $(this).hide();
+                });
+                $("#" + id + "Div").show();
+
+                $("li").each(function () {
+                    $(this).removeClass('active');
+                });
+                $(this).addClass('active');
+            });
         });
     </script>
 }
