@@ -7,6 +7,7 @@
 
 @section Styles {
     <link href="~/Content/Index.css" rel="stylesheet" />
+    <link href="~/Content/button-custom.css" rel="stylesheet" />
 }
 
 @foreach (var item in Model)
@@ -15,16 +16,11 @@
         <span style="float: right; margin: 10px;">
             @Html.ActionLink(" ", "Delete", "Searches", new { id = item.SearchId }, new { @class = "btn btn-light fa fa-trash" })
         </span>
-        <h3>@item.Content</h3>
+        <h3 style="font-style: italic; font-family: Cambria">@item.Content</h3>
         <div id="booksList">
             @Html.Partial("_IndexBooksList", (IEnumerable<LibrARRRy.Models.Book>)item.Books)
         </div>
     </section>
 }
 
-@section scripts {
-    <script type="text/javascript">
-
-    </script>
-}
 
