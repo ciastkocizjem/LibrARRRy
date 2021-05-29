@@ -21,27 +21,8 @@ namespace LibrARRRy.Controllers
         
         private List<string> CategoriesCheckBoxes { get; set; }
 
-        private ApplicationUserManager _userManager;
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
         public HomeController()
         {
-        }
-
-        public HomeController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
         }
 
         public ActionResult Index()
@@ -64,15 +45,6 @@ namespace LibrARRRy.Controllers
             catch(Exception ex)
             {
                 ViewBag.message = ex.Message;
-            }
-
-            //get current user email
-            string userName = HttpContext.User.Identity.Name;
-
-            if(userName != "")
-            {
-                string userId = UserManager.FindByEmail(userName).Id;
-                ViewBag.roleName = UserManager.GetRoles(userId)[0];
             }
 
             NewBooks();
@@ -286,20 +258,6 @@ namespace LibrARRRy.Controllers
             NewBooks();
 
             return PartialView("_IndexBooksList", selectedBooks);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         public ActionResult BookDetails(int? id)

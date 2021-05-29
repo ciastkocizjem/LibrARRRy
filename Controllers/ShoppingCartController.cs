@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace LibrARRRy.Controllers
 {
+    [Authorize(Roles = ("reader"))]
     public class ShoppingCartController : Controller
     {
         private readonly LibrARRRyContext db = new LibrARRRyContext();

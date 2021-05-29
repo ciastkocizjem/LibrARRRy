@@ -1,11 +1,19 @@
 ﻿@model IEnumerable<LibrARRRy.Models.Book>
+@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@{
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).ToList();
+}
+
 
 <div class="card-deck" style="margin: 10px;">
     @foreach (LibrARRRy.Models.Book item in @Model)
     {
         <div class="card" style="max-width: 28rem; min-width: 28rem; margin-bottom: 15px;">
             <h5 class="card-title"><strong>@item.Title</strong></h5>
-            <h6 class="card-subtitle mb-2 text-muted">
+            <h6 class="card-subtitle text-muted">
                 @foreach (LibrARRRy.Models.Author authors in item.Authors)
                 {
                     @(authors.Name + "  " + authors.Surname)
@@ -38,7 +46,13 @@
                     }
                 </p>
                 <div style="float:right">
-                    <a href="@Url.Action("Add", "ShoppingCart", item)" class="btn btn-light btn-md fa fa-plus"></a>
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (roles[0] == "reader")
+                        {
+                            <a href="@Url.Action("Add", "ShoppingCart", item)" class="btn btn-light btn-md fa fa-plus"></a>
+                        }
+                    }
                     <a href="@Url.Action("BookDetails", "Home", new { id = item.BookId })" class="btn btn-light btn-md fa fa-info"></a>
                 </div>
             </div>

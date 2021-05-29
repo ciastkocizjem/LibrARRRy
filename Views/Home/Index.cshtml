@@ -1,4 +1,9 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@{
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).ToList();
     ViewBag.Title = "Home Page";
 }
 
@@ -7,65 +12,58 @@
 }
 
 
-<div class="header">
-    <div class="top">
-        <h1 id="title">LibrARRRy</h1>
-        <div id="social">
-            <div class="form-inline">
-                @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
-                {
-                    <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook">
-                    <button class="btn btn-outline-secondary" id="searchButton"><i class="fa fa-search"></i></button>
-                    <button class="btn btn-outline-secondary" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
-                    @Html.ActionLink(" ", "Order", "ShoppingCart", null, new { @class = "btn btn-info fa fa-shopping-basket" })
-                }
-            </div>
+<div class="row">
+    <div class="col-lg-2" style="border-right: 1px solid #eee; padding: 0px;">
+        <p class="categoriesAndTags">Categories:</p>
+        <div class="form-group">
+            @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
+            {
+                <div class="checkbox checkBoxMargin">
+                    <label>
+                        <input type="checkbox" value="@item.Name" id="C_@item.Name" name="filters[]" /> @item.Name
+                    </label>
+                </div>
+            }
+        </div>
+        <hr />
+        <p class="categoriesAndTags">Tags:</p>
+        <form class="form-group" id="formTags">
+            @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
+            {
+                <div class="checkbox checkBoxMargin">
+                    <label>
+                        <input type="checkbox" value="@item.Name" id="T_@item.Name" name="filters[]" /> @item.Name
+                    </label>
+                </div>
+            }
+        </form>
+        <div class="floatRight">
+            <button class="btn btn-outline-secondary" id="filterBooks"><i class="fa fa-filter"></i></button>
         </div>
     </div>
-</div>
-
-
-
-<div class="row">
-    <div class="column left mycontent-left">
-        <aside>
-            <div>
-                <p class="categoriesAndTags">Categories:</p>
-                <div class="form-group">
-                    @foreach (LibrARRRy.Models.Category item in ViewBag.CategoriesList)
+    <div class="col-lg-10">
+        <div class="form-inline centered">
+            @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
+            {
+                <input type="text" name="searchString" class="form-control" placeholder="Search book..." id="searchBook" style="min-width: 30rem;">
+                <button class="btn btn-light" id="searchButton"><i class="fa fa-search"></i></button>
+                if (Request.IsAuthenticated)
+                {
+                    if (roles[0] == "reader")
                     {
-                        <div class="checkbox checkBoxMargin">
-                            <label>
-                                <input type="checkbox" value="@item.Name" id="C_@item.Name" name="filters[]" /> @item.Name
-                            </label>
-                        </div>
+                        <button class="btn btn-outline-secondary" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
                     }
-                </div>
-                <hr />
-                <p class="categoriesAndTags">Tags:</p>
-                <form class="form-group" id="formTags">
-                    @foreach (LibrARRRy.Models.Tag item in ViewBag.TagsList)
-                    {
-                        <div class="checkbox checkBoxMargin">
-                            <label>
-                                <input type="checkbox" value="@item.Name" id="T_@item.Name" name="filters[]" /> @item.Name
-                            </label>
-                        </div>
-                    }
-                </form>
-                <div class="floatRight">
-                    <button class="btn btn-outline-secondary" id="filterBooks"><i class="fa fa-filter"></i></button>
-                </div>
-            </div>
-        </aside>
-
-    </div>
-    <div class="column right">
+                }
+            }
+         </div>
         <section>
             <div class="info" id="info">
-                @if (ViewBag.roleName == "admin")
+                @if (Request.IsAuthenticated)
                 {
-                    <span id="edit" class="closebtn fa fa-edit"></span>
+                    if (roles[0] == "admin")
+                    {
+                        <span id="edit" class="closebtn fa fa-edit"></span>
+                    }
                 }
                 else
                 {
@@ -149,7 +147,9 @@
             </div>
         </section>
     </div>
+
 </div>
+
 
 
 @section scripts {
