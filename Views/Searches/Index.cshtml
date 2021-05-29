@@ -4,36 +4,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SearchId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SearchId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SearchId })
-        </td>
-    </tr>
+@section Styles {
+    <link href="~/Content/Index.css" rel="stylesheet" />
 }
 
-</table>
+@foreach (var item in Model)
+{
+    <section>
+        <span style="float: right; margin: 10px;">
+            @Html.ActionLink(" ", "Delete", "Searches", new { id = item.SearchId }, new { @class = "btn btn-light fa fa-trash" })
+        </span>
+        <h3>@item.Content</h3>
+        <div id="booksList">
+            @Html.Partial("_IndexBooksList", (IEnumerable<LibrARRRy.Models.Book>)item.Books)
+        </div>
+    </section>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+    </script>
+}
