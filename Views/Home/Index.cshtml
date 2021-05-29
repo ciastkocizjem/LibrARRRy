@@ -38,9 +38,10 @@
             }
         </form>
         <div class="floatRight">
-            <button class="btn btn-outline-secondary" id="filterBooks"><i class="fa fa-filter"></i></button>
+            <button class="btn btn-light" id="filterBooks"><i class="fa fa-filter"></i></button>
         </div>
     </div>
+
     <div class="col-lg-10" style="padding: 0px;">
         <section>
             <div class="info" id="info">
@@ -49,6 +50,10 @@
                     if (roles[0] == "admin")
                     {
                         <span id="edit" class="closebtn fa fa-edit"></span>
+                    }
+                    else
+                    {
+                        <span class="closebtn fa fa-times" id="close"></span>
                     }
                 }
                 else
@@ -80,7 +85,7 @@
                 {
                     if (roles[0] == "reader")
                     {
-                        <button class="btn btn-outline-secondary" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
+                        <button class="btn btn-light" id="saveSearchButton" title="Save your search!"><i class="fa fa-save"></i></button>
                     }
                 }
             }
@@ -233,12 +238,25 @@
                 e.preventDefault();
                 $.ajax({
                     url: '@Url.Action("SaveSearch")',
-                    data: { searchString: data }
+                    data: { searchString: data },
                     /*type: "post"*/
                     //success: function (resultData) {
-                    //    window.location.href = resultData;
+                    //    alert('Your search has been saved!')
                     //}
                 });
+                if (data != '') alert('Your search has been saved!')
+                else alert('Cannot save empty search!')
+            })
+
+            $(".btnAdd").click(function (e) {
+                e.preventDefault();
+                var data = $(this).val();
+
+                 $.ajax({
+                    url: '@Url.Action("Add", "ShoppingCart")',
+                    data: { id: data },
+                 })
+                alert('Book has been added to cart! :)')
             })
 
         });

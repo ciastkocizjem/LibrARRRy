@@ -50,7 +50,7 @@
                     {
                         if (roles[0] == "reader")
                         {
-                            <a href="@Url.Action("Add", "ShoppingCart", item)" class="btn btn-light btn-md fa fa-plus"></a>
+                            <button class="btn btn-light btn-sm btnAdd" value="@item.BookId"><i class="fa fa-plus"></i></button>
                         }
                     }
                     <a href="@Url.Action("BookDetails", "Home", new { id = item.BookId })" class="btn btn-light btn-md fa fa-info"></a>
@@ -59,3 +59,4 @@
         </div>
     }
 </div>
+
