@@ -70,15 +70,12 @@ namespace LibrARRRy.Controllers
                 Search search = new Search() { ApplicationUserId = user.Id, Content = searched };
                 search.Books = GetSearchedBooks(searched);
 
-                //foreach (Book b in books)
-                //{
-                //    search.Books.Add(b);
-                //}
-
-                db.Searches.Add(search);
-                db.SaveChanges();
+                if (search.Books.Count > 0)
+                {
+                    db.Searches.Add(search);
+                    db.SaveChanges();
+                }
             }
-            //RedirectToAction("Index", "Home");
         }
 
         private List<Book> GetSearchedBooks(string searchString)
