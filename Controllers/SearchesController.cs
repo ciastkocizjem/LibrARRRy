@@ -17,6 +17,7 @@ namespace LibrARRRy.Controllers
         private LibrARRRyContext db = new LibrARRRyContext();
 
 
+
         //GET: Searches
         public ActionResult Index()
         {
@@ -210,7 +211,6 @@ namespace LibrARRRy.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
 
         protected override void Dispose(bool disposing)
         {
