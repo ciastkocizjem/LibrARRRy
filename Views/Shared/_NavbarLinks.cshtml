@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@{ 
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).ToList();
+}
+
+@if (Request.IsAuthenticated)
+{
+<ul class="nav navbar-nav">
+    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    @if (roles[0] == "admin")
+    {
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Workers", "Workers", "ManagePanel")</li>
+                <li>@Html.ActionLink("Others", "All", "ManagePanel")</li>
+            </ul>
+        </li>
+    }
+    else if (roles[0] == "worker")
+    {
+        <li>@Html.ActionLink("Manage", "All", "ManagePanel")</li>
+    }
+    else
+    {
+        <li>@Html.ActionLink("Cart", "Order", "ShoppingCart")</li>
+        <li>@Html.ActionLink("Book Loans", "Loans", "BookLoans")</li>
+        <li>@Html.ActionLink("ADD VIEW History", "Loans", "BookLoans")</li>
+
+    }
+</ul>
+}
+else
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+    </ul>
+}
+

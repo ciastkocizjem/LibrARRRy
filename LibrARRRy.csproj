@@ -512,6 +512,7 @@
     <Content Include="Views\Searches\Details.cshtml" />
     <Content Include="Views\Searches\Edit.cshtml" />
     <Content Include="Views\Searches\Index.cshtml" />
+    <Content Include="Views\Shared\_NavbarLinks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
