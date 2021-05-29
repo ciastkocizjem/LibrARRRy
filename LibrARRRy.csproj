@@ -263,6 +263,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplyPenaltyJob.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagePanelController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\SearchesController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StoragesController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
@@ -301,6 +303,10 @@
     <Compile Include="Migrations\202105231645306_LoanAndUserUpdate.Designer.cs">
       <DependentUpon>202105231645306_LoanAndUserUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105271804034_SearchUpdate.cs" />
+    <Compile Include="Migrations\202105271804034_SearchUpdate.Designer.cs">
+      <DependentUpon>202105271804034_SearchUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -314,6 +320,11 @@
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="SendMailJob.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\BooksViewModel.cs" />
@@ -333,8 +344,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\IndexSheet.css" />
+    <Content Include="Content\Index.css" />
     <Content Include="Content\ManageAllSheet.css" />
+    <Content Include="Content\navbar-custom.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -389,6 +401,10 @@
     <Content Include="lib\font-awesome\webfonts\fa-solid-900.ttf" />
     <Content Include="lib\font-awesome\webfonts\fa-solid-900.woff" />
     <Content Include="lib\font-awesome\webfonts\fa-solid-900.woff2" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -411,8 +427,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -492,6 +506,12 @@
     <Content Include="Views\Loans\Index.cshtml" />
     <Content Include="Views\Shared\_LoansList.cshtml" />
     <Content Include="Views\Shared\_IndexBooksList.cshtml" />
+    <Content Include="Views\Searches\Create.cshtml" />
+    <Content Include="Views\Searches\Delete.cshtml" />
+    <Content Include="Views\Searches\Details.cshtml" />
+    <Content Include="Views\Searches\Edit.cshtml" />
+    <Content Include="Views\Searches\Index.cshtml" />
+    <Content Include="Views\Shared\_NavbarLinks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -518,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105231645306_LoanAndUserUpdate.resx">
       <DependentUpon>202105231645306_LoanAndUserUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105271804034_SearchUpdate.resx">
+      <DependentUpon>202105271804034_SearchUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

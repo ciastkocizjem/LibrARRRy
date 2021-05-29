@@ -1,30 +1,62 @@
 ﻿@model IEnumerable<LibrARRRy.Models.Book>
+@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@{
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).ToList();
+}
 
-@foreach (LibrARRRy.Models.Book item in @Model)
-{
-    <article>
-        <div>
-            <img class="bookImg" src="~/img/bookCover.jpg" />
-            <p class="bookText">@item.Title</p>
-            <div class="authorsText">
+
+<div class="card-deck" style="margin: 10px;">
+    @foreach (LibrARRRy.Models.Book item in @Model)
+    {
+        <div class="card" style="max-width: 28rem; min-width: 28rem; margin-bottom: 15px;">
+            <h5 class="card-title"><strong>@item.Title</strong></h5>
+            <h6 class="card-subtitle text-muted">
                 @foreach (LibrARRRy.Models.Author authors in item.Authors)
                 {
-                    <p class="pSameLine">@(authors.Name + "  " + authors.Surname)</p>
+                    @(authors.Name + "  " + authors.Surname)
                     if (item.Authors.Count > 1 && item.Authors.Last() != authors)
                     {
-                        <p class="pSameLine">and</p>
+                        @:and
                     }
 
                 }
-            </div>
-            <div class="floatRight">
-                <a href="@Url.Action("Add", "ShoppingCart", item)" class="btn btn-info btn-sm">
-                    <span class="fa fa-shopping-cart"></span>
-                </a>
-                @* @Html.ActionLink(" ", "A", null, new { @class = "btn btn-info fa fa-shopping-cart" })*@
+            </h6>
+            <div class="card-body">
+                <img class="card-img" src="~/img/bookCover.jpg" alt="Card book cover">
+                <p class="card-text">
+                    <strong>Description: </strong>
+                    @if (item.Description.Length > 100)
+                    {
+                        if (item.Description.Substring(0, Math.Min(item.Description.Length, 100)).EndsWith(" "))
+                        {
+                            @item.Description.Substring(0, Math.Min(item.Description.Length, 99))@:...
+                        }
+                        else
+                        {
+                            @item.Description.Substring(0, Math.Min(item.Description.Length, 100))@:...
+                        }
 
-                @Html.ActionLink(" ", "BookDetails", "Index", new { id = item.BookId }, new { @class = "btn btn-warning fa fa-info btn-md" })
+                    }
+                    else
+                    {
+                        @item.Description
+                    }
+                </p>
+                <div style="float:right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (roles[0] == "reader")
+                        {
+                            <button class="btn btn-light btn-sm btnAdd" value="@item.BookId"><i class="fa fa-plus"></i></button>
+                        }
+                    }
+                    <a href="@Url.Action("BookDetails", "Home", new { id = item.BookId })" class="btn btn-light btn-md fa fa-info"></a>
+                </div>
             </div>
         </div>
-    </article>
-}
+    }
+</div>
+

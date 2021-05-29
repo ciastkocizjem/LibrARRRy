@@ -21,27 +21,8 @@ namespace LibrARRRy.Controllers
         
         private List<string> CategoriesCheckBoxes { get; set; }
 
-        private ApplicationUserManager _userManager;
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
         public HomeController()
         {
-        }
-
-        public HomeController(ApplicationUserManager userManager)
-        {
-            UserManager = userManager;
         }
 
         public ActionResult Index()
@@ -66,15 +47,6 @@ namespace LibrARRRy.Controllers
                 ViewBag.message = ex.Message;
             }
 
-            //get current user email
-            string userName = HttpContext.User.Identity.Name;
-
-            if(userName != "")
-            {
-                string userId = UserManager.FindByEmail(userName).Id;
-                ViewBag.roleName = UserManager.GetRoles(userId)[0];
-            }
-
             NewBooks();
 
             return View();
@@ -94,6 +66,26 @@ namespace LibrARRRy.Controllers
             return RedirectToAction("Index");
         }
 
+        //[HttpPost]
+        [Authorize]
+        public void SaveSearch(string searchString)
+        {
+            if (!String.IsNullOrWhiteSpace(searchString))
+            {
+                List<Book> books = GetSearchedBooks(searchString);
+                IdentityManager im = new IdentityManager();
+
+                ApplicationUser user = im.GetUserByName(HttpContext.User.Identity.Name);
+
+                //Search search = new Search() { ApplicationUserId = user.Id, Content = searchString, Books = books };
+                var searchesController = DependencyResolver.Current.GetService<SearchesController>();
+                searchesController.CreateFromHome(user, searchString);
+
+                // TODO: Add alert
+            }
+            //return RedirectToAction("Index");
+        }
+
         public void NewBooks()
         {
             int numerOfDays = 5;
@@ -101,15 +93,12 @@ namespace LibrARRRy.Controllers
             var books = db.Books.OrderBy(b => b.Title);
 
             DateTime limitDate = DateTime.Now.AddDays(-numerOfDays);
-
             ViewBag.NewBookList = books.Where(b => b.AdditionDate.CompareTo(limitDate) > 0).ToList();
         }
 
-        public ActionResult SearchBooks(string searchString)
+        public List<Book> GetSearchedBooks(string searchString)
         {
             var books = db.Books.OrderBy(b => b.Title);
-            var categories = db.Categories.OrderBy(c => c.Name);
-            var tags = db.Tags.OrderBy(t => t.Name);
             List<Book> finalBooks = new List<Book>();
 
             if (!String.IsNullOrEmpty(searchString))
@@ -139,8 +128,8 @@ namespace LibrARRRy.Controllers
                                 {
                                     searchedBooks = searchedBooks.Where(b => (b.ISBN.Contains(splittedSearch[i - 1]) || b.ISBN.Contains(splittedSearch[i + 1]))
                                         || (b.Title.Contains(splittedSearch[i - 1]) || b.Title.Contains(splittedSearch[i + 1]))
-                                        || b.Authors.Any(a => 
-                                            (a.Name.Contains(splittedSearch[i - 1]) || a.Name.Contains(splittedSearch[i + 1])) 
+                                        || b.Authors.Any(a =>
+                                            (a.Name.Contains(splittedSearch[i - 1]) || a.Name.Contains(splittedSearch[i + 1]))
                                             || (a.Surname.Contains(splittedSearch[i - 1]) || a.Surname.Contains(splittedSearch[i + 1])))).ToList();
                                 }
                                 break;
@@ -165,8 +154,8 @@ namespace LibrARRRy.Controllers
                 {
                     //ViewBag.BooksList = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
                     //    || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString)));
-                   finalBooks = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
-                        || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString))).ToList();
+                    finalBooks = books.Where(b => b.ISBN.Contains(searchString) || b.Title.Contains(searchString)
+                         || b.Authors.Any(a => a.Name.Contains(searchString) || a.Surname.Contains(searchString))).ToList();
                 }
             }
             else
@@ -175,14 +164,22 @@ namespace LibrARRRy.Controllers
                 finalBooks = books.ToList();
             }
 
+            return finalBooks;
+        }
+
+        public ActionResult SearchBooks(string searchString)
+        {
+            var categories = db.Categories.OrderBy(c => c.Name);
+            var tags = db.Tags.OrderBy(t => t.Name);
+
+            List<Book> finalBooks = GetSearchedBooks(searchString);
+
             ModelState.Clear();
 
             NewBooks();
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
             ViewBag.BooksList = finalBooks;
-
-            //return RedirectToAction("Index");
 
             return PartialView("_IndexBooksList", finalBooks);
         }
@@ -261,20 +258,6 @@ namespace LibrARRRy.Controllers
             NewBooks();
 
             return PartialView("_IndexBooksList", selectedBooks);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
 
         public ActionResult BookDetails(int? id)
