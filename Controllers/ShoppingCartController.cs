@@ -61,7 +61,7 @@ namespace LibrARRRy.Controllers
             IdentityManager identityManager = new IdentityManager();
             ApplicationUser applicationUser = identityManager.GetUserByName(User.Identity.Name);
 
-            if(applicationUser.Loaned.Count() >= db.AdminSettings.First().BorrowedBooksLimit)
+            if(applicationUser.Loaned.Where(l => l.ReturnedDate == null).Count() >= db.AdminSettings.First().BorrowedBooksLimit)
             {
                 return false;
             }
