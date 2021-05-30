@@ -76,13 +76,32 @@
         {
             <div class="table">
                 <div style="float:right;">
-                    @Html.ActionLink("Add to cart", "BookDetails", null, new { @class = "btn btn-info" })
+                    <button class="btn btn-primary" value="@Model.BookId" id="btnAdd">Add to cart</button>
                 </div>
             </div>
             <br />
         }
     }
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnAdd").click(function (e) {
+
+                var data = $(this).val();
+
+                $.ajax({
+                url: '@Url.Action("Add", "ShoppingCart")',
+                data: { id: data },
+                success: function (data) {
+                alert(data.addMessage);
+                }
+                });
+            })
+        });
+    </script>
+}
 
 
 
