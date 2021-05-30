@@ -17,32 +17,42 @@
         <th>
             @Html.DisplayNameFor(model => model.EmailConfirmed)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CashPenalty)
+        </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailConfirmed)
-            </td>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmailConfirmed)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CashPenalty)
+    </td>
 
-            <td>
-                @if (item.EmailConfirmed == false)
-                {
-                    @Html.ActionLink("Confirm", "ConfirmAsync", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" }) <span>| </span>
-                }
-                @Html.ActionLink("Delete", "Delete", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
-                @if (roles[0] == "admin")
-                {
-                    <span> | </span> @Html.ActionLink("Change role", "ChangeRole", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
-                }
-            </td>
+    <td>
+        @if (item.EmailConfirmed == false)
+        {
+            @Html.ActionLink("Confirm", "ConfirmAsync", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" }) <span>| </span>
+        }
+        @Html.ActionLink("Delete", "Delete", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
+        @if (roles[0] == "admin")
+        {
+            <span> | </span> @Html.ActionLink("Change role", "ChangeRole", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
+        }
+        @if (item.CashPenalty == true)
+        {
+            <span> | </span> @Html.ActionLink("Remove penalty", "ChangePenaltyAsync", "ManagePanel", new { id = item.Id }, new { @class = "btn btn-outline" })
+        }
+    </td>
 
-        </tr>
+</tr>
     }
 
 </table>

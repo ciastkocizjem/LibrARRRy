@@ -13,5 +13,7 @@ namespace LibrARRRy.ViewModel
         public IEnumerable<string> Role { get; set; }
         [DisplayName("Confirmed")]
         public bool EmailConfirmed { get; set; }
+        [DisplayName("Cash penalty")]
+        public bool CashPenalty { get; set; }
     }
 }

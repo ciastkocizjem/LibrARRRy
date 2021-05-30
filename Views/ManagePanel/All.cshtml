@@ -10,6 +10,8 @@
     <link href="~/Content/ManageAllSheet.css" rel="stylesheet" />
  }
 
+<input type="number" id="maxBorrowBooks" value="@ViewBag.Limit"/>
+<button id="borrowBooksConfirm"></button>
 <div class="row" style="margin:10px; align-content: center;">
     <div class="col-sm-1">
         <ul class="nav nav-pills nav-stacked" id="manage">
@@ -21,6 +23,7 @@
             <li id="Readers"><a href="#Readers">Readers</a></li>
             <li id="Loans"><a href="#Loans">Borrows</a></li>
         </ul>
+
     </div>
     <div class="col-sm-11" style="border-left: 1px solid #eee;" id="render">
         <div id="BooksDiv">
@@ -72,7 +75,7 @@
 
             $("#manage li").each(function () {
                 if ($(this).has('active')) {
-                    if (string == '/' || string.includes("Workers")) {
+                    if (string == '/' || string.includes("Workers") || string.includes("Searches")) {
                         if (this.id == "Books") {
                             $("#" + this.id + "Div").show();
                             $(this).addClass('active');
@@ -99,6 +102,16 @@
                     $(this).removeClass('active');
                 });
                 $(this).addClass('active');
+            });
+
+            $("#borrowBooksConfirm").click(function (e) {
+                var value = $("#maxBorrowBooks").val();
+                e.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("ChangeBorrowBooksLimit")',
+                    data: { number: value },
+                    
+                });
             });
         });
     </script>

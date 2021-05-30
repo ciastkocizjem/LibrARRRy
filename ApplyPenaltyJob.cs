@@ -20,7 +20,7 @@ namespace LibrARRRy
             foreach(Loan l in loans)
             {
                 // Check if book was returned and if its past due returning date
-                if (l.ReturnedDate == null && l.LoanExpireDate.CompareTo(DateTime.Now) > 0)
+                if (l.ReturnedDate == null && l.LoanExpireDate.CompareTo(DateTime.Now) < 0)
                 {
                     ApplicationUser user = db.Users.Where(u => u.Id == l.ReaderId).FirstOrDefault();
 

@@ -14,6 +14,7 @@ namespace LibrARRRy.ViewModel
         public IEnumerable<SelectListItem> AllTags { get; set; }
         public List<int> SelectedAuthors { set; get; }
         public List<int> SelectedTags { set; get; }
+        public int CategoryId { set; get; }
 
         public BooksViewModel()
         {

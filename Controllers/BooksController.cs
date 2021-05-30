@@ -228,6 +228,10 @@ namespace LibrARRRy.Controllers
                         else
                             bookToUpdate.Tags.Add(tag);
                     }
+
+                    var category = db.Categories.Where(c => c.CategoryId == booksViewModel.CategoryId).FirstOrDefault();
+                    bookToUpdate.CategoryId = booksViewModel.CategoryId;
+                    bookToUpdate.Category = category;
                 }
                 db.Entry(bookToUpdate).State = EntityState.Modified;
                 db.SaveChanges();

@@ -38,8 +38,8 @@ namespace LibrARRRy.Controllers
                 .UsingJobData("type", collectionMessage ? "c" : "r")
                 .Build();
 
-            ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddDays(collectionMessage ? collectionAfter - 1 : loanDuration + 1)).Build();
-            //ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddSeconds(collectionMessage ? 20 : 40)).Build();
+            //ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddDays(collectionMessage ? collectionAfter - 1 : loanDuration + 1)).Build();
+            ITrigger trigger = TriggerBuilder.Create().StartAt(DateTimeOffset.Now.AddSeconds(collectionMessage ? 20 : 40)).Build();
 
             await scheduler.ScheduleJob(job, trigger);
         }

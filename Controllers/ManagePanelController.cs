@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -48,6 +49,9 @@ namespace LibrARRRy.Controllers
         [Authorize(Roles = "admin,worker")]
         public ActionResult All()
         {
+            //ViewBag.Limit = Properties.Settings.Default.BooksLimit;
+            ViewBag.Limit = Environment.GetEnvironmentVariable("BooksLimit");
+
             dynamic dynamicObject = new ExpandoObject();
             dynamicObject.Books = db.Books.ToList();
             dynamicObject.Authors = db.Authors.ToList();
@@ -65,7 +69,8 @@ namespace LibrARRRy.Controllers
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    EmailConfirmed = user.EmailConfirmed
+                    EmailConfirmed = user.EmailConfirmed, 
+                    CashPenalty = user.CashPenalty
                 };
                 confirmReaders.Add(r);
             }
@@ -99,6 +104,33 @@ namespace LibrARRRy.Controllers
 
             UserManager.Update(user);
             return RedirectToAction("All");
+        }
+
+        public async Task<ActionResult> ChangePenaltyAsync(string id)
+        {
+            if (id == "")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = await UserManager.FindByIdAsync(id);
+
+            if (user.CashPenalty == true)
+                user.CashPenalty = false;
+
+            UserManager.Update(user);
+            return RedirectToAction("All");
+        }
+
+        public void ChangeBorrowBooksLimit(int number)
+        {
+            //Properties.Settings.Default["BooksLimit"] = number;
+            //Properties.Settings.Default.Save();
+
+            Environment.SetEnvironmentVariable("BooksLimit", number.ToString());
+            using (StreamWriter writer = new StreamWriter(Server.MapPath(@"~/Content/BooksLimit.txt"), false))
+            {
+                writer.WriteLine(number);
+            }
         }
 
         public async Task<ActionResult> ConfirmWorkerAsync(string id)
