@@ -1,6 +1,7 @@
 ﻿body {
     margin: 10px;
 }
+
 .categoriesAndTags {
     margin-top: 5px;
     margin-left: 15px;
@@ -36,7 +37,7 @@
 }
 
 .row::-webkit-scrollbar {
-    visibility:hidden !important;
+    visibility: hidden !important;
 }
 
 .info {
@@ -60,9 +61,9 @@
 }
 
     /* When moving the mouse over the close button */
-.closebtn:hover {
-    color: black;
-}
+    .closebtn:hover {
+        color: black;
+    }
 
 .info-id {
     margin: 0px;
@@ -83,32 +84,32 @@
     box-shadow: 2px 2px 4px #636363;
 }
 
-.card > hr {
-    margin-right: 0;
-    margin-left: 0;
-}
+    .card > hr {
+        margin-right: 0;
+        margin-left: 0;
+    }
 
-.card > .list-group {
-    border-top: inherit;
-    border-bottom: inherit;
-}
+    .card > .list-group {
+        border-top: inherit;
+        border-bottom: inherit;
+    }
 
-.card > .list-group:first-child {
-    border-top-width: 0;
-    border-top-left-radius: calc(0.25rem - 1px);
-    border-top-right-radius: calc(0.25rem - 1px);
-}
+        .card > .list-group:first-child {
+            border-top-width: 0;
+            border-top-left-radius: calc(0.25rem - 1px);
+            border-top-right-radius: calc(0.25rem - 1px);
+        }
 
-.card > .list-group:last-child {
-    border-bottom-width: 0;
-    border-bottom-right-radius: calc(0.25rem - 1px);
-    border-bottom-left-radius: calc(0.25rem - 1px);
-}
+        .card > .list-group:last-child {
+            border-bottom-width: 0;
+            border-bottom-right-radius: calc(0.25rem - 1px);
+            border-bottom-left-radius: calc(0.25rem - 1px);
+        }
 
-.card > .card-header + .list-group,
-.card > .list-group + .card-footer {
-    border-top: 0;
-}
+        .card > .card-header + .list-group,
+        .card > .list-group + .card-footer {
+            border-top: 0;
+        }
 
 .card-body {
     -ms-flex: 1 1 auto;
@@ -393,11 +394,13 @@
     transition: all 0.2s ease-in-out !important;
     border-radius: 24px;
 }
+
 .centered {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .floatRight {
     float: right;
     margin: 15px;
