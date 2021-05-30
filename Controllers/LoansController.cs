@@ -19,7 +19,9 @@ namespace LibrARRRy.Controllers
     public class LoansController : Controller
     {
         private LibrARRRyContext db = new LibrARRRyContext();
-        private readonly int collectionAfter = 3, loanDuration = 14; // In days
+        private readonly List<int> loanDurationList = new List<int>() { 14, 21, 30 }; // In days
+        private readonly int collectionAfter = 3;
+        private int loanDuration; 
 
         // To schedule sending emails
         StdSchedulerFactory factory = new StdSchedulerFactory();
@@ -91,6 +93,9 @@ namespace LibrARRRy.Controllers
             if (ModelState.IsValid)
             {
                 IdentityManager im = new IdentityManager();
+                int durationIndex = db.AdminSettings.First().DetentionLimit;
+                loanDuration = loanDurationList.ElementAt(durationIndex);
+
                 db.Loans.Add(new Loan()
                 {
                     BookId = book.BookId,
