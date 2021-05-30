@@ -2,6 +2,13 @@
 @{
     ViewBag.Title = "Order";
 }
+@using Microsoft.AspNet.Identity
+@using LibrARRRy.Models
+@{
+    var userName = User.Identity.Name;
+    IdentityManager im = new IdentityManager();
+    var user = im.GetUserByName(userName);
+}
 
 @section Styles {
     <link href="~/Content/table-custom.css" rel="stylesheet" />
@@ -42,11 +49,18 @@
 
     <div class="table">
         <div style="float:right;">
-            @Html.ActionLink(" Order", "Index", null, new { @class = "btn btn-info btnLoan" })
+            @if (user.CashPenalty)
+            {
+                @Html.ActionLink(" Order", "Index", null, new { @class = "btn btn-info btnLoan disabled" })
+            }
+            else
+            {
+                @Html.ActionLink(" Order", "Index", null, new { @class = "btn btn-info btnLoan" })
+            }
         </div>
     </div>
 
-    <br/>
+    <br />
 
 </div>
 
@@ -64,7 +78,11 @@
                         location.reload(true);
                     }
                 });
-            })
+             })
+
+            //$(".disable").click(function () {
+            //    return false;
+            //})
         });
     </script>
 }
