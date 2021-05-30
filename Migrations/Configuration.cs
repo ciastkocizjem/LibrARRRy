@@ -78,7 +78,10 @@
                 context.Books.Add(book);
             }
 
-
+            if (context.AdminSettings.Count() == 0)
+            {
+                context.AdminSettings.Add(new AdminSettings { BorrowedBooksLimit = 5, DetentionLimit = 0, AdminInfo = "Nowe książki w każdy czwartek!", InfoAdditionDate = DateTime.Now });
+            }
 
             context.SaveChanges();
         }

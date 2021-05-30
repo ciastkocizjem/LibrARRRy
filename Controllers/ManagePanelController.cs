@@ -50,7 +50,8 @@ namespace LibrARRRy.Controllers
         public ActionResult All()
         {
             //ViewBag.Limit = Properties.Settings.Default.BooksLimit;
-            ViewBag.Limit = Environment.GetEnvironmentVariable("BooksLimit");
+            //ViewBag.Limit = Environment.GetEnvironmentVariable("BooksLimit");
+            ViewBag.Limit = db.AdminSettings.First().BorrowedBooksLimit;
 
             dynamic dynamicObject = new ExpandoObject();
             dynamicObject.Books = db.Books.ToList();
@@ -126,11 +127,15 @@ namespace LibrARRRy.Controllers
             //Properties.Settings.Default["BooksLimit"] = number;
             //Properties.Settings.Default.Save();
 
-            Environment.SetEnvironmentVariable("BooksLimit", number.ToString());
-            using (StreamWriter writer = new StreamWriter(Server.MapPath(@"~/Content/BooksLimit.txt"), false))
-            {
-                writer.WriteLine(number);
-            }
+            //Environment.SetEnvironmentVariable("BooksLimit", number.ToString());
+            //using (StreamWriter writer = new StreamWriter(Server.MapPath(@"~/Content/BooksLimit.txt"), false))
+            //{
+            //    writer.WriteLine(number);
+            //}
+
+            AdminSettings settings = db.AdminSettings.First();
+            settings.BorrowedBooksLimit = number;
+            db.SaveChanges();
         }
 
         public async Task<ActionResult> ConfirmWorkerAsync(string id)

@@ -32,16 +32,19 @@ namespace LibrARRRy.Controllers
             ViewBag.CategoriesList = categories.ToList();
             ViewBag.TagsList = tags.ToList();
 
-            try
-            {
-                ViewBag.message = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/AdminMessage.txt"));
-                DateTime date = System.IO.File.GetLastWriteTime(Server.MapPath(@"~/Content/AdminMessage.txt"));
-                ViewBag.lastModified = date.ToString("MM/dd/yyyy");
-            } 
-            catch(Exception ex)
-            {
-                ViewBag.message = ex.Message;
-            }
+            //try
+            //{
+            //    ViewBag.message = System.IO.File.ReadAllText(Server.MapPath(@"~/Content/AdminMessage.txt"));
+            //    DateTime date = System.IO.File.GetLastWriteTime(Server.MapPath(@"~/Content/AdminMessage.txt"));
+            //    ViewBag.lastModified = date.ToString("MM/dd/yyyy");
+            //} 
+            //catch(Exception ex)
+            //{
+            //    ViewBag.message = ex.Message;
+            //}
+
+            ViewBag.message = db.AdminSettings.First().AdminInfo;
+            ViewBag.lastModified = db.AdminSettings.First().InfoAdditionDate;
 
             NewBooks();
 
@@ -53,10 +56,16 @@ namespace LibrARRRy.Controllers
         {
             if(messsage != "")
             {
-                using (StreamWriter writer = new StreamWriter(Server.MapPath(@"~/Content/AdminMessage.txt"), false))
-                {
-                    writer.WriteLine(messsage);
-                }
+                //using (StreamWriter writer = new StreamWriter(Server.MapPath(@"~/Content/AdminMessage.txt"), false))
+                //{
+                //    writer.WriteLine(messsage);
+                //}
+
+                AdminSettings settings = db.AdminSettings.First();
+                settings.AdminInfo = messsage;
+                settings.InfoAdditionDate = DateTime.Now;
+
+                db.SaveChanges();
             }
 
             return RedirectToAction("Index");
