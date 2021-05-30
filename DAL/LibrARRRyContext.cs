@@ -24,6 +24,7 @@ namespace LibrARRRy.DAL
         public DbSet<Search> Searches { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<Loan> Loans { get; set; }
+        public DbSet<AdminSettings> AdminSettings { get; set; }
 
         public static LibrARRRyContext Create()
         {
