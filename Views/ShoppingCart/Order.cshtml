@@ -67,10 +67,17 @@
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $.get("/ShoppingCart/ChceckLimit", null, function (data) {
+                if (data == "False") {
+                    $(".btnLoan").attr('disabled', true);
+                    alert('Return some books first!')
+                }
+            }); 
+
              $(".btnLoan").click(function (e) {
                 e.preventDefault();
                 var data = $(this).val();
-
                 $.ajax({
                     url: '@Url.Action("Index", "ShoppingCart")',
                     success: function (data) {

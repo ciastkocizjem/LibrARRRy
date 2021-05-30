@@ -44,7 +44,7 @@ namespace LibrARRRy.Controllers
             //}
 
             ViewBag.message = db.AdminSettings.First().AdminInfo;
-            ViewBag.lastModified = db.AdminSettings.First().InfoAdditionDate;
+            ViewBag.lastModified = db.AdminSettings.First().InfoAdditionDate.ToString("dd/MM/yyyy");
 
             NewBooks();
 

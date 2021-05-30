@@ -22,6 +22,8 @@ namespace LibrARRRy.Controllers
     {
         private readonly LibrARRRyContext db = new LibrARRRyContext();
 
+        private readonly List<string> holdedBooks = new List<string>() { "For two weeks", "For three weeks", "For month" };
+
         private ApplicationUserManager _userManager;
 
         public ApplicationUserManager UserManager
@@ -52,6 +54,8 @@ namespace LibrARRRy.Controllers
             //ViewBag.Limit = Properties.Settings.Default.BooksLimit;
             //ViewBag.Limit = Environment.GetEnvironmentVariable("BooksLimit");
             ViewBag.Limit = db.AdminSettings.First().BorrowedBooksLimit;
+            ViewBag.HoldedBooks = holdedBooks;
+            ViewBag.SelectedHolded = db.AdminSettings.First().DetentionLimit;
 
             dynamic dynamicObject = new ExpandoObject();
             dynamicObject.Books = db.Books.ToList();
@@ -122,7 +126,7 @@ namespace LibrARRRy.Controllers
             return RedirectToAction("All");
         }
 
-        public void ChangeBorrowBooksLimit(int number)
+        public void ChangeBorrowBooksLimit(int number, string selectedValue)
         {
             //Properties.Settings.Default["BooksLimit"] = number;
             //Properties.Settings.Default.Save();
@@ -133,8 +137,11 @@ namespace LibrARRRy.Controllers
             //    writer.WriteLine(number);
             //}
 
+            int selectedInt = holdedBooks.IndexOf(selectedValue);
+
             AdminSettings settings = db.AdminSettings.First();
             settings.BorrowedBooksLimit = number;
+            settings.DetentionLimit = selectedInt;
             db.SaveChanges();
         }
 

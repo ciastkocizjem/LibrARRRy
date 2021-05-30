@@ -6,12 +6,44 @@
     ViewBag.Title = "ManageAll";
 }
 
+@using Microsoft.AspNet.Identity
+@using System.Security.Claims
+@{
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(c => c.Value).ToList();
+    ViewBag.Title = "Home Page";
+}
+
 @section Styles {
     <link href="~/Content/ManageAllSheet.css" rel="stylesheet" />
- }
+}
 
-<input type="number" id="maxBorrowBooks" value="@ViewBag.Limit"/>
-<button id="borrowBooksConfirm"></button>
+@if(roles[0] == "admin")
+{
+    <span class="closebtn fa fa-chevron-up" style="float: right; color: dimgray; margin: 10px;" id="btnHidePanel"></span>
+    <br />
+    <div class="row" style="margin: 10px;" id="hidePanel">
+        <div class="col-lg-6">
+            <div style="float:right;">
+                <label for="maxBorrowsBooks">Limit for borrowed books</label>
+                <input type="number" id="maxBorrowBooks" value="@ViewBag.Limit" class="form-control" />
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <label for="maxHoldedBooks">Limit for holding books</label>
+            <select id="holdedBook" class="form-control">
+                @for (int i = 0; i < ViewBag.HoldedBooks.Count; i++)
+                {
+                    <option value="@i">@ViewBag.HoldedBooks[i]</option>
+                }
+            </select>
+            <br />
+            <button class="btn btn-primary" id="borrowBooksConfirm"> Submit</button>
+        </div>
+    </div>
+}
+
 <div class="row" style="margin:10px; align-content: center;">
     <div class="col-sm-1">
         <ul class="nav nav-pills nav-stacked" id="manage">
@@ -68,6 +100,21 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $("#btnHidePanel").click(function () {
+                if ($("#hidePanel").is(':visible')) {
+                    $("#hidePanel").slideUp();
+                    $(this).removeClass('fa-chevron-up')
+                    $(this).addClass('fa-chevron-down')
+                } else {
+                    $("#hidePanel").slideDown();
+                    $(this).removeClass('fa-chevron-down')
+                    $(this).addClass('fa-chevron-up')
+                }
+
+            });
+
+            $('select option[value="@ViewBag.SelectedHolded"]').attr("selected", true);
+
             var string = '@ViewBag.PreviousUrl';
             $("#render").children().each(function (i, elm) {
                 $(this).hide();
@@ -87,6 +134,9 @@
                     else if (string == '/ManagePanel/All') {
                         $("#ReadersDiv").show();
                         $("#Readers").addClass('active');
+                    } else {
+                        $("#BookssDiv").show();
+                        $("#Books").addClass('active');
                     }
                 };
             });
@@ -106,12 +156,17 @@
 
             $("#borrowBooksConfirm").click(function (e) {
                 var value = $("#maxBorrowBooks").val();
+                var valueSelected = $("#holdedBook option:selected").text();
                 e.preventDefault();
-                $.ajax({
-                    url: '@Url.Action("ChangeBorrowBooksLimit")',
-                    data: { number: value },
-                    
-                });
+                if (value < 1) {
+                    alert('Value cannot be lower than 1!')
+                } else {
+                    $.ajax({
+                        url: '@Url.Action("ChangeBorrowBooksLimit")',
+                        data: { number: value, selectedValue: valueSelected },
+                    });
+                    alert('Successfully changed!')
+                }
             });
         });
     </script>

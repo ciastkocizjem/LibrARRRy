@@ -55,6 +55,20 @@ namespace LibrARRRy.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //false - cannot order more books
+        public bool ChceckLimit()
+        {
+            IdentityManager identityManager = new IdentityManager();
+            ApplicationUser applicationUser = identityManager.GetUserByName(User.Identity.Name);
+
+            if(applicationUser.Loaned.Count() >= db.AdminSettings.First().BorrowedBooksLimit)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public ActionResult Remove(Book book)
         {
             List<Book> books = (List<Book>)Session["cart"];

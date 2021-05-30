@@ -61,7 +61,7 @@
                     <span class="closebtn fa fa-times" id="close"></span>
                 }
 
-                <p class="info-id pSameLine"><strong id="id="messageDate"">@ViewBag.lastModified Info! </strong></p>
+                <p class="info-id pSameLine"><strong id="messageDate">@ViewBag.lastModified Info! </strong></p>
                 <p class="info-id pSameLine" id="messageP">@ViewBag.message</p>
 
                 <div id="formMessage" style="display:none;">
@@ -187,7 +187,8 @@
                 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
                 var yyyy = today.getFullYear();
 
-                today = mm + '.' + dd + '.' + yyyy;
+                today = dd + '/' + mm + '/' + yyyy;
+                alert(today)
 
                 $.ajax({
                     url: '/Home/SaveMessage',
