@@ -31,5 +31,6 @@ namespace LibrARRRy.Models
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<Author> Authors { get; set; }
         public virtual ICollection<ApplicationUser> Readers { get; set; }
+        public virtual ICollection<Search> Searches { get; set; }
     }
 }

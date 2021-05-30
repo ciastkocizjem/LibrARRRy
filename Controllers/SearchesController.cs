@@ -21,7 +21,8 @@ namespace LibrARRRy.Controllers
         //GET: Searches
         public ActionResult Index()
         {
-            var searches = db.Searches.Include(s => s.ApplicationUser);
+            //var searches = db.Searches.Include(s => s.ApplicationUser);
+            var searches = db.Searches.Where(s => s.ApplicationUser.Email == User.Identity.Name);
             return View(searches.ToList());
         }
 
