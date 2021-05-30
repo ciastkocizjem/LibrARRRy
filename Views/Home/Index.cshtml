@@ -61,7 +61,7 @@
                     <span class="closebtn fa fa-times" id="close"></span>
                 }
 
-                <p class="info-id pSameLine"><strong>@ViewBag.lastModified Info! </strong></p>
+                <p class="info-id pSameLine"><strong id="id="messageDate"">@ViewBag.lastModified Info! </strong></p>
                 <p class="info-id pSameLine" id="messageP">@ViewBag.message</p>
 
                 <div id="formMessage" style="display:none;">
@@ -184,13 +184,21 @@
 
             $("#save").click(function () {
                 var text = $("#messageText").val();
+
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+
+                today = mm + '.' + dd + '.' + yyyy;
+
                 $.ajax({
                     url: '/Home/SaveMessage',
                     data: { messsage: text },
-
                     type: "post",
                     cache: false,
                     success: function () {
+                        $('#messageDate').text(today + " Info! ")
                         $('#messageP').text(text)
                         $("#messageText").val('');
                     },
