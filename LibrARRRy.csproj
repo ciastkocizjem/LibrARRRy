@@ -310,6 +310,10 @@
     <Compile Include="Migrations\202105301733010_AdminSettingsAdded.Designer.cs">
       <DependentUpon>202105301733010_AdminSettingsAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105301801210_BookSearchesFix.cs" />
+    <Compile Include="Migrations\202105301801210_BookSearchesFix.Designer.cs">
+      <DependentUpon>202105301801210_BookSearchesFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminSettings.cs" />
@@ -538,6 +542,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105301733010_AdminSettingsAdded.resx">
       <DependentUpon>202105301733010_AdminSettingsAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105301801210_BookSearchesFix.resx">
+      <DependentUpon>202105301801210_BookSearchesFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
