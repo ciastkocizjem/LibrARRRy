@@ -19,6 +19,8 @@ namespace LibrARRRy.ViewModel
         {
             AllAuthors = new List<SelectListItem>();
             AllTags = new List<SelectListItem>();
+            SelectedAuthors = new List<int>();
+            SelectedTags = new List<int>();
         }
     }
 }

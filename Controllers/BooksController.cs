@@ -169,6 +169,15 @@ namespace LibrARRRy.Controllers
                 Value = o.TagId.ToString()
             });
 
+            foreach(Author a in bookViewModel.Book.Authors)
+            {
+                bookViewModel.SelectedAuthors.Add(a.AuthorId);
+            }
+            foreach(Tag t in bookViewModel.Book.Tags)
+            {
+                bookViewModel.SelectedTags.Add(t.TagId);
+            }
+
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", bookViewModel.Book.CategoryId);
             return View(bookViewModel);
         }
