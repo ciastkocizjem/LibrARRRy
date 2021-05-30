@@ -1,0 +1,27 @@
+﻿.details {
+    width: 50%;
+    margin: auto;
+    margin-top: 10px;
+    box-shadow: 2px 2px 4px #636363;
+    border-radius: 15px;
+}
+
+.pSameLine {
+    display: inline-block;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row {
+    display: flex;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
