@@ -341,7 +341,6 @@
     <Compile Include="Controllers\LoansController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\AdminMessage.txt" />
     <Content Include="App_Data\LibrARRRyDB.mdf" />
     <Content Include="App_Data\LibrARRRyDB_log.ldf">
       <DependentUpon>LibrARRRyDB.mdf</DependentUpon>
@@ -483,23 +482,13 @@
     <Content Include="Views\Storages\Delete.cshtml" />
     <Content Include="Views\Storages\Details.cshtml" />
     <Content Include="Views\Storages\Edit.cshtml" />
-    <Content Include="Views\Shared\_ReadersList.cshtml" />
-    <Content Include="Views\ManagePanel\All.cshtml" />
     <Content Include="Views\ManagePanel\Workers.cshtml" />
-    <Content Include="Views\Shared\_UsersList.cshtml" />
-    <Content Include="Views\ManagePanel\ChangeRole.cshtml" />
-    <Content Include="Views\Shared\_LoansList.cshtml" />
-    <Content Include="Views\Loans\Create.cshtml" />
     <Content Include="Views\Loans\Delete.cshtml" />
-    <Content Include="Views\Loans\Details.cshtml" />
-    <Content Include="Views\Loans\Edit.cshtml" />
     <Content Include="Views\Shared\_ReadersList.cshtml" />
     <Content Include="Views\ManagePanel\All.cshtml" />
-    <Content Include="Views\ManagePanel\Workers.cshtml" />
     <Content Include="Views\Shared\_UsersList.cshtml" />
     <Content Include="Views\ManagePanel\ChangeRole.cshtml" />
     <Content Include="Views\Loans\Create.cshtml" />
-    <Content Include="Views\Loans\Delete.cshtml" />
     <Content Include="Views\Loans\Details.cshtml" />
     <Content Include="Views\Loans\Edit.cshtml" />
     <Content Include="Views\Shared\_LoansList.cshtml" />
@@ -510,6 +499,7 @@
     <Content Include="Views\Searches\Edit.cshtml" />
     <Content Include="Views\Searches\Index.cshtml" />
     <Content Include="Views\Shared\_NavbarLinks.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
