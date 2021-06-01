@@ -51,7 +51,7 @@
         <div style="float:right;">
             @if (user.CashPenalty)
             {
-                @Html.ActionLink(" Order", "Index", null, new { @class = "btn btn-info btnLoan disabled", @title = "You have cash penalty and can't borrow any books :(" })
+                @Html.ActionLink(" Order", "Index", null, new { @class = "btn btn-info btnLoan disabled"})
             }
             else
             {
@@ -68,12 +68,16 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+             if ('@user.CashPenalty' == 'True') {
+                 alert('You have cash penalty and can\'t borrow any books :(')
+            }
+
             $.get("/ShoppingCart/ChceckLimit", null, function (data) {
                 if (data == "False") {
                     $(".btnLoan").attr('disabled', true);
                     alert('Return some books first!')
                 }
-            }); 
+            });
 
              $(".btnLoan").click(function (e) {
                 e.preventDefault();
