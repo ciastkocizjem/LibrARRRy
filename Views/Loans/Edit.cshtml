@@ -16,45 +16,21 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.LoanId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookId, "Title", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @Html.HiddenFor(model => model.BookId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReaderId, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ReaderId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ReaderId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @Html.HiddenFor(model => model.ReaderId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LoanedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LoanedDate, new { htmlAttributes = new { @class = "form-control"} })
-                @Html.ValidationMessageFor(model => model.LoanedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+       
+                @Html.HiddenFor(model => model.LoanedDate)
+    
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CollectionDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CollectionDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CollectionDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+       
+                @Html.HiddenFor(model => model.CollectionDate)
+         
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LoanExpireDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LoanExpireDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LoanExpireDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+      
+                @Html.HiddenFor(model => model.LoanExpireDate)
+        
 
         <div class="form-group">
             @Html.LabelFor(model => model.ReturnedDate, htmlAttributes: new { @class = "control-label col-md-2" })

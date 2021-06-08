@@ -74,10 +74,18 @@ namespace LibrARRRy.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,CollectionDate,LoanExpireDate,ReturnedDate")] Loan loan)
+        public ActionResult Create([Bind(Include = "LoanId,BookId,ReaderId,LoanedDate,ReturnedDate")] Loan loan)
         {
             if (ModelState.IsValid)
             {
+                var bookInStorage = db.Storages.Where(s => s.BookId == loan.BookId).FirstOrDefault();
+                if (bookInStorage != null)
+                {
+                    bookInStorage.CurrentAmount--;
+                }
+                loan.CollectionDate = loan.LoanedDate.AddDays(3);
+                loan.LoanExpireDate = loan.LoanedDate.AddDays(db.AdminSettings.FirstOrDefault().DetentionLimit);
+
                 db.Loans.Add(loan);
                 db.SaveChanges();
                 return RedirectToAction("All", "ManagePanel");
@@ -138,6 +146,11 @@ namespace LibrARRRy.Controllers
         {
             if (ModelState.IsValid)
             {
+                var bookFromStorage = db.Storages.Where(s => s.BookId == loan.BookId).FirstOrDefault();
+                if (bookFromStorage != null)
+                {
+                    bookFromStorage.CurrentAmount++;
+                }
                 db.Entry(loan).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("All", "ManagePanel");
@@ -153,6 +166,12 @@ namespace LibrARRRy.Controllers
             {
                 Loan toEdit = db.Loans.Where(l => l.BookId == book.BookId && l.ReaderId == user.Id && l.ReturnedDate == null).FirstOrDefault();
                 toEdit.ReturnedDate = DateTime.Now;
+
+                var bookFromStorage = db.Storages.Where(s => s.BookId == toEdit.BookId).FirstOrDefault();
+                if (bookFromStorage != null)
+                {
+                    bookFromStorage.CurrentAmount++;
+                }
 
                 db.Entry(toEdit).State = EntityState.Modified;
                 db.SaveChanges();
